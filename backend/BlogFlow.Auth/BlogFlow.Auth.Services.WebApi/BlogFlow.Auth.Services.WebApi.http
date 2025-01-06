@@ -1,0 +1,6 @@
+@BlogFlow.Auth.Services.WebApi_HostAddress = http://localhost:5207
+
+GET {{BlogFlow.Auth.Services.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

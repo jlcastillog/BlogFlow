@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{71949CDB-6252-4C7C-9550-067C499104D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4E6BA473-183D-4F64-A9C0-D2D152561E43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{069B8547-F0D0-4B62-9D6F-8A76E52F7F67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Persistence", "BlogFlow.Auth.Persistence\BlogFlow.Auth.Persistence.csproj", "{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Application.Interface", "BlogFlow.Auth.Application.Interface\BlogFlow.Auth.Application.Interface.csproj", "{904B94CF-4E4B-4DF5-BBD6-34EC92279E44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Domain", "BlogFlow.Auth.Domain\BlogFlow.Auth.Domain.csproj", "{CEEF1260-0386-46E1-9968-CDAE5B0ABB52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{2B917C67-022F-4AA0-8E4C-2517D676BB22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Application.DTO", "BlogFlow.Auth.Application.DTO\BlogFlow.Auth.Application.DTO.csproj", "{CADEE651-8E9C-492B-91C4-87B29F42FA7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Application.UseCases", "BlogFlow.Auth.Application.UseCases\BlogFlow.Auth.Application.UseCases.csproj", "{D653CE50-D5DE-40CB-A793-705924922C49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transversal", "Transversal", "{3F7307E9-C60B-4E00-AB77-80B776F2F8FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Transversal.Common", "BlogFlow.Auth.Transversal.Common\BlogFlow.Auth.Transversal.Common.csproj", "{DF56F37C-45DC-4C34-8C7D-C0AD1D531868}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Services.WebApi", "BlogFlow.Auth.Services.WebApi\BlogFlow.Auth.Services.WebApi.csproj", "{98E08B7B-ECF1-4A90-BD46-FFB094165883}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{904B94CF-4E4B-4DF5-BBD6-34EC92279E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{904B94CF-4E4B-4DF5-BBD6-34EC92279E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{904B94CF-4E4B-4DF5-BBD6-34EC92279E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{904B94CF-4E4B-4DF5-BBD6-34EC92279E44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEEF1260-0386-46E1-9968-CDAE5B0ABB52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEEF1260-0386-46E1-9968-CDAE5B0ABB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEEF1260-0386-46E1-9968-CDAE5B0ABB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEEF1260-0386-46E1-9968-CDAE5B0ABB52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADEE651-8E9C-492B-91C4-87B29F42FA7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADEE651-8E9C-492B-91C4-87B29F42FA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADEE651-8E9C-492B-91C4-87B29F42FA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADEE651-8E9C-492B-91C4-87B29F42FA7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D653CE50-D5DE-40CB-A793-705924922C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D653CE50-D5DE-40CB-A793-705924922C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D653CE50-D5DE-40CB-A793-705924922C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D653CE50-D5DE-40CB-A793-705924922C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF56F37C-45DC-4C34-8C7D-C0AD1D531868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF56F37C-45DC-4C34-8C7D-C0AD1D531868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF56F37C-45DC-4C34-8C7D-C0AD1D531868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF56F37C-45DC-4C34-8C7D-C0AD1D531868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9} = {069B8547-F0D0-4B62-9D6F-8A76E52F7F67}
+		{904B94CF-4E4B-4DF5-BBD6-34EC92279E44} = {71949CDB-6252-4C7C-9550-067C499104D1}
+		{CEEF1260-0386-46E1-9968-CDAE5B0ABB52} = {4E6BA473-183D-4F64-A9C0-D2D152561E43}
+		{CADEE651-8E9C-492B-91C4-87B29F42FA7D} = {71949CDB-6252-4C7C-9550-067C499104D1}
+		{D653CE50-D5DE-40CB-A793-705924922C49} = {71949CDB-6252-4C7C-9550-067C499104D1}
+		{DF56F37C-45DC-4C34-8C7D-C0AD1D531868} = {3F7307E9-C60B-4E00-AB77-80B776F2F8FE}
+		{98E08B7B-ECF1-4A90-BD46-FFB094165883} = {2B917C67-022F-4AA0-8E4C-2517D676BB22}
+	EndGlobalSection
+EndGlobal
