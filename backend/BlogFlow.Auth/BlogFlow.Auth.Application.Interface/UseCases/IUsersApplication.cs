@@ -5,6 +5,6 @@ namespace BlogFlow.Auth.Application.Interface.UseCases
 {
     public interface IUsersApplication
     {
-        Response<UserDTO> Authenticate(string userName, string password, CancellationToken cancellationToken = default);
+        Task<Response<UserDTO>> Authenticate(string userName, string password, CancellationToken cancellationToken = default);
     }
 }

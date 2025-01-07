@@ -17,13 +17,13 @@ namespace BlogFlow.Auth.Application.UseCases.Users
             _mapper = mapper;
         }
 
-        public Response<UserDTO> Authenticate(string userName, string password, CancellationToken cancellationToken = default)
+        public async Task<Response<UserDTO>> Authenticate(string userName, string password, CancellationToken cancellationToken = default)
         {
             var response = new Response<UserDTO>();
 
             try
             {
-                var user = _unitOfWork.Users.Authenticate(userName, password, cancellationToken);
+                var user = await _unitOfWork.Users.Authenticate(userName, password, cancellationToken);
 
                 response.Data = _mapper.Map<UserDTO>(user);
 
@@ -32,10 +32,14 @@ namespace BlogFlow.Auth.Application.UseCases.Users
                     response.IsSuccess = true;
                     response.Message = "Authenticate succeded!!";
                 }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
             }
             catch (InvalidOperationException)
             {
-                response.IsSuccess = true;
+                response.IsSuccess = false;
                 response.Message = "User doesn't exist";
             }
             catch (Exception ex)

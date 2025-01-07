@@ -17,9 +17,9 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v1
 
         [AllowAnonymous]
         [HttpPost("Authenticate")]
-        public IActionResult Authenticate([FromBody] UserDTO usersDto)
+        public async Task<IActionResult> Authenticate([FromBody] UserDTO usersDto)
         {
-            var respose = _usersApplication.Authenticate(usersDto.UserName, usersDto.Password);
+            var respose = await _usersApplication.Authenticate(usersDto.UserName, usersDto.Password);
 
             if (respose.IsSuccess)
             {
