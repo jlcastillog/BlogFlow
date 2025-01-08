@@ -38,5 +38,77 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v1
 
             return BadRequest(respose);
         }
+
+        [HttpPost("Insert")]
+        public async Task<IActionResult> InsertAsync([FromBody] UserDTO userDto)
+        {
+            if (userDto == null)
+            {
+                return BadRequest();
+            }
+
+            var response = await _usersApplication.InsertAsync(userDto);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [HttpPost("Update({userId}")]
+        public async Task<IActionResult> UpdateAsync(string userId, [FromBody] UserDTO userDto)
+        {
+            if (userDto == null || userDto.UserId == null)
+            {
+                return BadRequest();
+            }
+            var response = await _usersApplication.UpdateAsync(userId, userDto);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [HttpDelete("Delete/{userId}")]
+        public async Task<IActionResult> DeleteAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest();
+            }
+            var response = await _usersApplication.DeleteAsync(userId);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [HttpGet("Get/{userId}")]
+        public async Task<IActionResult> GetAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest();
+            }
+            var response = await _usersApplication.GetAsync(userId);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var response = await _usersApplication.GetAllAsync();
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 }

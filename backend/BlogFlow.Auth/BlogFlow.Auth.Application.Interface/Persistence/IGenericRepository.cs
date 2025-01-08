@@ -1,4 +1,6 @@
-﻿namespace BlogFlow.Auth.Application.Interface.Persistence
+﻿using System.Threading;
+
+namespace BlogFlow.Auth.Application.Interface.Persistence
 {
     public interface IGenericRepository <T> where T : class
     {
@@ -9,7 +11,6 @@
         bool Delete(string id);
         T Get(string id);
         IEnumerable<T> GetAll();
-        IEnumerable<T> GetAllWithPagination(int pageNumber, int pageSize);
         int Count();
 
         #endregion
@@ -19,10 +20,9 @@
         Task<bool> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(string id);
-        Task<T> GetAsync(string id);
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
-        Task<int> CountAsync();
+        Task<T> GetAsync(string id, CancellationToken cancellationToken);
+        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
+        Task<int> CountAsync(CancellationToken cancellationToken);
 
         #endregion
     }

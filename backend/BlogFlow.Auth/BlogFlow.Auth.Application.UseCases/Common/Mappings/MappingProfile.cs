@@ -9,6 +9,8 @@ namespace BlogFlow.Auth.Application.UseCases.Common.Mappings
         public MappingProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserResponseDTO>().ReverseMap();
+            CreateMap<User, UserRequestDTO>().ReverseMap();
         }
     }
 }

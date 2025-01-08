@@ -36,11 +36,6 @@ namespace BlogFlow.Auth.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAllWithPagination(int pageNumber, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Insert(User entity)
         {
             throw new NotImplementedException();
@@ -55,9 +50,9 @@ namespace BlogFlow.Auth.Persistence.Repositories
 
         #region Async methods
 
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.Users.CountAsync(cancellationToken);
         }
 
         public async Task<User> Authenticate(string userName, string password, CancellationToken cancellationToken)
@@ -65,35 +60,52 @@ namespace BlogFlow.Auth.Persistence.Repositories
             return await _applicationDbContext.Users.SingleOrDefaultAsync(x => x.UserName == userName && x.Password == password, cancellationToken);
         }
 
-        public Task<bool> DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            var entity = await _applicationDbContext.Set<User>().AsNoTracking().SingleOrDefaultAsync(x => x.UserId.Equals(int.Parse(id)));
+
+            if (entity == null)
+            {
+                return await Task.FromResult(false);
+            }
+
+            _applicationDbContext.Remove(entity);
+
+            return await Task.FromResult(true);
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.Set<User>().AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public Task<IEnumerable<User>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        public async Task<User> GetAsync(string id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.Set<User>().AsNoTracking().SingleOrDefaultAsync(x => x.UserId.Equals(int.Parse(id)), cancellationToken);
         }
 
-        public Task<User> GetAsync(string id)
+        public async Task<bool> InsertAsync(User entity)
         {
-            throw new NotImplementedException();
+            await _applicationDbContext.AddAsync(entity);
+            return await Task.FromResult(true);
         }
 
-        public Task<bool> InsertAsync(User entity)
+        public async Task<bool> UpdateAsync(User entity)
         {
-            throw new NotImplementedException();
-        }
+            var entityToUpdate = await _applicationDbContext.Set<User>().AsNoTracking().SingleOrDefaultAsync(x => x.UserId.Equals(entity.UserId));
 
+            if (entityToUpdate == null)
+            {
+                return await Task.FromResult(false);
+            }
 
-        public Task<bool> UpdateAsync(User entity)
-        {
-            throw new NotImplementedException();
+            entityToUpdate.FirstName = entity.FirstName;
+            entityToUpdate.LastName = entity.LastName;
+            entityToUpdate.UserName = entity.UserName;
+
+            _applicationDbContext.Update(entityToUpdate);
+
+            return await Task.FromResult(true);
         }
 
         #endregion
