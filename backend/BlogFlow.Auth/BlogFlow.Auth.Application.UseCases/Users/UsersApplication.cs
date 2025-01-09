@@ -36,7 +36,7 @@ namespace BlogFlow.Auth.Application.UseCases.Users
                 }
                 else
                 {
-                    response.IsSuccess = false;
+                    response.IsSuccess = true;
                     response.Message = "User doesn't exist!!";
                 }
             }
