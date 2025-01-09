@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Transversal.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Services.WebApi", "BlogFlow.Auth.Services.WebApi\BlogFlow.Auth.Services.WebApi.csproj", "{98E08B7B-ECF1-4A90-BD46-FFB094165883}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{45C012A5-9B6D-4769-B595-465732919B1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Application.Test", "BlogFlow.Auth.Application.Test\BlogFlow.Auth.Application.Test.csproj", "{93698198-D8E0-446D-9CEE-C90DFDE36829}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98E08B7B-ECF1-4A90-BD46-FFB094165883}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93698198-D8E0-446D-9CEE-C90DFDE36829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93698198-D8E0-446D-9CEE-C90DFDE36829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93698198-D8E0-446D-9CEE-C90DFDE36829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93698198-D8E0-446D-9CEE-C90DFDE36829}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,5 +81,6 @@ Global
 		{D653CE50-D5DE-40CB-A793-705924922C49} = {71949CDB-6252-4C7C-9550-067C499104D1}
 		{DF56F37C-45DC-4C34-8C7D-C0AD1D531868} = {3F7307E9-C60B-4E00-AB77-80B776F2F8FE}
 		{98E08B7B-ECF1-4A90-BD46-FFB094165883} = {2B917C67-022F-4AA0-8E4C-2517D676BB22}
+		{93698198-D8E0-446D-9CEE-C90DFDE36829} = {45C012A5-9B6D-4769-B595-465732919B1C}
 	EndGlobalSection
 EndGlobal
