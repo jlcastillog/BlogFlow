@@ -10,14 +10,14 @@ namespace BlogFlow.Auth.Application.Test
     [TestClass]
     public sealed class UserControllerTest
     {
-        private Mock<IUsersApplication> _mockProductService;
+        private Mock<IUsersApplication> _mockUserApplication;
         private UsersController _controller;
 
         [TestInitialize]
         public void Setup()
         {
-            _mockProductService = new Mock<IUsersApplication>();
-            _controller = new UsersController(_mockProductService.Object);
+            _mockUserApplication = new Mock<IUsersApplication>();
+            _controller = new UsersController(_mockUserApplication.Object);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace BlogFlow.Auth.Application.Test
             var userRequestDto = new UserRequestDTO { UserName = userName, Password = userPassword };
 
             // Configure the mock
-            _mockProductService.Setup(x => x.Authenticate(userName, userPassword, default))
+            _mockUserApplication.Setup(x => x.Authenticate(userName, userPassword, default))
                                .ReturnsAsync(new Response<UserResponseDTO>
                                {
                                    IsSuccess = true,
@@ -41,7 +41,7 @@ namespace BlogFlow.Auth.Application.Test
                                        Token = "token"
                                    }
                                });
-            // Run
+            // Act
             var result = await _controller.Authenticate(userRequestDto);
 
             // Assert
@@ -62,9 +62,9 @@ namespace BlogFlow.Auth.Application.Test
             var userRequestDto = new UserRequestDTO { UserName = userName, Password = userPassword };
 
             // Configure the mock
-            _mockProductService.Setup(x => x.Authenticate(userName, userPassword, default))
+            _mockUserApplication.Setup(x => x.Authenticate(userName, userPassword, default))
                                .ReturnsAsync(new Response<UserResponseDTO> { IsSuccess = true, Data = null });
-            // Run
+            // Act
             var result = await _controller.Authenticate(userRequestDto);
 
             // Assert
@@ -84,10 +84,10 @@ namespace BlogFlow.Auth.Application.Test
             var userRequestDto = new UserRequestDTO { UserName = userName };
 
             // Configure the mock
-            _mockProductService.Setup(x => x.Authenticate(userName, null, default))
+            _mockUserApplication.Setup(x => x.Authenticate(userName, null, default))
                                .ReturnsAsync(new Response<UserResponseDTO> { IsSuccess = false });
 
-            // Run
+            // Act
             var result = await _controller.Authenticate(userRequestDto);
 
             // Assert
@@ -102,9 +102,9 @@ namespace BlogFlow.Auth.Application.Test
             var userDto = new UserDTO { UserName = "test" };
 
             // Configure the mock
-            _mockProductService.Setup(x => x.InsertAsync(userDto, default))
+            _mockUserApplication.Setup(x => x.InsertAsync(userDto, default))
                                .ReturnsAsync(new Response<bool> { IsSuccess = true, Data = true });
-            // Run
+            // Act
             var result = await _controller.InsertAsync(userDto);
 
             // Assert
@@ -122,7 +122,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             UserDTO userDto = null;
 
-            // Run
+            // Act
             var result = await _controller.InsertAsync(userDto);
 
             // Assert
@@ -137,10 +137,10 @@ namespace BlogFlow.Auth.Application.Test
             var userDto = new UserDTO { UserName = "test" };
 
             // Configure the mock
-            _mockProductService.Setup(x => x.InsertAsync(userDto, default))
+            _mockUserApplication.Setup(x => x.InsertAsync(userDto, default))
                                .ReturnsAsync(new Response<bool> { IsSuccess = false });
 
-            // Run
+            // Act
             var result = await _controller.InsertAsync(userDto);
             // Assert
             var resultBadRequest = result as BadRequestObjectResult;
@@ -156,10 +156,11 @@ namespace BlogFlow.Auth.Application.Test
         {
             // Arrange
             var userDto = new UserDTO { UserId = 1, UserName = "test" };
+
             // Configure the mock
-            _mockProductService.Setup(x => x.UpdateAsync("1", userDto, default))
+            _mockUserApplication.Setup(x => x.UpdateAsync("1", userDto, default))
                                .ReturnsAsync(new Response<bool> { IsSuccess = true, Data = true });
-            // Run
+            // Act
             var result = await _controller.UpdateAsync("1", userDto);
 
             // Assert
@@ -177,7 +178,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             UserDTO userDto = null;
 
-            // Run
+            // Act
             var result = await _controller.UpdateAsync("1", userDto);
 
             // Assert
@@ -191,7 +192,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             var userDto = new UserDTO { UserName = "test" };
 
-            // Run
+            // Act
             var result = await _controller.UpdateAsync(null, userDto);
 
             // Assert
@@ -204,10 +205,12 @@ namespace BlogFlow.Auth.Application.Test
         {
             // Arrange
             var userDto = new UserDTO { UserId = 1, UserName = "test" };
+
             // Configure the mock
-            _mockProductService.Setup(x => x.UpdateAsync("1", userDto, default))
+            _mockUserApplication.Setup(x => x.UpdateAsync("1", userDto, default))
                                .ReturnsAsync(new Response<bool> { IsSuccess = false});
-            // Run
+
+            // Act
             var result = await _controller.UpdateAsync("1", userDto);
 
             // Assert
@@ -226,9 +229,10 @@ namespace BlogFlow.Auth.Application.Test
             var userId = "1";
 
             // Configure the mock
-            _mockProductService.Setup(x => x.DeleteAsync(userId, default))
+            _mockUserApplication.Setup(x => x.DeleteAsync(userId, default))
                                .ReturnsAsync(new Response<bool> { IsSuccess = true, Data = true });
-            // Run
+
+            // Act
             var result = await _controller.DeleteAsync(userId);
 
             // Assert
@@ -238,7 +242,7 @@ namespace BlogFlow.Auth.Application.Test
             Assert.IsNotNull(okResult.Value);
             Assert.IsInstanceOfType(okResult.Value, typeof(Response<bool>));
             Assert.IsTrue(((Response<bool>)okResult.Value).Data);
-            _mockProductService.Verify(service => service.DeleteAsync(userId, default), Times.Once);
+            _mockUserApplication.Verify(service => service.DeleteAsync(userId, default), Times.Once);
         }
 
         [TestMethod]
@@ -247,7 +251,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             var userId = string.Empty;
 
-            // Run
+            // Act
             var result = await _controller.DeleteAsync(userId);
 
             // Assert
@@ -262,9 +266,9 @@ namespace BlogFlow.Auth.Application.Test
             var userId = "1";
 
             // Configure the mock
-            _mockProductService.Setup(x => x.DeleteAsync(userId, default))
+            _mockUserApplication.Setup(x => x.DeleteAsync(userId, default))
                                .ReturnsAsync(new Response<bool> { IsSuccess = false});
-            // Run
+            // Act
             var result = await _controller.DeleteAsync(userId);
 
             // Assert
@@ -283,7 +287,7 @@ namespace BlogFlow.Auth.Application.Test
             var userId = "1";
 
             // Configure the mock
-            _mockProductService.Setup(x => x.GetAsync(userId, default))
+            _mockUserApplication.Setup(x => x.GetAsync(userId, default))
                                .ReturnsAsync(new Response<UserResponseDTO>
                                {
                                    IsSuccess = true,
@@ -294,7 +298,7 @@ namespace BlogFlow.Auth.Application.Test
                                    }
                                });
 
-            // Run
+            // Act
             var result = await _controller.GetAsync(userId);
 
             // Assert
@@ -312,7 +316,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             var userId = string.Empty;
 
-            // Run
+            // Act
             var result = await _controller.GetAsync(userId);
 
             // Assert
@@ -327,13 +331,13 @@ namespace BlogFlow.Auth.Application.Test
             var userId = "1";
 
             // Configure the mock
-            _mockProductService.Setup(x => x.GetAsync(userId, default))
+            _mockUserApplication.Setup(x => x.GetAsync(userId, default))
                                .ReturnsAsync(new Response<UserResponseDTO>
                                {
                                    IsSuccess = false
                                });
 
-            // Run
+            // Act
             var result = await _controller.GetAsync(userId);
 
             // Assert
@@ -350,7 +354,7 @@ namespace BlogFlow.Auth.Application.Test
             var userId = "1";
 
             // Configure the mock
-            _mockProductService.Setup(x => x.GetAllAsync(default))
+            _mockUserApplication.Setup(x => x.GetAllAsync(default))
                                .ReturnsAsync(new Response<IEnumerable<UserResponseDTO>>
                                {
                                    IsSuccess = true,
@@ -363,7 +367,8 @@ namespace BlogFlow.Auth.Application.Test
                                        }
                                    }
                                });
-            // Run
+
+            // Act
             var result = await _controller.GetAllAsync();
 
             // Assert
@@ -379,10 +384,10 @@ namespace BlogFlow.Auth.Application.Test
         public async Task GetAllAsync_ReturnBadRequest_WhenResponseIsNotSuccess()
         {
             // Configure the mock
-            _mockProductService.Setup(x => x.GetAllAsync(default))
+            _mockUserApplication.Setup(x => x.GetAllAsync(default))
                                .ReturnsAsync(new Response<IEnumerable<UserResponseDTO>> { IsSuccess = false });
 
-            // Run
+            // Act
             var result = await _controller.GetAllAsync();
 
             // Assert

@@ -4,7 +4,6 @@ using BlogFlow.Auth.Application.Interface.Persistence;
 using BlogFlow.Auth.Application.Interface.UseCases;
 using BlogFlow.Auth.Domain.Entities;
 using BlogFlow.Auth.Transversal.Common;
-using System.Threading;
 
 namespace BlogFlow.Auth.Application.UseCases.Users
 {
