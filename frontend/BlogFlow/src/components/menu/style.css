@@ -1,0 +1,43 @@
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    background-color: #333; 
+    color: white; 
+    padding: 10px 0; 
+    z-index: 1000; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+.menu li {
+    list-style: none;
+    margin-right: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+}
+
+.menu-left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.menu-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-right: 30px;
+}
