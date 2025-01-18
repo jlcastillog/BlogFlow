@@ -3,6 +3,7 @@ import Menu from "./components/menu";
 import { AuthProvider } from "./components/auth";
 import HomePage from "./pages/home";
 import Signin from "./pages/signin";
+import Signup from "./pages/signup";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup/>} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

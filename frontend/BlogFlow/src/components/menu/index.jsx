@@ -10,7 +10,7 @@ function Menu() {
             </ul>
             <ul className="menu-right">
                 <li><NavLink to="/signin">Sign in</NavLink></li>
-                <li>Sign up</li>
+                <li><NavLink to="/signup">Sign up</NavLink></li>
                 <li>About</li>
                 <li>Contact</li>                
             </ul>
