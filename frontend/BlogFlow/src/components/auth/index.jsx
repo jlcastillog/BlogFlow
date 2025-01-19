@@ -1,26 +1,29 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { login } from "../../services/login/loginService.js";
+import { authenticate } from "../../services/authenticate/authenticateService.js";
 
 const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = React.useState(null);
+  const [loginError, setLoginError] = React.useState(null);
 
-  // const login = (username) => {
-  //   const user = adminList.find((user) => user.username === username);
-  //   if (user === undefined) {
-  //     navigate("/error-login");
-  //   } else {
-  //     setUser(user);
-  //     navigate("/profile");
-  //   }
-  // };
+  const login = async (username, password) => {
+    try {
+      const loggedUser = await authenticate(username, password);
 
-  const authenticate = (username, password) => {
-    login(username, password);
+      if (loggedUser) {
+        setUser(loggedUser);
+        setLoginError(null);
+      } else {
+        setLoginError("Invalid username or password. Please try again.");
+      }
+    } catch (err) {
+      console.log("Login error", err);
+      setLoginError("Invalid username or password. Please try again.");
+    }
   };
 
   const logout = () => {
@@ -28,7 +31,7 @@ function AuthProvider({ children }) {
     navigate("/");
   };
 
-  const auth = { user, authenticate, logout };
+  const auth = { user, loginError, login, logout };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }

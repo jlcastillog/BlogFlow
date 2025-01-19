@@ -10,9 +10,10 @@ function Signin() {
 
   const doLogin = (e) => {
     e.preventDefault();
-    console.log("Login: ", userName, password);
-    auth.authenticate(userName, password);
+    auth.login(userName, password);
   };
+
+  const loginError = auth.loginError;
 
   return (
     <section className="login">
@@ -29,7 +30,7 @@ function Signin() {
             placeholder="Username"
           ></input>
           <input
-          type="password"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
@@ -39,6 +40,7 @@ function Signin() {
           </div>
         </form>
       </div>
+      <div className="login-error">{loginError && <p>{loginError}</p>}</div>
     </section>
   );
 }
