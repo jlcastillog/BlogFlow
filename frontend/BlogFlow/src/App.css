@@ -1,3 +1,14 @@
 #root {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+button {
+    width: 150px;
+    height: 40px;
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}

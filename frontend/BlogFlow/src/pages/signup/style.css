@@ -58,12 +58,3 @@
     align-items: center;
     margin-top: 10px;
 }
-
-.signup-button-container button {
-    width: 150px;
-    height: 40px;
-    background-color: #333;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-}

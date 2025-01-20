@@ -36,7 +36,7 @@ function Signin() {
             placeholder="Password"
           ></input>
           <div className="login-button-container">
-            <button type="submit">SIGN IN</button>
+            <button type="submit">Sign in</button>
           </div>
         </form>
       </div>
