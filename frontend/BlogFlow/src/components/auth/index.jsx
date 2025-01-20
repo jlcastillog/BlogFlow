@@ -17,6 +17,7 @@ function AuthProvider({ children }) {
       if (loggedUser) {
         setUser(loggedUser);
         setLoginError(null);
+        navigate("/");
       } else {
         setLoginError("Invalid username or password. Please try again.");
       }
