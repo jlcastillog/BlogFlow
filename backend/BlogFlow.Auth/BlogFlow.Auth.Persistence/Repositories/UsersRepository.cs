@@ -102,6 +102,7 @@ namespace BlogFlow.Auth.Persistence.Repositories
             entityToUpdate.FirstName = entity.FirstName;
             entityToUpdate.LastName = entity.LastName;
             entityToUpdate.UserName = entity.UserName;
+            entityToUpdate.Email = entity.Email;
 
             _applicationDbContext.Update(entityToUpdate);
 
