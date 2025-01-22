@@ -2,12 +2,13 @@
 import React from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { authenticate } from "../../services/authenticate/authenticateService.js";
+import { setLocalStorageUser, getLocalStorageUser } from "../../utils/localStorage.js";
 
 const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
   const navigate = useNavigate();
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(getLocalStorageUser());
   const [loginError, setLoginError] = React.useState(null);
 
   const login = async (username, password) => {
@@ -15,6 +16,7 @@ function AuthProvider({ children }) {
       const loggedUser = await authenticate(username, password);
 
       if (loggedUser) {
+        setLocalStorageUser(loggedUser);
         setUser(loggedUser);
         setLoginError(null);
         navigate("/");
