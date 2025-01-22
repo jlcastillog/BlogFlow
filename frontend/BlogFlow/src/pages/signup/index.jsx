@@ -1,7 +1,32 @@
+import { createUser } from "../../services/user/userService";
+import { useAuth } from "../../components/auth";
 import "./style.css";
 
 function Signup() {
-  const doSignup = () => {};
+  const auth = useAuth();
+
+  const doSignup = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const user = {
+      firstName: form[0].value,
+      lastName: form[1].value,
+      userName: form[2].value,
+      email: form[3].value,
+      password: form[4].value,
+      token: "",
+    };
+
+    createUser(user)
+      .then((response) => {
+        console.log(response);
+        auth.login(user.userName, user.password);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Error creating user");
+      });
+  };
 
   return (
     <section className="signup">
@@ -19,8 +44,12 @@ function Signup() {
             </div>
           </div>
           <div className="signup-one-field-inline-section">
-            <label>Work email</label>
-            <input placeholder="Work email" />
+            <label>User name</label>
+            <input placeholder="User Name" />
+          </div>
+          <div className="signup-one-field-inline-section">
+            <label>Email</label>
+            <input placeholder="Email" />
           </div>
           <div className="signup-one-field-inline-section">
             <label>Password</label>
