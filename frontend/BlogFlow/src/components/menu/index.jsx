@@ -15,11 +15,11 @@ function Menu() {
         </li>
       </ul>
       <ul className="menu-right">
+        <li>
+          <NavLink to="/signin">{loggedUser ? "Sign out" : "Sign in"}</NavLink>
+         </li>
         {!loggedUser && (
           <>
-            <li>
-              <NavLink to="/signin">Sign in</NavLink>
-            </li>
             <li>
               <NavLink to="/signup">Sign up</NavLink>
             </li>

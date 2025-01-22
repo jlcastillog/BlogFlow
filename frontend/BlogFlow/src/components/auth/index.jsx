@@ -2,7 +2,11 @@
 import React from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { authenticate } from "../../services/authenticate/authenticateService.js";
-import { setLocalStorageUser, getLocalStorageUser } from "../../utils/localStorage.js";
+import {
+  setLocalStorageUser,
+  getLocalStorageUser,
+  removeLocalStorageUser,
+} from "../../utils/localStorage.js";
 
 const AuthContext = React.createContext();
 
@@ -31,6 +35,7 @@ function AuthProvider({ children }) {
 
   const logout = () => {
     setUser(null);
+    removeLocalStorageUser();
     navigate("/");
   };
 

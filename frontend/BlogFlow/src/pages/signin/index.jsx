@@ -5,39 +5,61 @@ import "./style.css";
 
 function Signin() {
   const auth = useAuth();
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+
+  const loginError = auth.loginError;
+  const loggedUser = auth.user;
+
+  const [userName, setUserName] = useState(
+    loggedUser ? loggedUser.userName : ""
+  );
+  const [password, setPassword] = useState(loggedUser ? "*************" : "");
 
   const doLogin = (e) => {
     e.preventDefault();
     auth.login(userName, password);
   };
 
-  const loginError = auth.loginError;
+  const doLogout = (e) => {
+    e.preventDefault();
+    auth.logout();
+  };
+
+  const onSummit = loggedUser ? doLogout : doLogin;
 
   return (
     <section className="login">
       <div className="login-container">
-        <h2>Sign into BlogFlow</h2>
-        <p className="login-header">
-          Don´t have an account?&nbsp;
-          <NavLink to="/signup">Sign up</NavLink>
-        </p>
-        <form onSubmit={doLogin} className="login-form">
+        <h2>{!loggedUser ? "Sign into BlogFlow" : "Sign out"}</h2>
+        {!loggedUser && (
+          <p className="login-header">
+            Don´t have an account?&nbsp;
+            <NavLink to="/signup">Sign up</NavLink>
+          </p>
+        )}
+        <form onSubmit={onSummit} className="login-form">
           <input
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Username"
+            disabled={loggedUser}
           ></input>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            disabled={loggedUser}
           ></input>
-          <div className="login-button-container">
-            <button type="submit">Sign in</button>
-          </div>
+          {!loggedUser && (
+            <div className="login-button-container">
+              <button type="submit">Sign in</button>
+            </div>
+          )}
+          {loggedUser && (
+            <div className="login-button-container">
+              <button type="submit">Sign out</button>
+            </div>
+          )}
         </form>
       </div>
       <div className="login-error">{loginError && <p>{loginError}</p>}</div>
