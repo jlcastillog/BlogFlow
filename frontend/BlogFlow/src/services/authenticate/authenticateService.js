@@ -1,7 +1,9 @@
-const URL_API = "https://localhost:7257/api/v1/Users/Authenticate";
+import { URL_API_BASE, API_POST_AUTH } from "../../utils/constants";
 
 export const authenticate = async (userName, password) => {
   let user = null;
+
+  const URL_API = URL_API_BASE + API_POST_AUTH;
 
   try {
     const response = await fetch(URL_API, {
