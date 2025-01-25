@@ -16,6 +16,11 @@ builder.Services.AddApplicationServices();
 builder.Services.AddVersioning();
 builder.Services.AddSwagger();
 
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.HttpsPort = null; // Temporalmente no redirigir a HTTPS para ejecutar desde Docker
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
