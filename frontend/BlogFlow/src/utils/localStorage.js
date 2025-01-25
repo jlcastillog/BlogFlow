@@ -1,11 +1,27 @@
 export function setLocalStorageUser(user) {
-    localStorage.setItem("loggedUser", JSON.stringify(user));
+  const expirationInMinutes = 30; // Tiempo de expiración de la sesión en minutos
+  const expirationTime = new Date().getTime() + expirationInMinutes * 60 * 1000; // Tiempo en milisegundos
+  const sessionData = {
+    user: user,
+    expiration: expirationTime,
+  };
+  localStorage.setItem("loggedUser", JSON.stringify(sessionData));
 }
 
 export function getLocalStorageUser() {
-    return JSON.parse(localStorage.getItem("loggedUser"));
+  const sessionData = JSON.parse(localStorage.getItem("loggedUser"));
+  if (!sessionData) return null;
+  const currentTime = new Date().getTime();
+
+  // Verificar si la sesión ha expirado
+  if (currentTime > sessionData.expiration) {
+    removeLocalStorageUser(); // Eliminar sesión caducada
+    return null;
+  }
+
+  return sessionData.user;
 }
 
 export function removeLocalStorageUser() {
-    localStorage.removeItem("loggedUser");
+  localStorage.removeItem("loggedUser");
 }
