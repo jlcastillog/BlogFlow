@@ -6,6 +6,7 @@ import {
   setLocalStorageUser,
   getLocalStorageUser,
   removeLocalStorageUser,
+  updateLocalStorageUser,
 } from "../../utils/localStorage.js";
 
 const AuthContext = React.createContext();
@@ -39,7 +40,12 @@ function AuthProvider({ children }) {
     navigate("/");
   };
 
-  const auth = { user, loginError, login, logout };
+  const updateUser = (user) => {
+    updateLocalStorageUser(user);
+    setUser(user);
+  }
+
+  const auth = { user, loginError, login, logout, updateUser };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }

@@ -22,6 +22,12 @@ export function getLocalStorageUser() {
   return sessionData.user;
 }
 
+export function updateLocalStorageUser(user) {
+  const sessionData = JSON.parse(localStorage.getItem("loggedUser"));
+  sessionData.user = user;
+  setLocalStorageUser(sessionData);
+}
+
 export function removeLocalStorageUser() {
   localStorage.removeItem("loggedUser");
 }

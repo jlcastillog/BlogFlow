@@ -42,3 +42,14 @@
     font-weight: bold;
     padding-right: 30px;
 }
+
+.profile {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: white;
+    background-image: url('../../assets/icons/user-icon.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}

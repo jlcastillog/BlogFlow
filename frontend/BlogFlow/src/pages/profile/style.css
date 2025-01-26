@@ -1,0 +1,60 @@
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding-top: 90px;
+}
+
+.profile h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-form input {
+    border: 2px solid #e8e5e4;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: medium;
+    margin-top: 8px;
+}
+
+.profile-several-fields-inline-section {
+    display: flex;
+    gap: 20px
+}
+
+.profile-firstname-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-lastname-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-one-field-inline-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
