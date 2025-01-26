@@ -20,7 +20,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v1
 
         [AllowAnonymous]
         [HttpPost("Authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody] UserRequestDTO usersRequestDto)
+        public async Task<IActionResult> Authenticate([FromBody] AuthUserRequestDTO usersRequestDto)
         {
             var respose = await _usersApplication.Authenticate(usersRequestDto.UserName, usersRequestDto.Password);
 
@@ -55,10 +55,10 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v1
             return BadRequest(response);
         }
 
-        [HttpPost("Update({userId}")]
+        [HttpPost("Update/{userId}")]
         public async Task<IActionResult> UpdateAsync(string userId, [FromBody] UserDTO userDto)
         {
-            if (userDto == null || userDto.UserId == null)
+            if (userDto == null || userDto.HasValue())
             {
                 return BadRequest();
             }

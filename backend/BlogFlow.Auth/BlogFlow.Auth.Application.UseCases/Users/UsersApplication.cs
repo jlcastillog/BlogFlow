@@ -209,11 +209,11 @@ namespace BlogFlow.Auth.Application.UseCases.Users
 
                 if (userExist != null)
                 {
-                    userExist.UserName = user.UserName;
-                    userExist.Password = user.Password;
-                    userExist.FirstName = user.FirstName;
-                    userExist.LastName = user.LastName;
-                    userExist.Email = user.Email;
+                    userExist.UserName = user.UserName ?? userExist.UserName;
+                    userExist.Password = user.Password ?? userExist.Password;
+                    userExist.FirstName = user.FirstName ?? userExist.FirstName;
+                    userExist.LastName = user.LastName ?? userExist.LastName;
+                    userExist.Email = user.Email ?? userExist.Email;
                     
                     await _unitOfWork.Users.UpdateAsync(userExist);
 

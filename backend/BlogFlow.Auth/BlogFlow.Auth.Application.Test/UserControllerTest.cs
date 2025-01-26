@@ -26,7 +26,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             var userName = "test";
             var userPassword = "test";
-            var userRequestDto = new UserRequestDTO { UserName = userName, Password = userPassword };
+            var userRequestDto = new AuthUserRequestDTO { UserName = userName, Password = userPassword };
 
             // Configure the mock
             _mockUserApplication.Setup(x => x.Authenticate(userName, userPassword, default))
@@ -59,7 +59,7 @@ namespace BlogFlow.Auth.Application.Test
             // Arrange
             var userName = "test";
             var userPassword = "test";
-            var userRequestDto = new UserRequestDTO { UserName = userName, Password = userPassword };
+            var userRequestDto = new AuthUserRequestDTO { UserName = userName, Password = userPassword };
 
             // Configure the mock
             _mockUserApplication.Setup(x => x.Authenticate(userName, userPassword, default))
@@ -81,7 +81,7 @@ namespace BlogFlow.Auth.Application.Test
         {
             // Arrange
             var userName = "test";
-            var userRequestDto = new UserRequestDTO { UserName = userName };
+            var userRequestDto = new AuthUserRequestDTO { UserName = userName };
 
             // Configure the mock
             _mockUserApplication.Setup(x => x.Authenticate(userName, null, default))
