@@ -1,4 +1,5 @@
 import { URL_API_BASE, API_POST_AUTH } from "../../utils/constants";
+import { apiClient } from "../user/userService";
 
 export const authenticate = async (userName, password) => {
   let user = null;
@@ -6,25 +7,12 @@ export const authenticate = async (userName, password) => {
   const URL_API = URL_API_BASE + API_POST_AUTH;
 
   try {
-    const response = await fetch(URL_API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        password: password,
-        userName: userName,
-      }),
+    const response = await apiClient.post(URL_API, {
+      userName: userName,
+      password: password,
     });
 
-    if (!response.ok) {
-      throw new Error("Credenciales incorrectas");
-    }
-
-    const json = await response.json();
-    console.log("Response:", json);
-
-    user = json.data;
+    user = await response.data.data;
 
     console.log("User:", user);
   } catch (err) {
@@ -34,4 +22,4 @@ export const authenticate = async (userName, password) => {
   }
 
   return user;
-};
+}

@@ -15,15 +15,14 @@ function Profile() {
 
   const doSave = (event) => {
     event.preventDefault();
-    updateUser(loggedUser)
-      .then((response) => {
-        console.log(response);
-        auth.updateUser(loggedUser);
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Error creating user");
-      });
+
+    try {
+      updateUser(loggedUser);
+      auth.updateUser(loggedUser);
+    } catch (error) {
+      console.error(error);
+      alert("Error creating user");
+    }
   };
 
   return (
