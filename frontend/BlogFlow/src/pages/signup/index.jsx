@@ -17,15 +17,14 @@ function Signup() {
       token: "",
     };
 
-    createUser(user)
-      .then((response) => {
-        console.log(response);
-        auth.login(user.userName, user.password);
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Error creating user");
-      });
+    try {
+      createUser(user);
+      auth.login(user.userName, user.password);
+    }
+    catch (error) {
+      console.error(error);
+      alert("Error creating user");
+    }
   };
 
   return (

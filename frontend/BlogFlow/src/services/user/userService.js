@@ -1,38 +1,30 @@
-import { URL_API_BASE, API_POST_INSERT, API_POST_UPDATE } from "../../utils/constants";
+import axios from "axios";
+import {
+  URL_API_BASE,
+  API_POST_INSERT,
+  API_POST_UPDATE,
+} from "../../utils/constants";
 
-export function createUser(user) {
+export const apiClient = axios.create({
+  baseURL: URL_API_BASE,
+});
+
+export async function createUser(user) {
   const URL_API = URL_API_BASE + API_POST_INSERT;
 
-  return fetch(URL_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Error al crear el usuario");
-    }
-
-    return response.json();
-  });
+  try {
+    await apiClient.post(URL_API, user);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-export function updateUser(user) {
-  const URL_API = URL_API_BASE + API_POST_UPDATE + `/${user.userId}`;
-  console.log(user);
-  console.log(URL_API);
-  return fetch(URL_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Error al crear el usuario");
-    }
+export async function updateUser(user) {
+  const URL_API = URL_API_BASE + API_POST_UPDATE;
 
-    return response.json();
-  });
+  try {
+    await apiClient.post(URL_API + `/${user.userId}`, user);
+  } catch (error) {
+    console.log(error);
+  }
 }
