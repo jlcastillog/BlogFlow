@@ -19,7 +19,7 @@ namespace BlogFlow.Auth.Services.WebApi.Modules.Swagger
             var info = new OpenApiInfo()
             {
                 Version = description.ApiVersion.ToString(),
-                Title = "BlogFlow Services",
+                Title = "BlogFlow Auth Services",
                 Description = "Authentication ASP.NET Core Web API. ",
                 TermsOfService = new Uri("https://jlcastillog.github.io/portfolio/"),
                 Contact = new OpenApiContact()
