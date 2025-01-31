@@ -37,7 +37,19 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             {
                 if (respose.Data != null)
                 {
-                    respose.Data.Token = BuildToken(respose);
+                    var jwt = BuildToken(respose);
+
+                    // Configurar cookies
+                    var jwtCookieOptions = new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.None,
+                        Expires = DateTime.UtcNow.AddMinutes(15) // Igual que el JWT
+                    };
+
+                    Response.Cookies.Append("jwt", jwt, jwtCookieOptions);
+
                     return Ok(respose);
                 }
                 else
@@ -47,6 +59,23 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             }
 
             return BadRequest(respose);
+        }
+
+        [Authorize]
+        [HttpPost("Logout")]
+        public IActionResult Logout()
+        {
+            var jwtCookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddMinutes(-1)
+            };
+
+            Response.Cookies.Append("jwt", "", jwtCookieOptions);
+
+            return Ok();
         }
 
         [HttpPost("Insert")]

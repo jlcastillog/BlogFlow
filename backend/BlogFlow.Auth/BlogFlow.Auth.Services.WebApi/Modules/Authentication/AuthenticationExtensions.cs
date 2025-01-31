@@ -30,6 +30,16 @@ namespace BlogFlow.Auth.Services.WebApi.Modules.Authentication
             {
                 jwt.Events = new JwtBearerEvents
                 {
+                    OnMessageReceived = context =>
+                    {
+                        // Leer el JWT desde la cookie
+                        if (context.Request.Cookies.ContainsKey("jwt"))
+                        {
+                            context.Token = context.Request.Cookies["jwt"];
+                        }
+                        return Task.CompletedTask;
+                    },
+
                     OnTokenValidated = context =>
                     {
                         var userId = int.Parse(context.Principal.Identity.Name);
