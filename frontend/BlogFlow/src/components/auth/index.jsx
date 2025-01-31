@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { authenticate } from "../../services/authenticate/authenticateService.js";
+import {
+  authenticate,
+  logoutService,
+} from "../../services/authenticate/authenticateService.js";
 import {
   setLocalStorageUser,
   getLocalStorageUser,
@@ -35,15 +38,21 @@ function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    setUser(null);
-    removeLocalStorageUser();
-    navigate("/");
+    try {
+      logoutService();
+      setUser(null);
+      removeLocalStorageUser();
+      navigate("/");
+    } catch (err) {
+      console.log("Logout error", err);
+      alert("Error logging out. Please try again.");
+    }
   };
 
   const updateUser = (user) => {
     updateLocalStorageUser(user);
     setUser(user);
-  }
+  };
 
   const auth = { user, loginError, login, logout, updateUser };
 

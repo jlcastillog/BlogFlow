@@ -7,6 +7,7 @@ import {
 
 export const apiClient = axios.create({
   baseURL: URL_API_BASE,
+  withCredentials: true,
 });
 
 export async function createUser(user) {

@@ -8,9 +8,10 @@ namespace BlogFlow.Auth.Services.WebApi.Modules.Feature
 
         public static IServiceCollection AddFeature(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddCors(options => options.AddPolicy(myPolicy, policy => policy.AllowAnyOrigin()
+            services.AddCors(options => options.AddPolicy(myPolicy, policy => policy.WithOrigins(configuration.GetSection("Config:OriginCors").Value)
                                                                                     .AllowAnyHeader()
-                                                                                    .AllowAnyMethod()));
+                                                                                    .AllowAnyMethod()
+                                                                                    .AllowCredentials()));
 
 
             services.AddControllers();
