@@ -1,4 +1,8 @@
-import { URL_API_BASE, API_POST_AUTH } from "../../utils/constants";
+import {
+  URL_API_BASE,
+  API_POST_AUTH,
+  API_POST_LOGOUT,
+} from "../../utils/constants";
 import { apiClient } from "../user/userService";
 
 export const authenticate = async (userName, password) => {
@@ -22,4 +26,13 @@ export const authenticate = async (userName, password) => {
   }
 
   return user;
-}
+};
+
+export const logoutService = async () => {
+  const URL_API = URL_API_BASE + API_POST_LOGOUT;
+  try {
+    const response = await apiClient.post(URL_API);
+  } catch (err) {
+    throw err;
+  }
+};
