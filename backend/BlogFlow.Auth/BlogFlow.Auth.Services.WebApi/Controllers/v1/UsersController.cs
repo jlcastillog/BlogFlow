@@ -58,7 +58,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v1
         [HttpPost("Update/{userId}")]
         public async Task<IActionResult> UpdateAsync(string userId, [FromBody] UserDTO userDto)
         {
-            if (userDto == null || userDto.HasValue())
+            if (string.IsNullOrEmpty(userId) || userDto == null || userDto.HasValue())
             {
                 return BadRequest();
             }
