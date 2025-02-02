@@ -1,11 +1,11 @@
 ﻿using BlogFlow.Auth.Application.Interface.Persistence;
-using BlogFlow.Auth.Persistence.Contexts;
-using BlogFlow.Auth.Persistence.Repositories;
+using BlogFlow.Common.Persistence.Contexts;
+using BlogFlow.Common.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BlogFlow.Auth.Persistence
+namespace BlogFlow.Common.Persistence
 {
     public static class ConfigureServices
     {

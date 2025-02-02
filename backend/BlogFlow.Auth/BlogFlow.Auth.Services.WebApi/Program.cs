@@ -1,6 +1,6 @@
 using Asp.Versioning.ApiExplorer;
 using BlogFlow.Auth.Application.UseCases;
-using BlogFlow.Auth.Persistence;
+using BlogFlow.Common.Persistence;
 using BlogFlow.Auth.Services.WebApi.Modules.Authentication;
 using BlogFlow.Auth.Services.WebApi.Modules.Feature;
 using BlogFlow.Auth.Services.WebApi.Modules.Swagger;

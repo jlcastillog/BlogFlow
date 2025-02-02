@@ -6,7 +6,7 @@ EXPOSE 80
 # Copiar archivos de la solución completa
 COPY ["BlogFlow.Auth.sln", "./"]
 COPY ["BlogFlow.Auth.Services.WebApi/BlogFlow.Auth.Services.WebApi.csproj", "BlogFlow.Auth.Services.WebApi/"]
-COPY ["BlogFlow.Auth.Persistence/BlogFlow.Auth.Persistence.csproj", "BlogFlow.Auth.Persistence/"]
+COPY ["BlogFlow.Common.Persistence/BlogFlow.Common.Persistence.csproj", "BlogFlow.Common.Persistence/"]
 COPY ["BlogFlow.Auth.Domain/BlogFlow.Auth.Domain.csproj", "BlogFlow.Auth.Domain/"]
 COPY ["BlogFlow.Auth.Application.UseCases/BlogFlow.Auth.Application.UseCases.csproj", "BlogFlow.Auth.Application.UseCases/"]
 COPY ["BlogFlow.Auth.Application.Interface/BlogFlow.Auth.Application.Interface.csproj", "BlogFlow.Auth.Application.Interface/"]

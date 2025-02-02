@@ -22,7 +22,7 @@
     <ProjectReference Include="..\BlogFlow.Auth.Application.DTO\BlogFlow.Auth.Application.DTO.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Application.Interface\BlogFlow.Auth.Application.Interface.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Application.UseCases\BlogFlow.Auth.Application.UseCases.csproj" />
-    <ProjectReference Include="..\BlogFlow.Auth.Persistence\BlogFlow.Auth.Persistence.csproj" />
+    <ProjectReference Include="..\BlogFlow.Common.Persistence\BlogFlow.Common.Persistence.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Transversal.Common\BlogFlow.Auth.Transversal.Common.csproj" />
   </ItemGroup>
 

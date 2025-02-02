@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4E6BA4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{069B8547-F0D0-4B62-9D6F-8A76E52F7F67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Persistence", "BlogFlow.Auth.Persistence\BlogFlow.Auth.Persistence.csproj", "{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Common.Persistence", "BlogFlow.Common.Persistence\BlogFlow.Common.Persistence.csproj", "{84CBBACB-4CC4-4B4E-B745-F94CEFD36BE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Auth.Application.Interface", "BlogFlow.Auth.Application.Interface\BlogFlow.Auth.Application.Interface.csproj", "{904B94CF-4E4B-4DF5-BBD6-34EC92279E44}"
 EndProject

@@ -1,9 +1,9 @@
 ﻿using BlogFlow.Auth.Application.Interface.Persistence;
 using BlogFlow.Auth.Domain.Entities;
-using BlogFlow.Auth.Persistence.Contexts;
+using BlogFlow.Common.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlogFlow.Auth.Persistence.Repositories
+namespace BlogFlow.Common.Persistence.Repositories
 {
     public class UsersRepository : IUsersRepository
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace BlogFlow.Auth.Persistence.Contexts
+namespace BlogFlow.Common.Persistence.Contexts
 {
     public class ApplicationDbContext : DbContext
     {

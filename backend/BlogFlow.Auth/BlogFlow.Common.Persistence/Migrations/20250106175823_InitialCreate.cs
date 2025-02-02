@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BlogFlow.Auth.Persistence.Migrations
+namespace BlogFlow.Common.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
