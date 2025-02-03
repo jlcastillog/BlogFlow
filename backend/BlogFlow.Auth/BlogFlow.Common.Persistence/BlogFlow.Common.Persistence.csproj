@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlogFlow.Core\BlogFlow.Core.Application.Interface\BlogFlow.Core.Application.Interface.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Application.Interface\BlogFlow.Auth.Application.Interface.csproj" />
   </ItemGroup>
 

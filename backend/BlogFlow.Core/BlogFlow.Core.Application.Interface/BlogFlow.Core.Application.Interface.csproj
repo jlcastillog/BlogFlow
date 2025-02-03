@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogFlow.Core.Domain\BlogFlow.Core.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BlogFlow.Auth.Application.Interface">
+      <HintPath>..\..\BlogFlow.Auth\BlogFlow.Auth.Application.Interface\obj\Debug\net8.0\ref\BlogFlow.Auth.Application.Interface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

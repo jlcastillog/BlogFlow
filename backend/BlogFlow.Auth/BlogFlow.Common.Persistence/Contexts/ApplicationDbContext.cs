@@ -1,4 +1,5 @@
 ﻿using BlogFlow.Auth.Domain.Entities;
+using BlogFlow.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -15,6 +16,9 @@ namespace BlogFlow.Common.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<Blog>().ToTable("Blog");
+            modelBuilder.Entity<Post>().ToTable("Post");
+            modelBuilder.Entity<Content>().ToTable("Content");
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);

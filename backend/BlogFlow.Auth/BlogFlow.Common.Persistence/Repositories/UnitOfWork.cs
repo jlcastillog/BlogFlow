@@ -1,16 +1,23 @@
 ﻿using BlogFlow.Auth.Application.Interface.Persistence;
 using BlogFlow.Common.Persistence.Contexts;
+using BlogFlow.Core.Application.Interface.Persistence;
 
 namespace BlogFlow.Common.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
         public IUsersRepository Users { get; }
+        public IBlogsRepository Blogs { get; }
+        public IPostsRepository Posts { get; }
+        public IContentsRepository Contents { get; }
         private readonly ApplicationDbContext _applicaDbContext;
 
-        public UnitOfWork(IUsersRepository users, ApplicationDbContext applicationDbContext)
+        public UnitOfWork(IUsersRepository users, IBlogsRepository blogs, IPostsRepository posts, IContentsRepository contents, ApplicationDbContext applicationDbContext)
         {
             Users = users;
+            Blogs = blogs;
+            Posts = posts;
+            Contents = contents;
             _applicaDbContext = applicationDbContext;
         }
 
