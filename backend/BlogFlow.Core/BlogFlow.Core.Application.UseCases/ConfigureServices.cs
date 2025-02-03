@@ -1,6 +1,7 @@
 ﻿using BlogFlow.Common.Application.Interface.UseCases;
 using BlogFlow.Common.Application.Interface.UserCases;
 using BlogFlow.Core.Application.UseCases.Blogs;
+using BlogFlow.Core.Application.UseCases.Content;
 using BlogFlow.Core.Application.UseCases.Posts;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -14,6 +15,7 @@ namespace BlogFlow.Core.Application.UseCases
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IBlogsApplication, BlogsApplicaction>();
             services.AddScoped<IPostsApplication, PostsApplication>();
+            services.AddScoped<IContentsApplication, ContentsApplication>();
 
             return services;
         }

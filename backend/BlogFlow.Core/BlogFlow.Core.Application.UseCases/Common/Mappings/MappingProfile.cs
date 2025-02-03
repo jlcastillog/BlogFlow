@@ -10,7 +10,7 @@ namespace BlogFlow.Core.Application.UseCases.Common.Mappings
         {
             CreateMap<Blog, BlogDTO>().ReverseMap();
             CreateMap<Post, PostDTO>().ReverseMap();
-            CreateMap<Content, ContentDTO>().ReverseMap();
+            CreateMap<Domain.Entities.Content, ContentDTO>().ReverseMap();
         }
     }
 }
