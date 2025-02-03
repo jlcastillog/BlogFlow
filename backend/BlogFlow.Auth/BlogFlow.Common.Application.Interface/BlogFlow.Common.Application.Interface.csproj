@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlogFlow.Core\BlogFlow.Core.Application.DTO\BlogFlow.Core.Application.DTO.csproj" />
+    <ProjectReference Include="..\..\BlogFlow.Core\BlogFlow.Core.Domain\BlogFlow.Core.Domain.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Application.DTO\BlogFlow.Auth.Application.DTO.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Domain\BlogFlow.Auth.Domain.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Transversal.Common\BlogFlow.Auth.Transversal.Common.csproj" />

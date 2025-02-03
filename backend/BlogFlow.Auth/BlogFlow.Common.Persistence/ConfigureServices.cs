@@ -1,7 +1,7 @@
-﻿using BlogFlow.Auth.Application.Interface.Persistence;
+﻿using BlogFlow.Common.Application.Interface.Persistence;
 using BlogFlow.Common.Persistence.Contexts;
 using BlogFlow.Common.Persistence.Repositories;
-using BlogFlow.Core.Application.Interface.Persistence;
+using BlogFlow.Common.Application.Interface.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,6 @@
 ﻿using BlogFlow.Auth.Domain.Entities;
 
-namespace BlogFlow.Auth.Application.Interface.Persistence
+namespace BlogFlow.Common.Application.Interface.Persistence
 {
     public interface IUsersRepository : IGenericRepository<User>
     {

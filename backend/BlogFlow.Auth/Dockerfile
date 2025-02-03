@@ -9,7 +9,7 @@ COPY ["BlogFlow.Auth.Services.WebApi/BlogFlow.Auth.Services.WebApi.csproj", "Blo
 COPY ["BlogFlow.Common.Persistence/BlogFlow.Common.Persistence.csproj", "BlogFlow.Common.Persistence/"]
 COPY ["BlogFlow.Auth.Domain/BlogFlow.Auth.Domain.csproj", "BlogFlow.Auth.Domain/"]
 COPY ["BlogFlow.Auth.Application.UseCases/BlogFlow.Auth.Application.UseCases.csproj", "BlogFlow.Auth.Application.UseCases/"]
-COPY ["BlogFlow.Auth.Application.Interface/BlogFlow.Auth.Application.Interface.csproj", "BlogFlow.Auth.Application.Interface/"]
+COPY ["BlogFlow.Common.Application.Interface/BlogFlow.Common.Application.Interface.csproj", "BlogFlow.Common.Application.Interface/"]
 COPY ["BlogFlow.Auth.Application.DTO/BlogFlow.Auth.Application.DTO.csproj", "BlogFlow.Auth.Application.DTO/"]
 COPY ["BlogFlow.Auth.Transversal.Common/BlogFlow.Auth.Transversal.Common.csproj", "BlogFlow.Auth.Transversal.Common/"]
 COPY ["BlogFlow.Auth.Application.Test/BlogFlow.Auth.Application.Test.csproj", "BlogFlow.Auth.Application.Test/"]

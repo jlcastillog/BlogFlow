@@ -1,5 +1,5 @@
 ﻿using BlogFlow.Common.Persistence.Contexts;
-using BlogFlow.Core.Application.Interface.Persistence;
+using BlogFlow.Common.Application.Interface.Persistence;
 using BlogFlow.Core.Domain.Entities;
 
 namespace BlogFlow.Common.Persistence.Repositories

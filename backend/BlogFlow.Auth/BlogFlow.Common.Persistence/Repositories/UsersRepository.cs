@@ -1,4 +1,4 @@
-﻿using BlogFlow.Auth.Application.Interface.Persistence;
+﻿using BlogFlow.Common.Application.Interface.Persistence;
 using BlogFlow.Auth.Domain.Entities;
 using BlogFlow.Common.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;

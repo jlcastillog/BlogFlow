@@ -1,56 +1,23 @@
 ﻿using AutoMapper;
-using BlogFlow.Auth.Application.DTO;
 using BlogFlow.Common.Application.Interface.Persistence;
-using BlogFlow.Common.Application.Interface.UseCases;
-using BlogFlow.Auth.Domain.Entities;
 using BlogFlow.Auth.Transversal.Common;
+using BlogFlow.Core.Application.DTO;
+using BlogFlow.Common.Application.Interface.UserCases;
+using BlogFlow.Auth.Application.DTO;
+using BlogFlow.Auth.Domain.Entities;
+using BlogFlow.Core.Domain.Entities;
 
-namespace BlogFlow.Auth.Application.UseCases.Users
+namespace BlogFlow.Core.Application.UseCases.Blogs
 {
-    public class UsersApplication : IUsersApplication
+    public class BlogsApplicaction: IBlogsApplication
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UsersApplication(IUnitOfWork unitOfWork, IMapper mapper)
+        public BlogsApplicaction(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-        }
-
-        public async Task<Response<UserResponseDTO>> Authenticate(string userName, string password, CancellationToken cancellationToken = default)
-        {
-            var response = new Response<UserResponseDTO>();
-
-            try
-            {
-                var user = await _unitOfWork.Users.Authenticate(userName, password, cancellationToken);
-
-                response.Data = _mapper.Map<UserResponseDTO>(user);
-
-                if (response.Data != null)
-                {
-                    response.IsSuccess = true;
-                    response.Message = "Authenticate succeded!!";
-                }
-                else
-                {
-                    response.IsSuccess = true;
-                    response.Message = "User doesn't exist!!";
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                response.IsSuccess = false;
-                response.Message = "User doesn't exist";
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
         }
 
         public async Task<Response<int>> CountAsync(CancellationToken cancellationToken = default)
@@ -59,7 +26,7 @@ namespace BlogFlow.Auth.Application.UseCases.Users
 
             try
             {
-                var countUsers = await _unitOfWork.Users.CountAsync(cancellationToken);
+                var countUsers = await _unitOfWork.Blogs.CountAsync(cancellationToken);
 
                 response.Data = countUsers;
                 response.IsSuccess = true;
@@ -91,13 +58,13 @@ namespace BlogFlow.Auth.Application.UseCases.Users
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "User doesn't exist!!";
+                    response.Message = "Blog doesn't exist!!";
                 }
             }
             catch (InvalidOperationException)
             {
                 response.IsSuccess = false;
-                response.Message = "User doesn't exist";
+                response.Message = "Blog doesn't exist";
             }
             catch (Exception ex)
             {
@@ -108,15 +75,15 @@ namespace BlogFlow.Auth.Application.UseCases.Users
             return response;
         }
 
-        public async Task<Response<IEnumerable<UserResponseDTO>>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<IEnumerable<BlogDTO>>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var response = new Response<IEnumerable<UserResponseDTO>>();
+            var response = new Response<IEnumerable<BlogDTO>>();
 
             try
             {
-                var users = await _unitOfWork.Users.GetAllAsync(cancellationToken);
+                var users = await _unitOfWork.Blogs.GetAllAsync(cancellationToken);
 
-                response.Data = _mapper.Map<IEnumerable<UserResponseDTO>>(users);
+                response.Data = _mapper.Map<IEnumerable<BlogDTO>>(users);
 
                 if (response.Data != null)
                 {
@@ -133,15 +100,15 @@ namespace BlogFlow.Auth.Application.UseCases.Users
             return response;
         }
 
-        public async Task<Response<UserResponseDTO>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<BlogDTO>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            var response = new Response<UserResponseDTO>();
+            var response = new Response<BlogDTO>();
 
             try
             {
-                var user = await _unitOfWork.Users.GetAsync(id, cancellationToken);
+                var user = await _unitOfWork.Blogs.GetAsync(id, cancellationToken);
 
-                response.Data = _mapper.Map<UserResponseDTO>(user);
+                response.Data = _mapper.Map<BlogDTO>(user);
 
                 if (response.Data != null)
                 {
@@ -151,13 +118,13 @@ namespace BlogFlow.Auth.Application.UseCases.Users
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "User doesn't exist!!";
+                    response.Message = "Blog doesn't exist!!";
                 }
             }
             catch (InvalidOperationException)
             {
                 response.IsSuccess = false;
-                response.Message = "User doesn't exist";
+                response.Message = "Blog doesn't exist";
             }
             catch (Exception ex)
             {
@@ -168,15 +135,15 @@ namespace BlogFlow.Auth.Application.UseCases.Users
             return response;
         }
 
-        public async Task<Response<bool>> InsertAsync(UserDTO entity, CancellationToken cancellationToken = default)
+        public async Task<Response<bool>> InsertAsync(BlogDTO entity, CancellationToken cancellationToken = default)
         {
             var response = new Response<bool>();
 
             try
             {
-                var user = _mapper.Map<User>(entity);
+                var blog = _mapper.Map<Blog>(entity);
 
-                if(await _unitOfWork.Users.InsertAsync(user))
+                if (await _unitOfWork.Blogs.InsertAsync(blog))
                 {
                     response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
@@ -186,7 +153,7 @@ namespace BlogFlow.Auth.Application.UseCases.Users
                         response.Message = "Insert succeded!!";
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -197,25 +164,22 @@ namespace BlogFlow.Auth.Application.UseCases.Users
             return response;
         }
 
-        public async Task<Response<bool>> UpdateAsync(string id, UserDTO entity, CancellationToken cancellationToken = default)
+        public async Task<Response<bool>> UpdateAsync(string id, BlogDTO entity, CancellationToken cancellationToken = default)
         {
             var response = new Response<bool>();
 
             try
             {
-                var userExist = await _unitOfWork.Users.GetAsync(id, cancellationToken);
+                var blogExist = await _unitOfWork.Blogs.GetAsync(id, cancellationToken);
 
-                var user = _mapper.Map<User>(entity);
+                var blog = _mapper.Map<Blog>(entity);
 
-                if (userExist != null)
+                if (blogExist != null)
                 {
-                    userExist.UserName = user.UserName ?? userExist.UserName;
-                    userExist.Password = user.Password ?? userExist.Password;
-                    userExist.FirstName = user.FirstName ?? userExist.FirstName;
-                    userExist.LastName = user.LastName ?? userExist.LastName;
-                    userExist.Email = user.Email ?? userExist.Email;
-                    
-                    await _unitOfWork.Users.UpdateAsync(userExist);
+                    blogExist.Title = blog.Title;
+                    blogExist.Description = blog.Description;
+
+                    await _unitOfWork.Blogs.UpdateAsync(blogExist);
 
                     response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
@@ -228,10 +192,10 @@ namespace BlogFlow.Auth.Application.UseCases.Users
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "User doesn't exist!!";
+                    response.Message = "Blog doesn't exist!!";
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 response.IsSuccess = false;
                 response.Message = e.Message;

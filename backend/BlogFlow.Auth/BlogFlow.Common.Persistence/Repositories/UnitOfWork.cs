@@ -1,6 +1,6 @@
-﻿using BlogFlow.Auth.Application.Interface.Persistence;
+﻿using BlogFlow.Common.Application.Interface.Persistence;
+using BlogFlow.Common.Application.Interface.Persistence;
 using BlogFlow.Common.Persistence.Contexts;
-using BlogFlow.Core.Application.Interface.Persistence;
 
 namespace BlogFlow.Common.Persistence.Repositories
 {

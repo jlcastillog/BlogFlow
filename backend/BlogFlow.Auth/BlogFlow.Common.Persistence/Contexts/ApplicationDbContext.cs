@@ -12,6 +12,9 @@ namespace BlogFlow.Common.Persistence.Contexts
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Content> Contents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

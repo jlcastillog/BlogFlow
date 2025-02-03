@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 using BlogFlow.Auth.Application.DTO;
-using BlogFlow.Auth.Application.Interface.UseCases;
+using BlogFlow.Common.Application.Interface.UseCases;
 using BlogFlow.Auth.Services.WebApi.Helpers;
 using BlogFlow.Auth.Transversal.Common;
 using Microsoft.AspNetCore.Authorization;

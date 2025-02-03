@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlogFlow.Auth.Application.DTO\BlogFlow.Auth.Application.DTO.csproj" />
-    <ProjectReference Include="..\BlogFlow.Auth.Application.Interface\BlogFlow.Auth.Application.Interface.csproj" />
+    <ProjectReference Include="..\BlogFlow.Common.Application.Interface\BlogFlow.Common.Application.Interface.csproj" />
     <ProjectReference Include="..\BlogFlow.Auth.Transversal.Common\BlogFlow.Auth.Transversal.Common.csproj" />
   </ItemGroup>
 

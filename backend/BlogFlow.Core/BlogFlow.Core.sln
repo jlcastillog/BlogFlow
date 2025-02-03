@@ -21,11 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Core.Application.DTO", "BlogFlow.Core.Application.DTO\BlogFlow.Core.Application.DTO.csproj", "{3205135E-AFCE-40D4-A3FF-C24D7E451480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Core.Application.Interface", "BlogFlow.Core.Application.Interface\BlogFlow.Core.Application.Interface.csproj", "{DB75E6AD-D1C8-4146-B3A1-A262309F67E9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Core.Application.UseCases", "BlogFlow.Core.Application.UseCases\BlogFlow.Core.Application.UseCases.csproj", "{36C67D55-2800-4234-A2DE-F7F982A436F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Common.Persistence", "..\BlogFlow.Auth\BlogFlow.Common.Persistence\BlogFlow.Common.Persistence.csproj", "{2E0DD17B-4D1E-4B76-8C06-5C523FE6162C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFlow.Common.Application.Interface", "..\BlogFlow.Auth\BlogFlow.Common.Application.Interface\BlogFlow.Common.Application.Interface.csproj", "{D298F700-EF1E-472D-98AC-8E771F695BA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +49,6 @@ Global
 		{3205135E-AFCE-40D4-A3FF-C24D7E451480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3205135E-AFCE-40D4-A3FF-C24D7E451480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3205135E-AFCE-40D4-A3FF-C24D7E451480}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB75E6AD-D1C8-4146-B3A1-A262309F67E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB75E6AD-D1C8-4146-B3A1-A262309F67E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB75E6AD-D1C8-4146-B3A1-A262309F67E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB75E6AD-D1C8-4146-B3A1-A262309F67E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36C67D55-2800-4234-A2DE-F7F982A436F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36C67D55-2800-4234-A2DE-F7F982A436F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36C67D55-2800-4234-A2DE-F7F982A436F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +57,10 @@ Global
 		{2E0DD17B-4D1E-4B76-8C06-5C523FE6162C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E0DD17B-4D1E-4B76-8C06-5C523FE6162C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E0DD17B-4D1E-4B76-8C06-5C523FE6162C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D298F700-EF1E-472D-98AC-8E771F695BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D298F700-EF1E-472D-98AC-8E771F695BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D298F700-EF1E-472D-98AC-8E771F695BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D298F700-EF1E-472D-98AC-8E771F695BA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,8 +70,8 @@ Global
 		{C8820C19-CB88-4A00-ACD3-F46B731BE925} = {46D5221B-40B7-4505-AF98-FA9AD5785903}
 		{0C2FB327-577A-4B84-9AA7-8FD27EFF91CA} = {8819884B-6495-4D1A-84CC-9FB8363AECFB}
 		{3205135E-AFCE-40D4-A3FF-C24D7E451480} = {4323AF5C-DB94-4192-AE6A-D6BD61C96F13}
-		{DB75E6AD-D1C8-4146-B3A1-A262309F67E9} = {4323AF5C-DB94-4192-AE6A-D6BD61C96F13}
 		{36C67D55-2800-4234-A2DE-F7F982A436F1} = {4323AF5C-DB94-4192-AE6A-D6BD61C96F13}
 		{2E0DD17B-4D1E-4B76-8C06-5C523FE6162C} = {D56E9D98-0F86-4A57-9B36-554C524FDC86}
+		{D298F700-EF1E-472D-98AC-8E771F695BA5} = {4323AF5C-DB94-4192-AE6A-D6BD61C96F13}
 	EndGlobalSection
 EndGlobal

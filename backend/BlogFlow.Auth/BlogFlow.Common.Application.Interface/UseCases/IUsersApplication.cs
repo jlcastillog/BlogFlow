@@ -1,7 +1,7 @@
 ﻿using BlogFlow.Auth.Application.DTO;
 using BlogFlow.Auth.Transversal.Common;
 
-namespace BlogFlow.Auth.Application.Interface.UseCases
+namespace BlogFlow.Common.Application.Interface.UseCases
 {
     public interface IUsersApplication
     {

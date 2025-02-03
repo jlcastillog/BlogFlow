@@ -4,6 +4,7 @@ using BlogFlow.Core.Services.WebApi.Modules.Feature;
 using BlogFlow.Core.Services.WebApi.Modules.Swagger;
 using BlogFlow.Core.Services.WebApi.Modules.Versioning;
 using BlogFlow.Common.Persistence;
+using BlogFlow.Core.Application.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 // Add services to the container.
 builder.Services.AddFeature(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddVersioning();
 builder.Services.AddSwagger();

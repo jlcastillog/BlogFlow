@@ -19,11 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BlogFlow.Auth\BlogFlow.Common.Persistence\BlogFlow.Common.Persistence.csproj" />
+    <ProjectReference Include="..\BlogFlow.Core.Application.UseCases\BlogFlow.Core.Application.UseCases.csproj" />
   </ItemGroup>
 
 </Project>

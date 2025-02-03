@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace BlogFlow.Auth.Application.Interface.Persistence
+namespace BlogFlow.Common.Application.Interface.Persistence
 {
     public interface IGenericRepository <T> where T : class
     {
@@ -20,9 +20,9 @@ namespace BlogFlow.Auth.Application.Interface.Persistence
         Task<bool> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(string id);
-        Task<T> GetAsync(string id, CancellationToken cancellationToken);
-        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
-        Task<int> CountAsync(CancellationToken cancellationToken);
+        Task<T> GetAsync(string id, CancellationToken cancellationToken = default);
+        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<int> CountAsync(CancellationToken cancellationToken = default);
 
         #endregion
     }

@@ -1,6 +1,6 @@
 using AutoMapper;
 using BlogFlow.Auth.Application.DTO;
-using BlogFlow.Auth.Application.Interface.Persistence;
+using BlogFlow.Common.Application.Interface.Persistence;
 using BlogFlow.Auth.Application.UseCases.Common.Mappings;
 using BlogFlow.Auth.Application.UseCases.Users;
 using BlogFlow.Auth.Domain.Entities;
