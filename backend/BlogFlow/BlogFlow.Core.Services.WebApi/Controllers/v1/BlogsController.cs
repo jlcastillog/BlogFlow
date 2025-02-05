@@ -2,12 +2,14 @@
 using BlogFlow.Core.Application.Interface.UseCases;
 using BlogFlow.Core.Application.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogFlow.Core.Services.WebApi.Controllers.v1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class BlogsController : Controller
     {
         private readonly IBlogsApplication _blogsApplication;

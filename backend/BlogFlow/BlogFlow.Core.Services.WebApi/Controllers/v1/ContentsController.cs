@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using BlogFlow.Core.Application.DTO;
 using BlogFlow.Core.Application.Interface.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogFlow.Core.Services.WebApi.Controllers.v1
@@ -8,6 +9,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class ContentsController : Controller
     {
         private readonly IContentsApplication _ContentsApplication;
