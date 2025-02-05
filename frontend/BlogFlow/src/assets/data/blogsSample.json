@@ -1,0 +1,135 @@
+[
+  {
+    "id": 0,
+    "title": "Explorando el mundo de la tecnología",
+    "author": "Juan Pérez",
+    "content": "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Tecnología"
+  },
+  {
+    "id": 1,
+    "title": "Cocinando con ingredientes locales",
+    "author": "Ana Gómez",
+    "content": "https://images.pexels.com/photos/3730766/pexels-photo-3730766.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Cultura"
+  },
+  {
+    "id": 2,
+    "title": "Viajes de aventura por el sudeste asiático",
+    "author": "Carlos Rodríguez",
+    "content": "https://images.pexels.com/photos/4181584/pexels-photo-4181584.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Viajes"
+  },
+  {
+    "id": 3,
+    "title": "Moda sostenible para el 2025",
+    "author": "Laura Martínez",
+    "content": "https://images.pexels.com/photos/3715293/pexels-photo-3715293.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Moda"
+  },
+  {
+    "id": 4,
+    "title": "Introducción a la inteligencia artificial",
+    "author": "Pedro López",
+    "content": "https://images.pexels.com/photos/3795702/pexels-photo-3795702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Tecnología"
+  },
+  {
+    "id": 5,
+    "title": "El futuro del trabajo remoto",
+    "author": "Sofia Fernández",
+    "content": "https://images.pexels.com/photos/4145340/pexels-photo-4145340.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Negocios"
+  },
+  {
+    "id": 6,
+    "title": "Recetas fáciles para el almuerzo",
+    "author": "Maria González",
+    "content": "https://images.pexels.com/photos/6078983/pexels-photo-6078983.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Cultura"
+  },
+  {
+    "id": 7,
+    "title": "Historias de viajeros solitarios",
+    "author": "Luis Sánchez",
+    "content": "https://images.pexels.com/photos/4164067/pexels-photo-4164067.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Viajes"
+  },
+  {
+    "id": 8,
+    "title": "Cómo comenzar en el mundo del desarrollo web",
+    "author": "José Ruiz",
+    "content": "https://images.pexels.com/photos/2676141/pexels-photo-2676141.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Tecnología"
+  },
+  {
+    "id": 9,
+    "title": "Estilo de vida minimalista",
+    "author": "Isabel Díaz",
+    "content": "https://images.pexels.com/photos/5731971/pexels-photo-5731971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Lifestyle"
+  },
+  {
+    "id": 10,
+    "title": "Guía para viajar por Europa con presupuesto bajo",
+    "author": "Andrés Martínez",
+    "content": "https://images.pexels.com/photos/3671443/pexels-photo-3671443.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Viajes"
+  },
+  {
+    "id": 11,
+    "title": "El arte de la fotografía digital",
+    "author": "Ricardo Fernández",
+    "content": "https://images.pexels.com/photos/1181407/pexels-photo-1181407.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Arte"
+  },
+  {
+    "id": 12,
+    "title": "Consejos para aprender un nuevo idioma",
+    "author": "Paula Gómez",
+    "content": "https://images.pexels.com/photos/1316206/pexels-photo-1316206.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Educación"
+  },
+  {
+    "id": 13,
+    "title": "Estrategias de marketing digital",
+    "author": "Javier Pérez",
+    "content": "https://images.pexels.com/photos/2563129/pexels-photo-2563129.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Negocios"
+  },
+  {
+    "id": 14,
+    "title": "Cómo crear un jardín urbano",
+    "author": "Teresa López",
+    "content": "https://images.pexels.com/photos/3659640/pexels-photo-3659640.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Hogar"
+  },
+  {
+    "id": 15,
+    "title": "La influencia de la tecnología en la educación",
+    "author": "Ricardo Ramírez",
+    "content": "https://images.pexels.com/photos/3184445/pexels-photo-3184445.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Educación"
+  },
+  {
+    "id": 16,
+    "title": "Guía de compras sostenibles",
+    "author": "Martina Ruiz",
+    "content": "https://images.pexels.com/photos/3683053/pexels-photo-3683053.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Moda"
+  },
+  {
+    "id": 17,
+    "title": "Diseño de interiores con estilo vintage",
+    "author": "Antonio Sánchez",
+    "content": "https://images.pexels.com/photos/3713000/pexels-photo-3713000.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Hogar"
+  },
+  {
+    "id": 18,
+    "title": "Mente sana, cuerpo sano",
+    "author": "Elena Martínez",
+    "content": "https://images.pexels.com/photos/4748228/pexels-photo-4748228.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+    "category": "Salud"
+  }
+]
