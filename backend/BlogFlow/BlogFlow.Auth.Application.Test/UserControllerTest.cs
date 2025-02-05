@@ -37,8 +37,7 @@ namespace BlogFlow.Auth.Application.Test
                                    {
                                        FirstName = "Test",
                                        LastName = "Test",
-                                       UserName = userName,
-                                       Token = "token"
+                                       UserName = userName
                                    }
                                });
             // Act
