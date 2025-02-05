@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  web-service-auth:
+    build:
+      context: .
+      dockerfile: .\BlogFlow.Auth.Services.WebApi\Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+  web-service-core:
+    build:
+      context: .
+      dockerfile: .\BlogFlow.Core.Services.WebApi\Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
