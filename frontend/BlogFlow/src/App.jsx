@@ -5,6 +5,7 @@ import HomePage from "./pages/home";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import Profile from "./pages/profile";
+import BlogPage from "./pages/blog";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup/>} />
             <Route path="/profile" element={<Profile/>} />
+            <Route path="/blog/:id" element={<BlogPage/>} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

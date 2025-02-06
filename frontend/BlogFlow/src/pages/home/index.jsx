@@ -11,7 +11,6 @@ function HomePage() {
   return (
     <section className="home">
       {loggedUser && <h1>Wellcome {loggedUser.userName }</h1>}
-      {!loggedUser && <h1>Home Page</h1>}
       <div className="blogs-container">
         {blogsSampleData?.length > 0 &&
           blogsSampleData?.map((blog) => (
