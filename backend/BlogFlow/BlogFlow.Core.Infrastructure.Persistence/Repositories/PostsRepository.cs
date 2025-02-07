@@ -57,7 +57,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
 
         public async Task<bool> DeleteAsync(string id)
         {
-            var entity = await _applicationDbContext.Set<Blog>().AsNoTracking().SingleOrDefaultAsync(x => x.Id.Equals(int.Parse(id)));
+            var entity = await _applicationDbContext.Set<Post>().AsNoTracking().SingleOrDefaultAsync(x => x.Id.Equals(int.Parse(id)));
 
             if (entity == null)
             {

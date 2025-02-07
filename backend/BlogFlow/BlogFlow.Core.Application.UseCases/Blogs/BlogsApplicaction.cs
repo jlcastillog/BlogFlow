@@ -176,6 +176,8 @@ namespace BlogFlow.Core.Application.UseCases.Blogs
                 {
                     blogExist.Title = blog.Title;
                     blogExist.Description = blog.Description;
+                    blogExist.Category = blog.Category;
+                    blogExist.Image = blog.Image;
 
                     await _unitOfWork.Blogs.UpdateAsync(blogExist);
 
