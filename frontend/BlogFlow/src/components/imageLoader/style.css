@@ -1,0 +1,23 @@
+.image-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .image-loader input {
+    border: 2px solid #ddd;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .image-preview {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+  }
+  
+  
