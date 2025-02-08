@@ -1,17 +1,17 @@
 import axios from "axios";
 import {
-  URL_API_BASE,
+  URL_API_AUTH_BASE,
   API_POST_INSERT,
   API_POST_UPDATE,
 } from "../../utils/constants";
 
 export const apiClient = axios.create({
-  baseURL: URL_API_BASE,
+  baseURL: URL_API_AUTH_BASE,
   withCredentials: true,
 });
 
 export async function createUser(user) {
-  const URL_API = URL_API_BASE + API_POST_INSERT;
+  const URL_API = URL_API_AUTH_BASE + API_POST_INSERT;
 
   try {
     await apiClient.post(URL_API, user);
@@ -21,7 +21,7 @@ export async function createUser(user) {
 }
 
 export async function updateUser(user) {
-  const URL_API = URL_API_BASE + API_POST_UPDATE;
+  const URL_API = URL_API_AUTH_BASE + API_POST_UPDATE;
 
   try {
     await apiClient.post(URL_API + `/${user.userId}`, user);

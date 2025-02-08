@@ -1,5 +1,5 @@
 import {
-  URL_API_BASE,
+  URL_API_AUTH_BASE,
   API_POST_AUTH,
   API_POST_LOGOUT,
 } from "../../utils/constants";
@@ -8,7 +8,7 @@ import { apiClient } from "../user/userService";
 export const authenticate = async (userName, password) => {
   let user = null;
 
-  const URL_API = URL_API_BASE + API_POST_AUTH;
+  const URL_API = URL_API_AUTH_BASE + API_POST_AUTH;
 
   try {
     const response = await apiClient.post(URL_API, {
@@ -29,7 +29,7 @@ export const authenticate = async (userName, password) => {
 };
 
 export const logoutService = async () => {
-  const URL_API = URL_API_BASE + API_POST_LOGOUT;
+  const URL_API = URL_API_AUTH_BASE + API_POST_LOGOUT;
   try {
     const response = await apiClient.post(URL_API);
   } catch (err) {

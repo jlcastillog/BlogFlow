@@ -11,7 +11,7 @@ function BlogPreview({ blog }) {
 
   return (
     <div className="blog-preview" onClick={handleOnClick}>
-      <img src={blog.content} alt="Imagen del blog" className="blog-preview-image" />
+      <img src={`data:image/jpeg;base64,${blog.image}`} alt="Imagen del blog" className="blog-preview-image" />
       <div className="blog-preview-content">
         <h2 className="blog-preview-title">{blog.title}</h2>
         <p className="blog-preview-author">{blog.author}</p>

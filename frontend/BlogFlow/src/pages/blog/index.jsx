@@ -24,7 +24,7 @@ function BlogPage() {
         </div>
         <div className="blog-image-container">
           <img
-            src={blog.content}
+            src={`data:image/jpeg;base64,${blog.image}`}
             alt="Imagen del blog"
             className="blog-image"
           />
