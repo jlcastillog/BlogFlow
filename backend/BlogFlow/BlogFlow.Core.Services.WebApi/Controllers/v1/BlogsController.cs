@@ -3,13 +3,13 @@ using BlogFlow.Core.Application.Interface.UseCases;
 using BlogFlow.Core.Application.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using BlogFlow.Core.Transversal.Common.Helpers;
 
 namespace BlogFlow.Core.Services.WebApi.Controllers.v1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    [Authorize]
     public class BlogsController : Controller
     {
         private readonly IBlogsApplication _blogsApplication;
@@ -33,6 +33,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpGet("Get/{blogId}")]
+        [Authorize]
         public async Task<IActionResult> GetAsync(string blogId)
         {
             if (string.IsNullOrEmpty(blogId))
@@ -49,12 +50,30 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Insert")]
-        public async Task<IActionResult> InsertAsync([FromBody] BlogDTO blog)
+        [Authorize]
+        public async Task<IActionResult> InsertAsync([FromForm] BlogDTO blog, IFormFile image)
         {
             if (blog == null)
             {
                 return BadRequest("Blog is required");
             }
+
+            if (image == null)
+            {
+                return BadRequest("Image is required");
+            }
+
+            // Convert IFormFile from the request to byte[]
+            try
+            {
+                ImageHelper.IFormFileToByteArray(image, out byte[] imageBytes);
+                blog.Image = imageBytes;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
             var response = await _blogsApplication.InsertAsync(blog);
             if (response.IsSuccess)
             {
@@ -75,6 +94,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Update/{blogId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateAsync(string blogId, [FromBody] BlogDTO blog)
         {
             if (string.IsNullOrEmpty(blogId))
@@ -94,6 +114,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpDelete("delete/{blogId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteAsync(string blogId)
         {
             if (string.IsNullOrEmpty(blogId))
