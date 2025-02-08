@@ -162,7 +162,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
                 {
                     new Claim(ClaimTypes.Name, usersDto.Data.UserId.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Issuer = _appSettings.Issuer,
                 Audience = _appSettings.Audience
