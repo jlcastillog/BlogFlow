@@ -17,35 +17,27 @@ const AuthContext = React.createContext();
 function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = React.useState(getLocalStorageUser());
-  const [loginError, setLoginError] = React.useState(null);
 
   const login = async (username, password) => {
-    try {
-      const loggedUser = await authenticate(username, password);
+    const loggedUser = await authenticate(username, password);
 
-      if (loggedUser) {
-        setLocalStorageUser(loggedUser);
-        setUser(loggedUser);
-        setLoginError(null);
-        navigate("/");
-      } else {
-        setLoginError("Invalid username or password. Please try again.");
-      }
-    } catch (err) {
-      console.log("Login error", err);
-      setLoginError("Invalid username or password. Please try again.");
+    if (loggedUser) {
+      setLocalStorageUser(loggedUser);
+      setUser(loggedUser);
+      navigate("/");
+    } else {
+      throw new Error("Invalid username or password. Please try again.");
     }
   };
 
-  const logout = () => {
-    try {
-      logoutService();
+  const logout = async () => {
+    if (user) {
+      await logoutService();
       setUser(null);
       removeLocalStorageUser();
       navigate("/");
-    } catch (err) {
-      console.log("Logout error", err);
-      alert("Error logging out. Please try again.");
+    } else {
+      throw new Error("Not logged in.");
     }
   };
 
@@ -54,7 +46,7 @@ function AuthProvider({ children }) {
     setUser(user);
   };
 
-  const auth = { user, loginError, login, logout, updateUser };
+  const auth = { user, login, logout, updateUser };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }

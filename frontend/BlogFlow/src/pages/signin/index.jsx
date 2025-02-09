@@ -1,27 +1,46 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../components/auth";
+import ErrorPanel from "../../components/error";
+import { getErrorMessage } from "../../components/error/helper";
 import "./style.css";
 
 function Signin() {
   const auth = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const loginError = auth.loginError;
   const loggedUser = auth.user;
 
   const [userName, setUserName] = useState(
     loggedUser ? loggedUser.userName : ""
   );
+
   const [password, setPassword] = useState(loggedUser ? "*************" : "");
 
-  const doLogin = (e) => {
+  const doLogin = async (e) => {
     e.preventDefault();
-    auth.login(userName, password);
+    try {
+      await setErrorMessage(null);
+      if (!userName || !password) {
+        throw new Error("Please enter a username and password.");
+      }
+      await auth.login(userName, password);
+    } catch (err) {
+      const errorFromRespose = getErrorMessage(err);
+      setErrorMessage(errorFromRespose);
+    }
   };
 
-  const doLogout = (e) => {
+  const doLogout = async (e) => {
     e.preventDefault();
-    auth.logout();
+
+    try {
+      await setErrorMessage(null);
+      await auth.logout();
+    } catch (err) {
+      const errorFromRespose = getErrorMessage(err);
+      setErrorMessage(errorFromRespose);
+    }
   };
 
   const onSummit = loggedUser ? doLogout : doLogin;
@@ -62,7 +81,7 @@ function Signin() {
           )}
         </form>
       </div>
-      <div className="login-error">{loginError && <p>{loginError}</p>}</div>
+      <ErrorPanel message={errorMessage} />
     </section>
   );
 }
