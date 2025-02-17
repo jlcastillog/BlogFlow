@@ -1,0 +1,14 @@
+.remove-button-container {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    color: transparent;
+    background-image: url('../../../assets/icons/trash.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70% 70%;
+    border: 3px solid black;
+    border-radius: 50%;
+    margin: 20px 0 20px 0;
+}
