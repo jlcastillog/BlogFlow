@@ -7,6 +7,7 @@ import { getBlogs } from "../../services/blog/blogService";
 import ErrorPanel from "../../components/error";
 import { getErrorMessage } from "../../components/error/helper";
 import Loading from "../../components/loading";
+import RoundedButton from "../../components/buttons/roundedButton";
 import "./style.css";
 
 function HomePage() {
@@ -43,15 +44,23 @@ function HomePage() {
   return (
     <section className="home">
       {loading && <Loading text="Loading blogs..." />}
-
       {loggedUser && !loading && (
         <>
           <h1>Wellcome {loggedUser.userName}</h1>
-          <button onClick={onCreateBlog}>Create new blog</button>
         </>
       )}
       {!loading && (
         <div className="blogs-container">
+          {loggedUser && (
+            <div className="add-button-home">
+              <RoundedButton
+                title="Create new blog"
+                type="add"
+                onclick={onCreateBlog}
+              />
+            </div>
+          )}
+
           {blogs?.length > 0 &&
             blogs?.map((blog) => <BlogPreview key={blog.id} blog={blog} />)}
         </div>
