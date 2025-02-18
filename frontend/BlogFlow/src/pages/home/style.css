@@ -4,7 +4,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    padding-top: 90px;
+    padding-top: 110px;
 }
 
 .blogs-container {
@@ -13,6 +13,19 @@
     /* Se crea una grilla flexible que se adapta al tamaño del contenedor.
        Cada columna tendrá un ancho mínimo de 300px y se expandirá hasta ocupar el espacio disponible */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px; /* Espacio entre los elementos del grid */
-    padding: 20px; /* Opcional: espacio interno en el contenedor */
-  }
+    gap: 16px;
+    /* Espacio entre los elementos del grid */
+    padding: 20px;
+    /* Opcional: espacio interno en el contenedor */
+    border: 1px solid rgb(207, 203, 203);
+    border-radius: 10px;
+}
+
+.add-button-home {
+    position: fixed;
+    top: 50px;
+    right: 2.7vw;
+    z-index: 10;
+    padding-top: 110px;
+    background-color: white;
+}
