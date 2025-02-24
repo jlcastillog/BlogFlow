@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using BlogFlow.Core.Application.DTO;
 using BlogFlow.Core.Application.Interface.UseCases;
+using BlogFlow.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,24 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _postsApplication.GetAllAsync();
+
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response.Message);
+        }
+
+        [HttpGet("GetByBlog/{blogId}")]
+        public async Task<IActionResult> GetByBlogAsync(string blogId)
+        {
+            if (string.IsNullOrEmpty(blogId))
+            {
+                return BadRequest("BlogId is required");
+            }
+
+            var response = await _postsApplication.GetByIdBlogAsync(blogId);
 
             if (response.IsSuccess)
             {

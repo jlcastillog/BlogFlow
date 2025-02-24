@@ -133,6 +133,31 @@ namespace BlogFlow.Core.Application.UseCases.Posts
             return response;
         }
 
+        public async Task<Response<IEnumerable<PostDTO>>> GetByIdBlogAsync(string idBlog, CancellationToken cancellationToken = default)
+        {
+            var response = new Response<IEnumerable<PostDTO>>();
+
+            try
+            {
+                var posts = await _unitOfWork.Posts.GetByIdPostAsync(idBlog, cancellationToken);
+
+                response.Data = _mapper.Map<IEnumerable<PostDTO>>(posts);
+
+                if (response.Data != null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "GetByIdBlog succeded!!";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
         public async Task<Response<bool>> InsertAsync(PostDTO entity, CancellationToken cancellationToken = default)
         {
             var response = new Response<bool>();

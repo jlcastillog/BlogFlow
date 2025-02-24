@@ -10,6 +10,7 @@ namespace BlogFlow.Core.Application.Interface.UseCases
         Task<Response<bool>> DeleteAsync(string id, CancellationToken cancellationToken = default);
         Task<Response<PostDTO>> GetAsync(string id, CancellationToken cancellationToken = default);
         Task<Response<IEnumerable<PostDTO>>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<Response<IEnumerable<PostDTO>>> GetByIdBlogAsync(string idBlog, CancellationToken cancellationToken = default);
         Task<Response<int>> CountAsync(CancellationToken cancellationToken = default);
     }
 }
