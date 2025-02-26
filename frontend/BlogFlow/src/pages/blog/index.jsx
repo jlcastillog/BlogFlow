@@ -1,35 +1,85 @@
-import { useParams, useLocation } from "react-router-dom";
-import blogsSampleData from "../../assets/data/blogsSample.json";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/auth";
+import ErrorPanel from "../../components/error";
+import Loading from "../../components/loading";
+import PostPreview from "../../components/post-preview";
+import RoundedButton from "../../components/buttons/roundedButton";
+import { getPostsByBlog } from "../../services/post/postService";
+import { getErrorMessage } from "../../components/error/helper";
 import "./style.css";
 
 function BlogPage() {
-  const { id } = useParams();
+  const navigate = useNavigate();
+  const auth = useAuth();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [blog, setBlog] = useState(location.state.blog);
+  const [posts, setPosts] = useState([]);
+  
+  const loggedUser = auth.user;
 
-  let blog = null;
+  const onCreateBlog = () => {
+    navigate(`/editPost/${blog.id}`, { state: { blog } });
+  };
 
-  if (location?.state?.blog) {
-    blog = location.state.blog;
-  } else {
-    blog = blogsSampleData.find((blog) => blog.id === id);
-  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        await setErrorMessage(null);
+        setLoading(true);
+        const data = await getPostsByBlog(blog.id);
+        setPosts(data);
+      } catch (err) {
+        const errorFromRespose = getErrorMessage(err);
+        setErrorMessage(errorFromRespose);
+      } finally {
+        
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
-    <section className="blog-section">
-      <h1>{blog.title}</h1>
+    <section className="blog-section-container">
+      <h1>{blog?.title}</h1>
       <div className="blog-info">
         <div className="blog-text-container">
-          <p className="blog-author">By {blog.author}</p>
-          <p className="blog-category">{blog.category}</p>
+          <p className="blog-author">By {blog?.author}</p>
+          <p className="blog-category">{blog?.category}</p>
         </div>
         <div className="blog-image-container">
           <img
-            src={`data:image/jpeg;base64,${blog.image}`}
+            src={`data:image/jpeg;base64,${blog?.image}`}
             alt="Imagen del blog"
             className="blog-image"
           />
         </div>
+        <div className="posts-section-container">
+          {loggedUser && (<div className="add-button-blog">
+            <RoundedButton
+              title="Create new post"
+              type="add"
+              onclick={onCreateBlog}
+            />
+          </div>)}
+            {loading && (
+              <div className="loading-container">
+                <Loading text="Loading posts..." />
+              </div>
+            )}
+            {!loading && (
+              <div className="posts-content">
+                {posts?.map((post) => (
+                  <PostPreview key={post.id} post={post} />
+                ))}
+              </div>
+            )}
+        </div>
       </div>
+      <ErrorPanel message={errorMessage} />
     </section>
   );
 }

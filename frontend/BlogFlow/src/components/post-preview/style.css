@@ -1,0 +1,8 @@
+.post-preview {
+    margin-bottom: 1.5rem;
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}

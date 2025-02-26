@@ -25,6 +25,7 @@ function HomePage() {
         await setErrorMessage(null);
         setLoading(true);
         const data = await getBlogs();
+        console.log(data);
         setBlogs(data);
       } catch (err) {
         const errorFromRespose = getErrorMessage(err);
@@ -50,7 +51,7 @@ function HomePage() {
         </>
       )}
       {!loading && (
-        <div className="blogs-container">
+        <div className="blogs-section">
           {loggedUser && (
             <div className="add-button-home">
               <RoundedButton
@@ -60,9 +61,10 @@ function HomePage() {
               />
             </div>
           )}
-
-          {blogs?.length > 0 &&
-            blogs?.map((blog) => <BlogPreview key={blog.id} blog={blog} />)}
+          <div className="blogs-container">
+            {blogs?.length > 0 &&
+              blogs?.map((blog) => <BlogPreview key={blog.id} blog={blog} />)}
+          </div>
         </div>
       )}
       <ErrorPanel message={errorMessage} />

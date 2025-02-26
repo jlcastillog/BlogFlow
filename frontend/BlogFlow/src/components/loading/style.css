@@ -6,8 +6,8 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    margin-top: 25vh;
-    margin-bottom: 20px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     background: linear-gradient(to right,
             rgba(255, 255, 255, 0),
             rgba(255, 255, 255, 0.5) 50%,

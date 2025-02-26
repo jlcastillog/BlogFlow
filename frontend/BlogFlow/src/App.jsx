@@ -7,6 +7,7 @@ import Signup from "./pages/signup";
 import Profile from "./pages/profile";
 import BlogPage from "./pages/blog";
 import EditBlogPage from "./pages/editBlog";
+import PostPage from "./pages/post";
 import EditPostPage from "./pages/editPost";
 import "./App.css";
 
@@ -23,7 +24,8 @@ function App() {
             <Route path="/profile" element={<Profile/>} />
             <Route path="/blog/:id" element={<BlogPage/>} />
             <Route path="/editBlog" element={<EditBlogPage/>} />
-            <Route path="/editPost" element={<EditPostPage/>} />
+            <Route path="/post/:id" element={<PostPage/>} />
+            <Route path="/editPost/:id" element={<EditPostPage/>} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

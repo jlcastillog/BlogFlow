@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using BlogFlow.Core.Application.DTO;
 using BlogFlow.Core.Application.Interface.UseCases;
+using BlogFlow.Core.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,6 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    [Authorize]
     public class PostsController : Controller
     {
         private readonly IPostsApplication  _postsApplication;
@@ -23,6 +23,24 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         public async Task<IActionResult> GetAllAsync()
         {
             var response = await _postsApplication.GetAllAsync();
+
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response.Message);
+        }
+
+        [HttpGet("GetByBlog/{blogId}")]
+        public async Task<IActionResult> GetByBlogAsync(string blogId)
+        {
+            if (string.IsNullOrEmpty(blogId))
+            {
+                return BadRequest("BlogId is required");
+            }
+
+            var response = await _postsApplication.GetByIdBlogAsync(blogId);
 
             if (response.IsSuccess)
             {
@@ -49,6 +67,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Insert")]
+        [Authorize]
         public async Task<IActionResult> InsertAsync([FromBody] PostDTO post)
         {
             if (post == null)
@@ -75,6 +94,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Update/{postId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateAsync(string postId, [FromBody] PostDTO post)
         {
             if (string.IsNullOrEmpty(postId))
@@ -94,6 +114,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpDelete("delete/{postId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteAsync(string postId)
         {
             if (string.IsNullOrEmpty(postId))

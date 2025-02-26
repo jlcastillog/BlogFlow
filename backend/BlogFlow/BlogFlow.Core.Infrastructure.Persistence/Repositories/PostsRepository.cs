@@ -103,6 +103,11 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
             return await Task.FromResult(true);
         }
 
+        public async Task<IEnumerable<Post>> GetByIdPostAsync(string idBlog, CancellationToken cancellationToken = default)
+        {
+            return await _applicationDbContext.Set<Post>().AsNoTracking().Where(x => x.BlogId.ToString().Equals(idBlog)).ToListAsync(cancellationToken);
+        }
+
         #endregion
     }
 }

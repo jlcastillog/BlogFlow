@@ -7,6 +7,13 @@
     padding-top: 110px;
 }
 
+.blogs-section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
 .blogs-container {
     width: 90%;
     display: grid;
@@ -19,13 +26,14 @@
     /* Opcional: espacio interno en el contenedor */
     border: 1px solid rgb(207, 203, 203);
     border-radius: 10px;
+    margin-top: 2vh;
 }
 
 .add-button-home {
-    position: fixed;
-    top: 50px;
-    right: 2.7vw;
+    position: absolute;
+    margin-top: -7px;
+    width: 50px;
+    height: 50px;
     z-index: 10;
-    padding-top: 110px;
     background-color: white;
 }
