@@ -1,4 +1,4 @@
-.blog-section {
+.blog-section-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,4 +54,42 @@
     padding: 4px 8px;
     border-radius: 4px;
     margin: 0px 0px 25px;
+}
+
+.posts-section-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+    width: 90%;
+    min-height: 100px;
+    border: 1px solid rgb(207, 203, 203);
+    border-radius: 10px;
+}
+
+.posts-content {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.add-button-blog {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -3vh;
+    z-index: 10;
+    background-color: white;
 }

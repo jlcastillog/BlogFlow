@@ -7,3 +7,5 @@ export const API_POST_UPDATE = "Users/update";
 export const URL_API_CORE_BASE = "http://localhost:5001/api/v1/";
 export const API__BLOG_POST_INSERT = "Blogs/Insert";
 export const API__BLOG_POST_GETALL = "Blogs/GetAll";
+export const API__POST_POST_INSERT = "Posts/Insert";
+export const API__GET_POST_GETBYBLOG = "Posts/GetByBlog/";
