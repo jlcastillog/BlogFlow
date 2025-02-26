@@ -10,7 +10,6 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    [Authorize]
     public class PostsController : Controller
     {
         private readonly IPostsApplication  _postsApplication;
@@ -68,6 +67,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Insert")]
+        [Authorize]
         public async Task<IActionResult> InsertAsync([FromBody] PostDTO post)
         {
             if (post == null)
@@ -94,6 +94,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Update/{postId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateAsync(string postId, [FromBody] PostDTO post)
         {
             if (string.IsNullOrEmpty(postId))
@@ -113,6 +114,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpDelete("delete/{postId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteAsync(string postId)
         {
             if (string.IsNullOrEmpty(postId))
