@@ -1,7 +1,9 @@
-﻿using BlogFlow.Core.Services.WebApi.Helpers;
+﻿using BlogFlow.Core.Application.DTO;
+using BlogFlow.Core.Services.WebApi.Helpers;
 using BlogFlow.Core.Services.WebApi.Modules.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace BlogFlow.Core.Services.WebApi.Modules.Authentication
@@ -36,7 +38,7 @@ namespace BlogFlow.Core.Services.WebApi.Modules.Authentication
                         // Leer el JWT desde la cookie
                         if (context.Request.Cookies.ContainsKey("jwt"))
                         {
-                            context.Token = context.Request.Cookies["jwt"];
+                            context.Token = JsonConvert.DeserializeObject<RefreshTokenDTO>(context.Request.Cookies["jwt"])?.AccessToken;
                         }
                         return Task.CompletedTask;
                     },

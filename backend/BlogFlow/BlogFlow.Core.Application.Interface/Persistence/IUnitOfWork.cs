@@ -6,6 +6,7 @@
         IBlogsRepository Blogs { get; }
         IPostsRepository Posts { get; }
         IContentsRepository Contents { get; }
+        IRefreshTokenRepository RefreshTokens { get; }
         Task<int> Save(CancellationToken cancellationToken);
     }
 }

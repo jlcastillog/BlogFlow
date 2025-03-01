@@ -10,6 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BlogFlow.Core.Domain.Entities;
+using BlogFlow.Core.Application.UseCases.RefreshTokens;
+using Newtonsoft.Json;
 
 namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
 {
@@ -19,11 +22,13 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
     public class UsersController : Controller
     {
         private readonly IUsersApplication _usersApplication;
+        private readonly IRefreshTokenApplication _refreshTokenApplication;
         private readonly AppSettings _appSettings;
 
-        public UsersController(IUsersApplication usersApplication, IOptions<AppSettings> appSettings)
+        public UsersController(IUsersApplication usersApplication, IRefreshTokenApplication refreshTokenApplication, IOptions<AppSettings> appSettings)
         {
             _usersApplication = usersApplication;
+            _refreshTokenApplication = refreshTokenApplication;
             _appSettings = appSettings.Value;
         }
 
@@ -37,7 +42,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             {
                 if (respose.Data != null)
                 {
-                    var jwt = BuildToken(respose);
+                    var (accessToken, refreshToken) = BuildToken(respose);
 
                     // Configurar cookies
                     var jwtCookieOptions = new CookieOptions
@@ -45,10 +50,32 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
                         HttpOnly = true,
                         Secure = true,
                         SameSite = SameSiteMode.None,
-                        Expires = DateTime.UtcNow.AddMinutes(15) // Igual que el JWT
+                        Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_appSettings.AccessTokenExpiration)) // Same like JWT
                     };
 
-                    Response.Cookies.Append("jwt", jwt, jwtCookieOptions);
+                    var newRefreshToken = new RefreshTokenDTO
+                    {
+                        Token = refreshToken,
+                        AccessToken = accessToken,
+                        JwtId = Guid.NewGuid().ToString(),
+                        IsRevoked = false,
+                        IsUsed = false,
+                        ExpiryDate = DateTime.UtcNow.AddDays(Convert.ToDouble(_appSettings.RefreshTokenExpiration)),
+                        UserId = respose.Data.UserId
+                    };
+
+                    var refreshTokenResponse = await _refreshTokenApplication.InsertAsync(newRefreshToken);
+
+                    if (!refreshTokenResponse.IsSuccess)
+                    {
+                        respose.Data = null;
+                        respose.IsSuccess = false;
+                        respose.Message = "Authenticate fail!!";
+
+                        return BadRequest(respose);
+                    }
+
+                    Response.Cookies.Append("jwt", JsonConvert.SerializeObject(newRefreshToken), jwtCookieOptions);
 
                     return Ok(respose);
                 }
@@ -152,7 +179,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             return BadRequest(response);
         }
 
-        private string BuildToken(Response<UserResponseDTO> usersDto)
+        private (string AccessToken, string RefreshToken) BuildToken(Response<UserResponseDTO> usersDto)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -162,7 +189,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
                 {
                     new Claim(ClaimTypes.Name, usersDto.Data.UserId.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(60),
+                Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_appSettings.AccessTokenExpiration)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Issuer = _appSettings.Issuer,
                 Audience = _appSettings.Audience
@@ -170,7 +197,9 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
+            var refreshToken = Guid.NewGuid().ToString();
+
+            return (tokenHandler.WriteToken(token), refreshToken);
         }
     }
 }

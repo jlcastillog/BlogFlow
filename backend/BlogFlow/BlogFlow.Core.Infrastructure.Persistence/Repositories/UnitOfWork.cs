@@ -10,14 +10,23 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
         public IBlogsRepository Blogs { get; }
         public IPostsRepository Posts { get; }
         public IContentsRepository Contents { get; }
+
+        public IRefreshTokenRepository RefreshTokens { get; }
+
         private readonly ApplicationDbContext _applicaDbContext;
 
-        public UnitOfWork(IUsersRepository users, IBlogsRepository blogs, IPostsRepository posts, IContentsRepository contents, ApplicationDbContext applicationDbContext)
+        public UnitOfWork(IUsersRepository users, 
+                          IBlogsRepository blogs, 
+                          IPostsRepository posts, 
+                          IContentsRepository contents, 
+                          IRefreshTokenRepository refreshTokens,
+                          ApplicationDbContext applicationDbContext)
         {
             Users = users;
             Blogs = blogs;
             Posts = posts;
             Contents = contents;
+            RefreshTokens = refreshTokens;
             _applicaDbContext = applicationDbContext;
         }
 
