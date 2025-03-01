@@ -1,18 +1,17 @@
 ﻿using Asp.Versioning;
+using Azure;
+using BlogFlow.Auth.Services.WebApi.Helpers;
 using BlogFlow.Core.Application.DTO;
 using BlogFlow.Core.Application.Interface.UseCases;
-using BlogFlow.Auth.Services.WebApi.Helpers;
 using BlogFlow.Core.Transversal.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using BlogFlow.Core.Domain.Entities;
-using BlogFlow.Core.Application.UseCases.RefreshTokens;
-using Newtonsoft.Json;
 
 namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
 {
@@ -42,7 +41,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             {
                 if (respose.Data != null)
                 {
-                    var (accessToken, refreshToken) = BuildToken(respose);
+                    var tokenService = new TokenService(_appSettings);
 
                     // Configurar cookies
                     var jwtCookieOptions = new CookieOptions
@@ -53,16 +52,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
                         Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_appSettings.AccessTokenExpiration)) // Same like JWT
                     };
 
-                    var newRefreshToken = new RefreshTokenDTO
-                    {
-                        Token = refreshToken,
-                        AccessToken = accessToken,
-                        JwtId = Guid.NewGuid().ToString(),
-                        IsRevoked = false,
-                        IsUsed = false,
-                        ExpiryDate = DateTime.UtcNow.AddDays(Convert.ToDouble(_appSettings.RefreshTokenExpiration)),
-                        UserId = respose.Data.UserId
-                    };
+                    var newRefreshToken = tokenService.CreateNewToken(respose.Data.UserId);
 
                     var refreshTokenResponse = await _refreshTokenApplication.InsertAsync(newRefreshToken);
 
@@ -86,6 +76,49 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             }
 
             return BadRequest(respose);
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenDTO request)
+        {
+            var existRefreshToken = await _refreshTokenApplication.ExistsRefreshAsync(request);
+
+            if (!existRefreshToken.IsSuccess)
+            {
+                return Unauthorized(new { message = "Invalid or expired Refresh Token" });
+            }
+
+            var markRefreshTokenAsUsed = await _refreshTokenApplication.MarkRefreshTokenAsUsed(request);
+
+            if (!markRefreshTokenAsUsed.IsSuccess)
+            {
+                return Unauthorized(new { message = "Invalid or expired Refresh Token" });
+            }
+
+            var tokenService = new TokenService(_appSettings);
+
+            // Configurar cookies
+            var jwtCookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_appSettings.AccessTokenExpiration)) // Same like JWT
+            };
+
+            var newRefreshToken = tokenService.CreateNewToken(request.UserId);
+
+            var refreshTokenResponse = await _refreshTokenApplication.InsertAsync(newRefreshToken);
+
+            if (!refreshTokenResponse.IsSuccess)
+            {
+                return BadRequest();
+            }
+
+            Response.Cookies.Append("jwt", "", jwtCookieOptions);
+            Response.Cookies.Append("jwt", JsonConvert.SerializeObject(newRefreshToken), jwtCookieOptions);
+
+            return Ok();
         }
 
         [Authorize]
@@ -177,29 +210,6 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
                 return Ok(response);
             }
             return BadRequest(response);
-        }
-
-        private (string AccessToken, string RefreshToken) BuildToken(Response<UserResponseDTO> usersDto)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, usersDto.Data.UserId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_appSettings.AccessTokenExpiration)),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = _appSettings.Issuer,
-                Audience = _appSettings.Audience
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            var refreshToken = Guid.NewGuid().ToString();
-
-            return (tokenHandler.WriteToken(token), refreshToken);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BlogFlow.Core.Application.Interface.Persistence;
 using BlogFlow.Core.Domain.Entities;
 using BlogFlow.Core.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
 {
@@ -75,9 +76,30 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
             return await Task.FromResult(true);
         }
 
-        public Task<bool> UpdateAsync(RefreshToken entity)
+        public async Task<bool> UpdateAsync(RefreshToken entity)
         {
-            throw new NotImplementedException();
+            var entityToUpdate = await _applicationDbContext.Set<RefreshToken>().AsNoTracking().SingleOrDefaultAsync(x => x.Token.Equals(entity.Token));
+
+            if (entityToUpdate == null)
+            {
+                return await Task.FromResult(false);
+            }
+
+            entityToUpdate.Token = entity.Token;
+            entityToUpdate.JwtId = entity.JwtId;
+            entityToUpdate.IsRevoked = entity.IsRevoked;
+            entityToUpdate.IsUsed = entity.IsUsed;
+            entityToUpdate.ExpiryDate = entity.ExpiryDate;
+            entityToUpdate.UserId = entity.UserId;
+
+            _applicationDbContext.Update(entityToUpdate);
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<RefreshToken> GetByTokenAsync(string token, CancellationToken cancellationToken = default)
+        {
+            return await _applicationDbContext.Set<RefreshToken>().AsNoTracking().SingleOrDefaultAsync(x => x.Token.Equals(token), cancellationToken);
         }
 
         #endregion
