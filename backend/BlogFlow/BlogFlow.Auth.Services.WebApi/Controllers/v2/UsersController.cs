@@ -79,8 +79,17 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh([FromBody] RefreshTokenDTO request)
+        public async Task<IActionResult> Refresh()
         {
+            string cookieJwt = string.Empty;
+
+            if (!Request.Cookies.TryGetValue("jwt", out cookieJwt))
+            {
+                return Unauthorized(new { message = "Invalid or expired Refresh Token" });
+            }
+
+            var request = JsonConvert.DeserializeObject<RefreshTokenDTO>(cookieJwt);
+
             var existRefreshToken = await _refreshTokenApplication.ExistsRefreshAsync(request);
 
             if (!existRefreshToken.IsSuccess)
