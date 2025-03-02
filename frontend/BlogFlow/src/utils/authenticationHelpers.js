@@ -7,7 +7,7 @@ export const apiClient = axios.create({
 });
 
 export async function refreshToken(error, apiBusiness) {
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     // Refresh token
     try {
       const url = URL_API_AUTH_BASE + API_POST_REFRESH_TOKEN;
