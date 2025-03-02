@@ -55,7 +55,7 @@ namespace BlogFlow.Core.Application.UseCases.RefreshTokens
             {
                 var storedToken = await _unitOfWork.RefreshTokens.GetByTokenAsync(token.Token, cancellationToken);
 
-                if (storedToken != null || storedToken.IsRevoked || storedToken.ExpiryDate < DateTime.UtcNow)
+                if (storedToken != null && !storedToken.IsRevoked && !storedToken.IsUsed && storedToken.ExpiryDate < DateTime.UtcNow)
                 {
                     response.Data = true;
                     response.IsSuccess = true;
