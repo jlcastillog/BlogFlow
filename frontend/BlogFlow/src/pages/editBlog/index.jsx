@@ -43,6 +43,10 @@ function EditBlogPage() {
 
     } catch (err) {
       setError(err.message);
+
+      if(err.message === "Refresh token failed") {
+        auth.resetUser();
+      }
     }
     finally{
       setLoading(false);

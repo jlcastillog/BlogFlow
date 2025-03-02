@@ -19,9 +19,10 @@ function Profile() {
     try {
       updateUser(loggedUser);
       auth.updateUser(loggedUser);
-    } catch (error) {
-      console.error(error);
-      alert("Error creating user");
+    } catch (err) {
+      if(err.message === "Refresh token failed") {
+        auth.resetUser();
+      }
     }
   };
 

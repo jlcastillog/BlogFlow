@@ -34,8 +34,11 @@ function BlogPage() {
       } catch (err) {
         const errorFromRespose = getErrorMessage(err);
         setErrorMessage(errorFromRespose);
-      } finally {
         
+        if(err.message === "Refresh token failed") {
+          auth.resetUser();
+        }
+      } finally {
         setLoading(false);
       }
     }

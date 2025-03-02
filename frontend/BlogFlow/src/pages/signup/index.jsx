@@ -23,7 +23,6 @@ function Signup() {
     }
     catch (error) {
       console.error(error);
-      alert("Error creating user");
     }
   };
 

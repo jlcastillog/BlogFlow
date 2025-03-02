@@ -46,7 +46,13 @@ function AuthProvider({ children }) {
     setUser(user);
   };
 
-  const auth = { user, login, logout, updateUser };
+  const resetUser = () => {
+    updateLocalStorageUser(null);
+    setUser(null);
+    navigate("/signin");
+  };
+
+  const auth = { user, login, logout, updateUser, resetUser };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }

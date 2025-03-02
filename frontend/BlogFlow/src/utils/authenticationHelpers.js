@@ -18,6 +18,7 @@ export async function refreshToken(error, apiBusiness) {
       }
     } catch (refreshError) {
       console.error("Could not refresh token", refreshError);
+      throw new Error("Refresh token failed");
     }
   }
   return Promise.reject(error);
