@@ -38,6 +38,9 @@ function Signin() {
       await setErrorMessage(null);
       await auth.logout();
     } catch (err) {
+      if(err.message === "Refresh token failed") {
+        auth.resetUser();
+      }
       const errorFromRespose = getErrorMessage(err);
       setErrorMessage(errorFromRespose);
     }

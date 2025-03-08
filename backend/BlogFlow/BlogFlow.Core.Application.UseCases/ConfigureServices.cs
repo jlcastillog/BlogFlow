@@ -2,6 +2,7 @@
 using BlogFlow.Core.Application.UseCases.Blogs;
 using BlogFlow.Core.Application.UseCases.Content;
 using BlogFlow.Core.Application.UseCases.Posts;
+using BlogFlow.Core.Application.UseCases.RefreshTokens;
 using BlogFlow.Core.Application.UseCases.Users;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -17,6 +18,7 @@ namespace BlogFlow.Core.Application.UseCases
             services.AddScoped<IBlogsApplication, BlogsApplicaction>();
             services.AddScoped<IPostsApplication, PostsApplication>();
             services.AddScoped<IContentsApplication, ContentsApplication>();
+            services.AddScoped<IRefreshTokenApplication, RefreshTokenApplication>();
 
             return services;
         }

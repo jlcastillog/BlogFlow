@@ -4,10 +4,12 @@ import ReactQuill from "react-quill";
 import { createPost } from "../../services/post/postService";
 import Loading from "../../components/loading";
 import ErrorPanel from "../../components/error";
+import { useAuth } from "../../components/auth";
 import "./style.css";
 import "react-quill/dist/quill.snow.css";
 
 function EditPostPage() {
+  const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -24,6 +26,9 @@ function EditPostPage() {
       navigate(`/blog/${blog.id}`, { state: { blog } });
     } catch (err) {
       setError(err.message);
+      if(err.message === "Refresh token failed") {
+        auth.resetUser();
+      }
     } finally {
       setLoading(false);
     }

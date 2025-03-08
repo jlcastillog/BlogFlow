@@ -4,11 +4,17 @@ import {
   API__POST_POST_INSERT,
   API__GET_POST_GETBYBLOG,
 } from "../../utils/constants";
+import { refreshToken } from "../../utils/authenticationHelpers";
 
 export const apiClient = axios.create({
   baseURL: URL_API_CORE_BASE,
   withCredentials: true,
 });
+
+apiClient.interceptors.response.use(
+  response => response,
+  async (error) => refreshToken(error, apiClient)
+);
 
 export async function createPost(data) {
   const URL_API = URL_API_CORE_BASE + API__POST_POST_INSERT;
