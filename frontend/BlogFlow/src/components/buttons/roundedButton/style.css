@@ -2,7 +2,7 @@
     display: inline-block;
     width: 50px;
     height: 50px;
-    background-color: transparent;
+    background-color: white;
     color: transparent;
     background-repeat: no-repeat;
     background-position: center;
@@ -24,4 +24,8 @@
 
 .remove {
     background-image: url('../../../assets/icons/trash.svg');
+}
+
+.edit {
+    background-image: url('../../../assets/icons/pencil.svg');
 }

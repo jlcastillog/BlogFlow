@@ -1,0 +1,44 @@
+.createPost-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding-top: 90px;
+    gap: 20px;
+}
+
+.createPost-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.createPost-title {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.createPost-title input {
+    width: 50%;
+    border: 2px solid #e8e5e4;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: medium;
+}
+
+.createPost-content {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    height: 60vh;
+}
+
+.createPost-quill {
+    min-height: 400px;
+    max-height: 480px;
+}

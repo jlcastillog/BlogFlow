@@ -21,7 +21,7 @@ function BlogPage() {
   const loggedUser = auth.user;
 
   const onCreateBlog = () => {
-    navigate(`/editPost/${blog.id}`, { state: { blog } });
+    navigate(`/createPost/${blog.id}`, { state: { blog } });
   };
 
   useEffect(() => {

@@ -1,29 +1,29 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
-import { updatePost } from "../../services/post/postService";
+import { createPost } from "../../services/post/postService";
 import Loading from "../../components/loading";
 import ErrorPanel from "../../components/error";
-import MessagePanel from "../../components/message";
 import { useAuth } from "../../components/auth";
 import "./style.css";
 import "react-quill/dist/quill.snow.css";
 
-function EditPostPage() {
+function CreatePostPage() {
   const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [message, setMassage] = useState(null);
+  const navigate = useNavigate();
   const location = useLocation();
-  const [post, setPost] = useState(location.state.post);
+  const [blog, setBlog] = useState(location.state.blog);
+  const [post, setPost] = useState({ title: "", htmlContent: "", BlogId: blog.id });
 
   const handleSave = async (event) => {
     try {
       event.preventDefault();
       setLoading(true);
-      await updatePost(post, post.id);
-      setMassage("Post updated successfully");
+      await createPost(post);
       setLoading(false);
+      navigate(`/blog/${blog.id}`, { state: { blog } });
     } catch (err) {
       setError(err.message);
       if(err.message === "Refresh token failed") {
@@ -35,13 +35,13 @@ function EditPostPage() {
   };
 
   return (
-    <section className="editPost-section">
-      {loading && <Loading text="Updating post..." />}
+    <section className="createPost-section">
+      {loading && <Loading text="Creating post..." />}
       {!loading && (
         <>
           <h2>Edit Post</h2>
-          <form onSubmit={handleSave} className="editPost-form">
-          <div className="editPost-title">
+          <form onSubmit={handleSave} className="createPost-form">
+          <div className="createPost-title">
             <label>Title</label>
             <input
               type="text"
@@ -49,12 +49,12 @@ function EditPostPage() {
               onChange={(e) => setPost({ ...post, title: e.target.value })}
             />
           </div>
-          <div className="editPost-content">
+          <div className="createPost-content">
             <ReactQuill
               value={post.htmlContent}
               onChange={(value) => setPost({ ...post, htmlContent: value })}
               theme="snow"
-              className="editPost-quill"
+              className="createPost-quill"
             />
           </div>
           <div>
@@ -62,11 +62,10 @@ function EditPostPage() {
           </div>
           </form>
           <ErrorPanel message={error} />
-          <MessagePanel message={message} />
         </>
       )}
     </section>
   );
 }
 
-export default EditPostPage;
+export default CreatePostPage;
