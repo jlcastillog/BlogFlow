@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import { updatePost } from "../../services/post/postService";
 import Loading from "../../components/loading";
 import ErrorPanel from "../../components/error";
+import MessagePanel from "../../components/message";
 import { useAuth } from "../../components/auth";
 import "./style.css";
 import "react-quill/dist/quill.snow.css";
@@ -12,6 +13,7 @@ function EditPostPage() {
   const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMassage] = useState(null);
   const location = useLocation();
   const [post, setPost] = useState(location.state.post);
 
@@ -20,6 +22,7 @@ function EditPostPage() {
       event.preventDefault();
       setLoading(true);
       await updatePost(post, post.id);
+      setMassage("Post updated successfully");
       setLoading(false);
     } catch (err) {
       setError(err.message);
@@ -59,6 +62,7 @@ function EditPostPage() {
           </div>
           </form>
           <ErrorPanel message={error} />
+          <MessagePanel message={message} />
         </>
       )}
     </section>
