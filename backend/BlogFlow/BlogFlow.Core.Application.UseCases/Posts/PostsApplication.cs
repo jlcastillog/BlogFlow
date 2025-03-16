@@ -201,6 +201,7 @@ namespace BlogFlow.Core.Application.UseCases.Posts
                 {
                     postExist.Title = post.Title;
                     postExist.Description = post.Description;
+                    postExist.HtmlContent = post.HtmlContent;
 
                     await _unitOfWork.Posts.UpdateAsync(postExist);
 

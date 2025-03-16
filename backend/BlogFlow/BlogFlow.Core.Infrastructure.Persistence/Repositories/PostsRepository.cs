@@ -97,6 +97,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
 
             entityToUpdate.Title = entity.Title;
             entityToUpdate.Description = entity.Description;
+            entityToUpdate.HtmlContent = entity.HtmlContent;
 
             _applicationDbContext.Update(entityToUpdate);
 
