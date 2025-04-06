@@ -8,6 +8,7 @@ export const API_POST_REFRESH_TOKEN = "Users/refresh";
 export const URL_API_CORE_BASE = import.meta.env.VITE_URL_API_CORE_BASE;
 export const API__BLOG_POST_INSERT = "Blogs/Insert";
 export const API__BLOG_POST_GETALL = "Blogs/GetAll";
+export const API__BLOG_POST_DELETE = "Blogs/Delete";
 export const API__POST_POST_INSERT = "Posts/Insert";
 export const API__POST_POST_UPDATE = "Posts/Update";
 export const API__POST_POST_DELETE = "Posts/Delete";

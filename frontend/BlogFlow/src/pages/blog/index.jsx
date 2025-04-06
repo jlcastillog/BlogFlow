@@ -7,6 +7,7 @@ import Loading from "../../components/loading";
 import PostPreview from "../../components/post-preview";
 import RoundedButton from "../../components/buttons/roundedButton";
 import { getPostsByBlog } from "../../services/post/postService";
+import { deleteBlog } from "../../services/blog/blogService";
 import { getErrorMessage } from "../../components/error/helper";
 import "./style.css";
 
@@ -52,10 +53,37 @@ function BlogPage() {
     setMassage("Post removed successfully");
   };
 
+  const onRemoveBlog = async () => {
+    event.stopPropagation();
+    try {
+      event.preventDefault();
+      await deleteBlog(blog.id);
+      navigate(`/`);
+    } catch (err) {
+      setErrorMessage(err.message);
+      if (err.message === "Refresh token failed") {
+        auth.resetUser();
+      }
+    }
+  };
+
   return (
     <section className="blog-section-container">
-      <h1>{blog?.title}</h1>
-      <div className="blog-info">
+      <div className="blog-header-container">
+        <div className="blog-header">
+          <h1>{blog?.title}</h1>
+        </div>
+        {loggedUser && (
+          <div className="remove-button-blog">
+            <RoundedButton
+              title="Remove blog"
+              type="remove"
+              onclick={onRemoveBlog}
+            />
+          </div>
+        )}
+      </div>
+      <div className="blog-info-container">
         <div className="blog-text-container">
           <p className="blog-author">By {blog?.author}</p>
           <p className="blog-category">{blog?.category}</p>
@@ -67,6 +95,8 @@ function BlogPage() {
             className="blog-image"
           />
         </div>
+      </div>
+      <div className="posts-info-container">
         <div className="posts-section-container">
           {loggedUser && (
             <div className="add-button-blog">
