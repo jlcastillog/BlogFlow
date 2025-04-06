@@ -3,6 +3,7 @@ import {
   URL_API_CORE_BASE,
   API__BLOG_POST_INSERT,
   API__BLOG_POST_GETALL,
+  API__BLOG_POST_DELETE,
 } from "../../utils/constants";
 import { refreshToken } from "../../utils/authenticationHelpers";
 
@@ -31,4 +32,10 @@ export async function getBlogs() {
 
   const response = await apiClient.get(URL_API);
   return response.data.data;
+}
+
+export async function deleteBlog(blogId) {
+  const URL_API = URL_API_CORE_BASE + API__BLOG_POST_DELETE;
+
+  await apiClient.delete(URL_API + `/${blogId}`);
 }

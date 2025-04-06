@@ -44,7 +44,7 @@ namespace BlogFlow.Core.Application.UseCases.Blogs
 
             try
             {
-                await _unitOfWork.Users.DeleteAsync(id);
+                await _unitOfWork.Blogs.DeleteAsync(id);
 
                 response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
