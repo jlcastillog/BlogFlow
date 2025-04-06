@@ -10,4 +10,5 @@ export const API__BLOG_POST_INSERT = "Blogs/Insert";
 export const API__BLOG_POST_GETALL = "Blogs/GetAll";
 export const API__POST_POST_INSERT = "Posts/Insert";
 export const API__POST_POST_UPDATE = "Posts/Update";
-export const API__GET_POST_GETBYBLOG = "Posts/GetByBlog/";
+export const API__POST_POST_DELETE = "Posts/Delete";
+export const API__GET_POST_GETBYBLOG = "Posts/GetByBlog";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ReactQuill from "react-quill";
 import { updatePost } from "../../services/post/postService";
 import Loading from "../../components/loading";

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../components/auth";
 import ErrorPanel from "../../components/error";
+import MessagePanel from "../../components/message";
 import Loading from "../../components/loading";
 import PostPreview from "../../components/post-preview";
 import RoundedButton from "../../components/buttons/roundedButton";
@@ -15,9 +16,10 @@ function BlogPage() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [message, setMassage] = useState(null);
   const [blog, setBlog] = useState(location.state.blog);
   const [posts, setPosts] = useState([]);
-  
+
   const loggedUser = auth.user;
 
   const onCreateBlog = () => {
@@ -34,8 +36,8 @@ function BlogPage() {
       } catch (err) {
         const errorFromRespose = getErrorMessage(err);
         setErrorMessage(errorFromRespose);
-        
-        if(err.message === "Refresh token failed") {
+
+        if (err.message === "Refresh token failed") {
           auth.resetUser();
         }
       } finally {
@@ -44,6 +46,11 @@ function BlogPage() {
     }
     fetchData();
   }, []);
+
+  const onRemovedPost = (post) => {
+    setPosts(posts.filter((p) => p.id !== post.id));
+    setMassage("Post removed successfully");
+  };
 
   return (
     <section className="blog-section-container">
@@ -61,28 +68,35 @@ function BlogPage() {
           />
         </div>
         <div className="posts-section-container">
-          {loggedUser && (<div className="add-button-blog">
-            <RoundedButton
-              title="Create new post"
-              type="add"
-              onclick={onCreateBlog}
-            />
-          </div>)}
-            {loading && (
-              <div className="loading-container">
-                <Loading text="Loading posts..." />
-              </div>
-            )}
-            {!loading && (
-              <div className="posts-content">
-                {posts?.map((post) => (
-                  <PostPreview key={post.id} post={post} />
-                ))}
-              </div>
-            )}
+          {loggedUser && (
+            <div className="add-button-blog">
+              <RoundedButton
+                title="Create new post"
+                type="add"
+                onclick={onCreateBlog}
+              />
+            </div>
+          )}
+          {loading && (
+            <div className="loading-container">
+              <Loading text="Loading posts..." />
+            </div>
+          )}
+          {!loading && (
+            <div className="posts-content">
+              {posts?.map((post) => (
+                <PostPreview
+                  key={post.id}
+                  post={post}
+                  onRemovedPost={onRemovedPost}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <ErrorPanel message={errorMessage} />
+      <MessagePanel message={message} />
     </section>
   );
 }
