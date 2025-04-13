@@ -95,7 +95,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
 
         [HttpPost("Update/{blogId}")]
         [Authorize]
-        public async Task<IActionResult> UpdateAsync(string blogId, [FromBody] BlogDTO blog)
+        public async Task<IActionResult> UpdateAsync(string blogId, [FromForm] BlogDTO blog, IFormFile image)
         {
             if (string.IsNullOrEmpty(blogId))
             {
@@ -105,6 +105,23 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
             {
                 return BadRequest("Blog is required");
             }
+
+            if (image == null)
+            {
+                return BadRequest("Image is required");
+            }
+
+            // Convert IFormFile from the request to byte[]
+            try
+            {
+                ImageHelper.IFormFileToByteArray(image, out byte[] imageBytes);
+                blog.Image = imageBytes;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
             var response = await _blogsApplication.UpdateAsync(blogId, blog);
             if (response.IsSuccess)
             {
