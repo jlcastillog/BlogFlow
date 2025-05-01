@@ -1,17 +1,24 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/auth";
 import ImageLoader from "../../components/imageLoader";
-import { createBlog } from "../../services/blog/blogService";
+import { updateBlog } from "../../services/blog/blogService";
 import Loading from "../../components/loading";
+import {base64ToFile} from "../../utils/imageHelpers.js";
+import ErrorPanel from "../../components/error";
+import MessagePanel from "../../components/message";
 import "./style.css";
 
 function EditBlogPage() {
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(base64ToFile(location.state.blog.image, "image.png", "image/png"));
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [message, setMassage] = useState(null);
+  const [blog, setBlog] = useState(location.state.blog);
   const auth = useAuth();
+
+console.log("blog", blog);
 
   const loggedUser = auth.user;
 
@@ -33,14 +40,14 @@ function EditBlogPage() {
       const formData = new FormData();
       formData.append("Title", newBlog.title);
       formData.append("Category", newBlog.category);
-      formData.append("Description", newBlog.description);
+      formData.append("Description", newBlog.description);                                       
       formData.append("UserId", newBlog.userId);
       formData.append("image", image);
 
-      createBlog(formData);
+      await updateBlog(formData, blog.id);
 
-      navigate("/");
-
+      setMassage("Blog updated successfully");
+      setLoading(false);
     } catch (err) {
       setError(err.message);
 
@@ -56,7 +63,7 @@ function EditBlogPage() {
   return (
     <section className="editBlog-section">
       {loading && (
-        <Loading text="Creating blog..." />
+        <Loading text="Loading blog..." />
       )}
       {!loading && (
         <>
@@ -64,30 +71,25 @@ function EditBlogPage() {
           <form onSubmit={handleSubmit} className="editBlog-form">
             <div className="editBlog-towLine-fields">
               <label>Title</label>
-              <input placeholder="Title" />
+              <input placeholder="Title" value={blog.title}/>
             </div>
             <div className="editBlog-towLine-fields">
               <label>Category</label>
-              <input placeholder="Category" />
+              <input placeholder="Category" value={blog.category}/>
             </div>
             <div className="editBlog-towLine-fields">
               <label>Description</label>
-              <input placeholder="Description" />
+              <input placeholder="Description" value={blog.description}/>
             </div>
             <div className="image-loader-field">
-              <ImageLoader onImageSelect={setImage} />
+              <ImageLoader onImageSelect={setImage} image={image} />
             </div>
             <div className="editBlog-button-container">
-              <button type="submit">Create Blog</button>
+              <button type="submit">Save</button>
             </div>
           </form>
-          {
-            error && (
-              <div className="error-message">
-                <p>{error}</p>
-              </div>
-            )
-          }
+          <ErrorPanel message={error} />
+          <MessagePanel message={message} />
         </>
       )}
     </section>

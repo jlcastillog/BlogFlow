@@ -1,0 +1,40 @@
+.createBlog-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding-top: 90px;
+}
+
+.createBlog-form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 20px;
+}
+
+.createBlog-towLine-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.createBlog-towLine-fields input {
+    border: 2px solid #e8e5e4;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: medium;
+    margin-top: 8px;
+}
+
+.image-loader-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createBlog-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
