@@ -1,8 +1,17 @@
 import { useState } from "react";
 import "./style.css";
 
-const ImageLoader = ({ onImageSelect }) => {
+const ImageLoader = ({ onImageSelect, image }) => {
   const [imagePreview, setImagePreview] = useState(null);
+
+  if (image) {
+    console.log(image);
+    const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(image);
+  }
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];

@@ -4,6 +4,7 @@ import {
   API__BLOG_POST_INSERT,
   API__BLOG_POST_GETALL,
   API__BLOG_POST_DELETE,
+  API__BLOG_POST_UPDATE,
 } from "../../utils/constants";
 import { refreshToken } from "../../utils/authenticationHelpers";
 
@@ -20,6 +21,15 @@ apiClient.interceptors.response.use(
 export async function createBlog(data) {
   const URL_API = URL_API_CORE_BASE + API__BLOG_POST_INSERT;
 
+  await apiClient.post(URL_API, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}
+
+export async function updateBlog(data, blogId) {
+  const URL_API = URL_API_CORE_BASE + API__BLOG_POST_UPDATE + `/${blogId}`;
   await apiClient.post(URL_API, data, {
     headers: {
       "Content-Type": "multipart/form-data",

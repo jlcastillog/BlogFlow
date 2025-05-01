@@ -28,10 +28,23 @@
     width: 90%;
 }
 
+.blog-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 10%;
+}
+
+.edit-button-blog {
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+}
+
 .remove-button-blog {
     display: flex;
     justify-content: end;
-    width: 10%;
     cursor: pointer;
 }
 

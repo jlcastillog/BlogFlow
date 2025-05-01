@@ -39,7 +39,7 @@ function HomePage() {
   }, []);
 
   const onCreateBlog = () => {
-    navigate("/editBlog");
+    navigate("/createBlog");
   };
 
   return (

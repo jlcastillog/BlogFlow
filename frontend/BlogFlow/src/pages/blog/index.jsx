@@ -23,7 +23,7 @@ function BlogPage() {
 
   const loggedUser = auth.user;
 
-  const onCreateBlog = () => {
+  const onCreatePost = () => {
     navigate(`/createPost/${blog.id}`, { state: { blog } });
   };
 
@@ -67,6 +67,11 @@ function BlogPage() {
     }
   };
 
+  const onEditBlog = () => {
+    console.log(blog);
+    navigate(`/editBlog/${blog.id}`, { state: { blog } });
+  }
+
   return (
     <section className="blog-section-container">
       <div className="blog-header-container">
@@ -74,12 +79,21 @@ function BlogPage() {
           <h1>{blog?.title}</h1>
         </div>
         {loggedUser && (
-          <div className="remove-button-blog">
-            <RoundedButton
-              title="Remove blog"
-              type="remove"
-              onclick={onRemoveBlog}
-            />
+          <div className="blog-buttons-container">
+            <div className="edit-button-blog">
+              <RoundedButton
+                title="Edit blog"
+                type="edit"
+                onclick={onEditBlog}
+              />
+            </div>
+            <div className="remove-button-blog">
+              <RoundedButton
+                title="Remove blog"
+                type="remove"
+                onclick={onRemoveBlog}
+              />
+            </div>
           </div>
         )}
       </div>
@@ -103,7 +117,7 @@ function BlogPage() {
               <RoundedButton
                 title="Create new post"
                 type="add"
-                onclick={onCreateBlog}
+                onclick={onCreatePost}
               />
             </div>
           )}
