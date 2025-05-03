@@ -6,13 +6,14 @@ using BlogFlow.Core.Services.WebApi.Modules.Versioning;
 using BlogFlow.Core.Infrastructure.Persistence;
 using BlogFlow.Core.Application.UseCases;
 using System;
+using BlogFlow.Core.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Detect current environment
 var environment = builder.Environment.EnvironmentName;
-
 
 Console.WriteLine($"Running in: {environment}");
 
@@ -39,6 +40,13 @@ builder.Services.AddHttpsRedirection(options =>
 });
 
 var app = builder.Build();
+
+// Ejecuta migraciones al iniciar
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate(); // Apply pending migrations
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
