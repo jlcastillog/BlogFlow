@@ -1,17 +1,18 @@
 ﻿using AutoMapper;
-using BlogFlow.Core.Transversal.Common;
+using BlogFlow.Core.Application.DTO;
 using BlogFlow.Core.Application.Interface.Persistence;
 using BlogFlow.Core.Application.Interface.UseCases;
-using BlogFlow.Core.Application.DTO;
+using BlogFlow.Core.Domain.Entities;
+using BlogFlow.Core.Transversal.Common;
 
-namespace BlogFlow.Core.Application.UseCases.Content
+namespace BlogFlow.Core.Application.UseCases.Images
 {
-    public class ContentsApplication : IContentsApplication
+    public class ImageApplication : IImageApplication
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ContentsApplication(IUnitOfWork unitOfWork, IMapper mapper)
+        public ImageApplication(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -23,9 +24,9 @@ namespace BlogFlow.Core.Application.UseCases.Content
 
             try
             {
-                var countContents = await _unitOfWork.Contents.CountAsync(cancellationToken);
+                var countImages = await _unitOfWork.Images.CountAsync(cancellationToken);
 
-                response.Data = countContents;
+                response.Data = countImages;
                 response.IsSuccess = true;
             }
             catch (Exception ex)
@@ -43,7 +44,7 @@ namespace BlogFlow.Core.Application.UseCases.Content
 
             try
             {
-                await _unitOfWork.Contents.DeleteAsync(id);
+                await _unitOfWork.Images.DeleteAsync(id);
 
                 response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
@@ -55,13 +56,13 @@ namespace BlogFlow.Core.Application.UseCases.Content
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "Content doesn't exist!!";
+                    response.Message = "Image doesn't exist!!";
                 }
             }
             catch (InvalidOperationException)
             {
                 response.IsSuccess = false;
-                response.Message = "Content doesn't exist";
+                response.Message = "Image doesn't exist";
             }
             catch (Exception ex)
             {
@@ -72,15 +73,15 @@ namespace BlogFlow.Core.Application.UseCases.Content
             return response;
         }
 
-        public async Task<Response<IEnumerable<ContentDTO>>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<IEnumerable<ImageDTO>>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var response = new Response<IEnumerable<ContentDTO>>();
+            var response = new Response<IEnumerable<ImageDTO>>();
 
             try
             {
-                var posts = await _unitOfWork.Contents.GetAllAsync(cancellationToken);
+                var images = await _unitOfWork.Images.GetAllAsync(cancellationToken);
 
-                response.Data = _mapper.Map<IEnumerable<ContentDTO>>(posts);
+                response.Data = _mapper.Map<IEnumerable<ImageDTO>>(images);
 
                 if (response.Data != null)
                 {
@@ -97,15 +98,15 @@ namespace BlogFlow.Core.Application.UseCases.Content
             return response;
         }
 
-        public async Task<Response<ContentDTO>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public async Task<Response<ImageDTO>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            var response = new Response<ContentDTO>();
+            var response = new Response<ImageDTO>();
 
             try
             {
-                var content = await _unitOfWork.Contents.GetAsync(id, cancellationToken);
+                var image = await _unitOfWork.Images.GetAsync(id, cancellationToken);
 
-                response.Data = _mapper.Map<ContentDTO>(content);
+                response.Data = _mapper.Map<ImageDTO>(image);
 
                 if (response.Data != null)
                 {
@@ -115,13 +116,13 @@ namespace BlogFlow.Core.Application.UseCases.Content
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "Content doesn't exist!!";
+                    response.Message = "Image doesn't exist!!";
                 }
             }
             catch (InvalidOperationException)
             {
                 response.IsSuccess = false;
-                response.Message = "Content doesn't exist";
+                response.Message = "Image doesn't exist";
             }
             catch (Exception ex)
             {
@@ -132,21 +133,21 @@ namespace BlogFlow.Core.Application.UseCases.Content
             return response;
         }
 
-        public async Task<Response<bool>> InsertAsync(ContentDTO entity, CancellationToken cancellationToken = default)
+        public async Task<Response<ImageDTO>> InsertAsync(ImageDTO entity, CancellationToken cancellationToken = default)
         {
-            var response = new Response<bool>();
+            var response = new Response<ImageDTO>();
 
             try
             {
-                var content = _mapper.Map<Domain.Entities.Content>(entity);
+                var image = _mapper.Map<Image>(entity);
 
-                if (await _unitOfWork.Contents.InsertAsync(content))
+                if (await _unitOfWork.Images.InsertAsync(image))
                 {
-                    response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
+                    response.IsSuccess = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
-                    if (response.Data)
+                    if (response.IsSuccess)
                     {
-                        response.IsSuccess = true;
+                        response.Data = entity;
                         response.Message = "Insert succeded!!";
                     }
                 }
@@ -161,21 +162,22 @@ namespace BlogFlow.Core.Application.UseCases.Content
             return response;
         }
 
-        public async Task<Response<bool>> UpdateAsync(string id, ContentDTO entity, CancellationToken cancellationToken = default)
+        public async Task<Response<bool>> UpdateAsync(string id, ImageDTO entity, CancellationToken cancellationToken = default)
         {
             var response = new Response<bool>();
 
             try
             {
-                var contentExists = await _unitOfWork.Contents.GetAsync(id, cancellationToken);
+                var imageExist = await _unitOfWork.Images.GetAsync(id, cancellationToken);
 
-                var content = _mapper.Map<Domain.Entities.Content>(entity);
+                var image = _mapper.Map<Image>(entity);
 
-                if (contentExists != null)
+                if (imageExist != null)
                 {
-                    contentExists.TextContent = content.TextContent;
+                    imageExist.Url = image.Url;
+                    imageExist.PublicId = image.PublicId;
 
-                    await _unitOfWork.Contents.UpdateAsync(contentExists);
+                    await _unitOfWork.Images.UpdateAsync(imageExist);
 
                     response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
@@ -188,7 +190,7 @@ namespace BlogFlow.Core.Application.UseCases.Content
                 else
                 {
                     response.IsSuccess = false;
-                    response.Message = "Content doesn't exist!!";
+                    response.Message = "Image doesn't exist!!";
                 }
             }
             catch (Exception e)

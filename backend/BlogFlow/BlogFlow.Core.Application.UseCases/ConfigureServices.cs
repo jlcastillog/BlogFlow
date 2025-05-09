@@ -1,6 +1,6 @@
 ﻿using BlogFlow.Core.Application.Interface.UseCases;
 using BlogFlow.Core.Application.UseCases.Blogs;
-using BlogFlow.Core.Application.UseCases.Content;
+using BlogFlow.Core.Application.UseCases.Images;
 using BlogFlow.Core.Application.UseCases.Posts;
 using BlogFlow.Core.Application.UseCases.RefreshTokens;
 using BlogFlow.Core.Application.UseCases.Users;
@@ -15,10 +15,11 @@ namespace BlogFlow.Core.Application.UseCases
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IUsersApplication, UsersApplication>();
-            services.AddScoped<IBlogsApplication, BlogsApplicaction>();
+            services.AddScoped<IBlogsApplication, BlogsApplication>();
             services.AddScoped<IPostsApplication, PostsApplication>();
-            services.AddScoped<IContentsApplication, ContentsApplication>();
             services.AddScoped<IRefreshTokenApplication, RefreshTokenApplication>();
+            services.AddScoped<IImageApplication, ImageApplication>();
+            services.AddScoped<IImageStorageApplication, ImageStorageApplication>();
 
             return services;
         }
