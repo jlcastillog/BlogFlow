@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./style.css";
 
-const ImageLoader = ({ onImageSelect, image }) => {
-  const [imagePreview, setImagePreview] = useState(null);
+const ImageLoader = ({ onImageSelect, image, imageUrl }) => {
+  const [imagePreview, setImagePreview] = useState(imageUrl);
 
   if (image) {
     console.log(image);

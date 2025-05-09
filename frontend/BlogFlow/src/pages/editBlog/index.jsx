@@ -4,7 +4,7 @@ import { useAuth } from "../../components/auth";
 import ImageLoader from "../../components/imageLoader";
 import { updateBlog } from "../../services/blog/blogService";
 import Loading from "../../components/loading";
-import {base64ToFile} from "../../utils/imageHelpers.js";
+// import {base64ToFile} from "../../utils/imageHelpers.js";
 import ErrorPanel from "../../components/error";
 import MessagePanel from "../../components/message";
 import "./style.css";
@@ -12,7 +12,7 @@ import "./style.css";
 function EditBlogPage() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(base64ToFile(location.state.blog.image, "image.png", "image/png"));
+  const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const [message, setMassage] = useState(null);
   const [blog, setBlog] = useState(location.state.blog);
@@ -82,7 +82,7 @@ console.log("blog", blog);
               <input placeholder="Description" value={blog.description}/>
             </div>
             <div className="image-loader-field">
-              <ImageLoader onImageSelect={setImage} image={image} />
+              <ImageLoader onImageSelect={setImage} image={image} imageUrl={blog.imageUrl + "?v=" + new Date().getTime()}/>
             </div>
             <div className="editBlog-button-container">
               <button type="submit">Save</button>
