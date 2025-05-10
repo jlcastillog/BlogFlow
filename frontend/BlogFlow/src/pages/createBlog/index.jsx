@@ -37,7 +37,7 @@ function CreateBlogPage() {
       formData.append("UserId", newBlog.userId);
       formData.append("image", image);
 
-      createBlog(formData);
+      await createBlog(formData);
 
       navigate("/");
 
