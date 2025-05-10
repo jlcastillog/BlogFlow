@@ -91,7 +91,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
 
         public async Task<bool> UpdateAsync(Blog entity)
         {
-            var entityToUpdate = await _applicationDbContext.Set<Blog>().AsNoTracking().SingleOrDefaultAsync(x => x.Id.Equals(entity.Id));
+            var entityToUpdate = await _applicationDbContext.Set<Blog>().Include(b => b.Image).SingleOrDefaultAsync(x => x.Id.Equals(entity.Id));
 
             if (entityToUpdate == null)
             {

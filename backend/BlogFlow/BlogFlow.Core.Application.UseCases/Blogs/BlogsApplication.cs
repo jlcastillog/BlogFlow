@@ -273,11 +273,11 @@ namespace BlogFlow.Core.Application.UseCases.Blogs
 
                     var blog = _mapper.Map<Blog>(entity);
 
-                    blogExist.Title = blog.Title;
-                    blogExist.Description = blog.Description;
-                    blogExist.Category = blog.Category;
+                    blog.Image = blogExist.Image;
+                    blog.Image.PublicId = publicId;
+                    blog.Image.Url = url;
 
-                    await _unitOfWork.Blogs.UpdateAsync(blogExist);
+                    await _unitOfWork.Blogs.UpdateAsync(blog);
 
                     response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 
