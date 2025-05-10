@@ -28,6 +28,7 @@ console.log("blog", blog);
       event.preventDefault();
       
       setLoading(true);
+      setError(null);
       
       const form = event.target;
       const newBlog = {
@@ -38,6 +39,7 @@ console.log("blog", blog);
       };
 
       const formData = new FormData();
+      formData.append("Id", blog.id);
       formData.append("Title", newBlog.title);
       formData.append("Category", newBlog.category);
       formData.append("Description", newBlog.description);                                       
