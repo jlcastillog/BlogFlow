@@ -104,7 +104,7 @@ function BlogPage() {
         </div>
         <div className="blog-image-container">
           <img
-            src={`data:image/jpeg;base64,${blog?.image}`}
+            src={blog.imageUrl + "?v=" + new Date().getTime()}
             alt="Imagen del blog"
             className="blog-image"
           />

@@ -75,12 +75,12 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<Blog>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _applicationDbContext.Set<Blog>().AsNoTracking().ToListAsync(cancellationToken);
+            return await _applicationDbContext.Set<Blog>().Include(b => b.Image).ToListAsync(cancellationToken);
         }
 
         public async Task<Blog> GetAsync(string id, CancellationToken cancellationToken)
         {
-            return await _applicationDbContext.Set<Blog>().AsNoTracking().SingleOrDefaultAsync(x => x.Id.Equals(int.Parse(id)), cancellationToken);
+            return await _applicationDbContext.Set<Blog>().Include(b => b.Image).SingleOrDefaultAsync(x => x.Id.Equals(int.Parse(id)), cancellationToken);
         }
 
         public async Task<bool> InsertAsync(Blog entity)
@@ -91,7 +91,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
 
         public async Task<bool> UpdateAsync(Blog entity)
         {
-            var entityToUpdate = await _applicationDbContext.Set<Blog>().AsNoTracking().SingleOrDefaultAsync(x => x.Id.Equals(entity.Id));
+            var entityToUpdate = await _applicationDbContext.Set<Blog>().Include(b => b.Image).SingleOrDefaultAsync(x => x.Id.Equals(entity.Id));
 
             if (entityToUpdate == null)
             {

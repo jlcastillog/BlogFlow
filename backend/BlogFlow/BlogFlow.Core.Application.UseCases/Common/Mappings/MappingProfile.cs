@@ -11,10 +11,13 @@ namespace BlogFlow.Core.Application.UseCases.Common.Mappings
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserResponseDTO>().ReverseMap();
             CreateMap<User, AuthUserRequestDTO>().ReverseMap();
-            CreateMap<Blog, BlogDTO>().ReverseMap();
+            CreateMap<Blog, BlogDTO>().ReverseMap().AfterMap((dest, src) =>
+            {
+                dest.ImageUrl = src?.Image?.Url;
+            });             
             CreateMap<Post, PostDTO>().ReverseMap();
-            CreateMap<Domain.Entities.Content, ContentDTO>().ReverseMap();
             CreateMap<RefreshToken, RefreshTokenDTO>().ReverseMap();
+            CreateMap<Image, ImageDTO>().ReverseMap();
         }
     }
 }

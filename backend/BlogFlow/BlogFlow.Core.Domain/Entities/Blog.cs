@@ -1,7 +1,4 @@
-﻿using BlogFlow.Core.Domain.Entities;
-using System.Reflection.Metadata;
-
-namespace BlogFlow.Core.Domain.Entities
+﻿namespace BlogFlow.Core.Domain.Entities
 {
     public class Blog
     {
@@ -9,7 +6,8 @@ namespace BlogFlow.Core.Domain.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public byte[] Image { get; set; }
+        public int ImageId { get; set; }
+        public Image Image { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
     }

@@ -27,3 +27,37 @@ Usando docker compose (archivo docker-compose.yml) se realiza la creación de to
 - frontend
 
 He creado un script de powershell en la raiz de la solución que automatiza el redespliegue en docker de todas la aplicación (dev-docker-redeploy.ps1).
+
+# Almacenamiento de ficheros
+
+Para el alamcenamiento de ficheros (por ahora imagenes) he optado por usar un almacenamiento en la nube usando [Cloudinary](https://cloudinary.com/).
+He optado principalmente por esta opcion por:
+
+1. Escalabilidad
+   - Puedes almacenar desde unos pocos archivos hasta petabytes sin preocuparte por la infraestructura.
+   - Se adapta automáticamente al crecimiento de tu aplicación y a la demanda de usuarios.
+
+2. Alta disponibilidad y redundancia
+   - Los proveedores en la nube como AWS S3, Azure Blob Storage o Google Cloud Storage replican los datos en múltiples ubicaciones.
+   - Esto garantiza que los archivos estén disponibles incluso ante fallos de hardware o centros de datos.
+
+3. Reducción de costos operativos
+   - No necesitas invertir en servidores propios ni preocuparte por el mantenimiento físico.
+   - Puedes pagar solo por lo que usas (almacenamiento, transferencias, solicitudes).
+
+4. Integración fácil con CDNs
+   - Puedes conectar el almacenamiento a una Red de Distribución de Contenidos (CDN) para servir archivos estáticos (imágenes, vídeos, PDFs, etc.) rápidamente a usuarios de todo el mundo.
+
+5. Seguridad y control de acceso
+   - Soporte para encriptación en reposo y en tránsito.
+   - Gestión detallada de permisos mediante roles y políticas (IAM, ACLs, etc.).
+
+6. Backups y versiones
+   - Posibilidad de mantener versiones de archivos y restaurarlos en caso de errores o eliminación accidental.
+
+7. Facilidad de integración
+   - APIs y SDKs disponibles para múltiples lenguajes y frameworks.
+   - Ideal para aplicaciones que requieren subir y servir archivos desde el frontend (por ejemplo, React + backend en .NET).
+
+8. Optimización del rendimiento
+   - Al externalizar la entrega de archivos, reduces la carga del servidor principal de tu aplicación.

@@ -9,3 +9,13 @@ export function base64ToFile(base64, fileName, mimeType) {
       lastModified: Date.now()
     });
   }
+
+export function transformarUrlCloudinary(url, width) {
+    // Verifica si la URL ya contiene parámetros de transformación
+    if (url.includes('/upload/')) {
+        // Si ya tiene transformaciones, solo agrega las nuevas
+        return url.replace('/upload/', `/upload/w_${width},f_auto,q_auto/`);
+    }
+    // Si no tiene devuelve al original
+  return url;
+}

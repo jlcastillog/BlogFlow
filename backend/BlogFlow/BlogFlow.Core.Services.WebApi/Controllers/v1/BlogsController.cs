@@ -4,6 +4,7 @@ using BlogFlow.Core.Application.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using BlogFlow.Core.Transversal.Common.Helpers;
+using BlogFlow.Core.Application.UseCases.Images;
 
 namespace BlogFlow.Core.Services.WebApi.Controllers.v1
 {
@@ -63,18 +64,13 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
                 return BadRequest("Image is required");
             }
 
-            // Convert IFormFile from the request to byte[]
-            try
+            //Insert image in cloud service
+            var imageStoreageDto = new ImageStorageDTO()
             {
-                ImageHelper.IFormFileToByteArray(image, out byte[] imageBytes);
-                blog.Image = imageBytes;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                File = image
+            };
 
-            var response = await _blogsApplication.InsertAsync(blog);
+            var response = await _blogsApplication.InsertAsync(blog, imageStoreageDto);
             if (response.IsSuccess)
             {
                 return Ok(response);
@@ -106,23 +102,10 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
                 return BadRequest("Blog is required");
             }
 
-            if (image == null)
-            {
-                return BadRequest("Image is required");
-            }
+            var imageStoreageDto = new ImageStorageDTO() { File = image };
 
-            // Convert IFormFile from the request to byte[]
-            try
-            {
-                ImageHelper.IFormFileToByteArray(image, out byte[] imageBytes);
-                blog.Image = imageBytes;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-            var response = await _blogsApplication.UpdateAsync(blogId, blog);
+            //Update the blog
+            var response = await _blogsApplication.UpdateAsync(blogId, blog, imageStoreageDto);
             if (response.IsSuccess)
             {
                 return Ok(response);
@@ -138,6 +121,8 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
             {
                 return BadRequest("BlogId is required");
             }
+
+            //Remove blog
             var response = await _blogsApplication.DeleteAsync(blogId);
             if (response.IsSuccess)
             {

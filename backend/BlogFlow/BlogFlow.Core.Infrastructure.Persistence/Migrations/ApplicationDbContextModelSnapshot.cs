@@ -38,9 +38,8 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -51,12 +50,14 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ImageId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Blog", (string)null);
                 });
 
-            modelBuilder.Entity("BlogFlow.Core.Domain.Entities.Content", b =>
+            modelBuilder.Entity("BlogFlow.Core.Domain.Entities.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,13 +65,17 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("TextContent")
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Content", (string)null);
+                    b.ToTable("Image", (string)null);
                 });
 
             modelBuilder.Entity("BlogFlow.Core.Domain.Entities.Post", b =>
@@ -82,9 +87,6 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BlogId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ContentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -100,8 +102,6 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BlogId");
-
-                    b.HasIndex("ContentId");
 
                     b.ToTable("Post", (string)null);
                 });
@@ -180,11 +180,19 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("BlogFlow.Core.Domain.Entities.Blog", b =>
                 {
+                    b.HasOne("BlogFlow.Core.Domain.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BlogFlow.Core.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Image");
 
                     b.Navigation("User");
                 });
@@ -197,13 +205,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlogFlow.Core.Domain.Entities.Content", "Content")
-                        .WithMany()
-                        .HasForeignKey("ContentId");
-
                     b.Navigation("Blog");
-
-                    b.Navigation("Content");
                 });
 #pragma warning restore 612, 618
         }

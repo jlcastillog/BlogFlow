@@ -5,8 +5,8 @@
         IUsersRepository Users { get; }
         IBlogsRepository Blogs { get; }
         IPostsRepository Posts { get; }
-        IContentsRepository Contents { get; }
         IRefreshTokenRepository RefreshTokens { get; }
+        IImageRepository Images { get; }
         Task<int> Save(CancellationToken cancellationToken);
     }
 }

@@ -1,9 +1,14 @@
 ﻿using BlogFlow.Core.Application.Interface.Persistence;
+using BlogFlow.Core.Application.Interface.Services;
 using BlogFlow.Core.Infrastructure.Persistence.Contexts;
+using BlogFlow.Core.Infrastructure.Persistence.Helpers;
 using BlogFlow.Core.Infrastructure.Persistence.Repositories;
+using BlogFlow.Core.Infrastructure.Persistence.Services;
+using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace BlogFlow.Core.Infrastructure.Persistence
 {
@@ -22,11 +27,23 @@ namespace BlogFlow.Core.Infrastructure.Persistence
                                      );
             });
 
+            var cloudinarySettingsSection = configuration.GetSection("CloudinarySettings");
+            services.Configure<CloudinarySettings>(cloudinarySettingsSection);
+
+            services.AddSingleton(provider =>
+            {
+                var config = provider.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+                var account = new Account(config.CloudName, config.ApiKey, config.ApiSecret);
+                return new Cloudinary(account);
+            });
+
+            services.AddScoped<IImageStorageService, CloudinaryImageStorageService>();
+
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IBlogsRepository, BlogsRepository>();
             services.AddScoped<IPostsRepository, PostsRepository>();
-            services.AddScoped<IContentsRepository, ContentsRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

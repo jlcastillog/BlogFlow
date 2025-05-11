@@ -1,5 +1,4 @@
 ﻿using BlogFlow.Core.Application.Interface.Persistence;
-using BlogFlow.Core.Application.Interface.Persistence;
 using BlogFlow.Core.Infrastructure.Persistence.Contexts;
 
 namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
@@ -9,24 +8,23 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
         public IUsersRepository Users { get; }
         public IBlogsRepository Blogs { get; }
         public IPostsRepository Posts { get; }
-        public IContentsRepository Contents { get; }
-
         public IRefreshTokenRepository RefreshTokens { get; }
+        public IImageRepository Images { get; }
 
         private readonly ApplicationDbContext _applicaDbContext;
 
         public UnitOfWork(IUsersRepository users, 
                           IBlogsRepository blogs, 
-                          IPostsRepository posts, 
-                          IContentsRepository contents, 
+                          IPostsRepository posts,
                           IRefreshTokenRepository refreshTokens,
+                          IImageRepository images,
                           ApplicationDbContext applicationDbContext)
         {
             Users = users;
             Blogs = blogs;
             Posts = posts;
-            Contents = contents;
             RefreshTokens = refreshTokens;
+            Images = images;
             _applicaDbContext = applicationDbContext;
         }
 
