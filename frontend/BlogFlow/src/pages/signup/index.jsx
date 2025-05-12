@@ -5,7 +5,7 @@ import "./style.css";
 function Signup() {
   const auth = useAuth();
 
-  const doSignup = (event) => {
+  const doSignup = async (event) => {
     event.preventDefault();
     const form = event.target;
     const user = {
@@ -18,7 +18,7 @@ function Signup() {
     };
 
     try {
-      createUser(user);
+      await createUser(user);
       auth.login(user.userName, user.password);
     }
     catch (error) {
