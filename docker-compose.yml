@@ -12,14 +12,24 @@ services:
       - sql_data:/var/opt/mssql
     networks:
       - app-network
+  service-api-gateway:
+    build:
+      context: .\backend\BlogFlow
+      dockerfile: .\BlogFlow.APIGateway.Services.WebApi\Dockerfile
+    depends_on:
+      - sqlserver
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker-Dev
+    networks:
+      - app-network
   web-service-auth:
     build:
       context: .\backend\BlogFlow
       dockerfile: .\BlogFlow.Auth.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
-    ports:
-      - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:
@@ -30,8 +40,6 @@ services:
       dockerfile: .\BlogFlow.Core.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
-    ports:
-      - "5001:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:

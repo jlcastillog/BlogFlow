@@ -39,7 +39,7 @@ export async function updateBlog(data, blogId) {
 
 export async function getBlogs() {
   const URL_API = URL_API_CORE_BASE + API__BLOG_POST_GETALL;
-
+  console.log("URL_API", URL_API);
   const response = await apiClient.get(URL_API);
   return response.data.data;
 }

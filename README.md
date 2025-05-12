@@ -22,10 +22,14 @@ docker run -d -p 5000:8080 --name BlogFlow.Auth.WebApi blogflow-auth-webapi:late
 
 Usando docker compose (archivo docker-compose.yml) se realiza la creación de todas las images de la aplicación:
 
+- sqlserver
+- web-service-gateway
 - web-service-core
 - web-service-auth
 - frontend
 
+<img src="docker-dev-strucutre.png" alt="Docker-Dev structure" style="width: 50%; height: 50%;"/>
+  
 He creado un script de powershell en la raiz de la solución que automatiza el redespliegue en docker de todas la aplicación (dev-docker-redeploy.ps1).
 
 # Almacenamiento de ficheros
