@@ -23,11 +23,11 @@ RUN dotnet restore "BlogFlow.sln"
 COPY . .
 
 # Compilar la solución
-WORKDIR /src/BlogFlow.Auth.Services.WebApi
+WORKDIR /src/BlogFlow.APIGateway.Services.WebApi
 RUN dotnet publish -c Release -o /app/publish
 
 # Crear la imagen final basada en el runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "BlogFlow.Auth.Services.WebApi.dll"]
+ENTRYPOINT ["dotnet", "BlogFlow.APIGateway.Services.WebApi.dll"]
