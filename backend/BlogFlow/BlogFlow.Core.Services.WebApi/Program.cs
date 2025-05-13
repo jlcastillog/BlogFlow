@@ -33,6 +33,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddVersioning();
 builder.Services.AddSwagger();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddHttpsRedirection(options =>
 {
@@ -67,5 +68,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

@@ -1,4 +1,8 @@
+using BlogFlow.APIGateway.Services.WebApi.Helpers;
 using BlogFlow.APIGateway.Services.WebApi.Modules.Features;
+using BlogFlow.APIGateway.Services.WebApi.Modules.HealthCheck;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,12 +11,34 @@ var environment = builder.Environment.EnvironmentName;
 
 Console.WriteLine($"Running in: {environment}");
 
+builder.Services.Configure<HealthCheckSettings>(
+    builder.Configuration.GetSection("HealthChecks"));
+
 builder.Services.AddFeature(builder.Configuration);
+builder.Services.AddHealthCheck(builder.Configuration);
 
 var app = builder.Build();
 
 app.UseCors(FeatureExtension.myPolicy);
 app.UseHttpsRedirection();
 app.MapReverseProxy();
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+        var result = JsonSerializer.Serialize(new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(entry => new {
+                name = entry.Key,
+                status = entry.Value.Status.ToString(),
+                exception = entry.Value.Exception?.Message,
+                duration = entry.Value.Duration.ToString()
+            })
+        });
+        await context.Response.WriteAsync(result);
+    }
+});
 
 app.Run();

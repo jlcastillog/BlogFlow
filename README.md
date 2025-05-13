@@ -65,3 +65,7 @@ He optado principalmente por esta opcion por:
 
 8. Optimización del rendimiento
    - Al externalizar la entrega de archivos, reduces la carga del servidor principal de tu aplicación.
+
+# Healthcheck
+
+Dentro de la API Gateway se ha ahbilitado un healthcheck para comprobar la disponibilidad de los servicios.
