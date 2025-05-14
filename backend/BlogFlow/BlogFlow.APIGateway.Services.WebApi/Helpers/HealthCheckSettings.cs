@@ -3,6 +3,8 @@
     public class HealthCheckSettings
     {
         public List<HealthCheckService> Services { get; set; }
+        public int EvaluationTimeInSeconds { get; set; }
+        public int MaximumHistoryEntriesPerEndpoint {get; set;}
     }
 
     public class HealthCheckService

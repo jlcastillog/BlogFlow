@@ -6,6 +6,9 @@ using BlogFlow.Auth.Services.WebApi.Modules.Feature;
 using BlogFlow.Auth.Services.WebApi.Modules.Swagger;
 using BlogFlow.Auth.Services.WebApi.Modules.Versioning;
 using System;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using BlogFlow.Auth.Services.WebApi.Modules.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +33,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddVersioning();
 builder.Services.AddSwagger();
-builder.Services.AddHealthChecks();
+builder.Services.AddHealthCheck(builder.Configuration);
 
 builder.Services.AddHttpsRedirection(options =>
 {
@@ -58,6 +61,10 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

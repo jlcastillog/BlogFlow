@@ -1,6 +1,7 @@
 using BlogFlow.APIGateway.Services.WebApi.Helpers;
 using BlogFlow.APIGateway.Services.WebApi.Modules.Features;
 using BlogFlow.APIGateway.Services.WebApi.Modules.HealthCheck;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Text.Json;
 
@@ -22,6 +23,7 @@ var app = builder.Build();
 app.UseCors(FeatureExtension.myPolicy);
 app.UseHttpsRedirection();
 app.MapReverseProxy();
+
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = async (context, report) =>
@@ -30,7 +32,8 @@ app.MapHealthChecks("/health", new HealthCheckOptions
         var result = JsonSerializer.Serialize(new
         {
             status = report.Status.ToString(),
-            checks = report.Entries.Select(entry => new {
+            checks = report.Entries.Select(entry => new
+            {
                 name = entry.Key,
                 status = entry.Value.Status.ToString(),
                 exception = entry.Value.Exception?.Message,
@@ -39,6 +42,11 @@ app.MapHealthChecks("/health", new HealthCheckOptions
         });
         await context.Response.WriteAsync(result);
     }
+});
+
+app.MapHealthChecksUI(options =>
+{
+    options.UIPath = "/health-ui";
 });
 
 app.Run();
