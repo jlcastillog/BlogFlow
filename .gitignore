@@ -364,3 +364,9 @@ FodyWeavers.xsd
 FodyWeavers.xsd
 /ARQUITECTURA .NET/Pacagroup.Ecommerce/Pacagroup.Ecommerce.Services.WebApi/obj/Debug/net8.0/Pacagroup.Ecommerce.Services.WebApi.AssemblyInfoInputs.cache
 /ARQUITECTURA .NET/Pacagroup.Ecommerce/Pacagroup.Ecommerce.Services.WebApi/obj/Debug/net8.0/Pacagroup.Ecommerce.Services.WebApi.AssemblyInfo.cs
+
+# environment configuraion file
+.env
+
+# local secrets
+*.psd1

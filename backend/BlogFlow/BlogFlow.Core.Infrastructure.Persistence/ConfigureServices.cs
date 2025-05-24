@@ -4,6 +4,7 @@ using BlogFlow.Core.Infrastructure.Persistence.Contexts;
 using BlogFlow.Core.Infrastructure.Persistence.Helpers;
 using BlogFlow.Core.Infrastructure.Persistence.Repositories;
 using BlogFlow.Core.Infrastructure.Persistence.Services;
+using BlogFlow.Core.Transversal.Secrets;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,11 +15,25 @@ namespace BlogFlow.Core.Infrastructure.Persistence
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+        public static async Task<IServiceCollection> AddPersistenceServicesAsync(this IServiceCollection services, IConfiguration configuration)
         {
+            string dataBaseConnectionString = string.Empty;
+            var secretManager = services.BuildServiceProvider().GetRequiredService<ISecretManager>();
+
+            if (configuration.GetValue<bool>("IsVaultSecretEnable"))
+            {
+                var secret = await secretManager.Get<SqlServerCredentials>("BlogFlowConnection");
+
+                dataBaseConnectionString = secret.ConnectionString;
+            }
+            else
+            {
+                dataBaseConnectionString = configuration.GetConnectionString("BlogFlowConnection");
+            }
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("BlogFlowConnection"),
+                options.UseSqlServer(dataBaseConnectionString,
                                      builder =>
                                          {
                                              builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
@@ -48,6 +63,11 @@ namespace BlogFlow.Core.Infrastructure.Persistence
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
+        }
+
+        private record SqlServerCredentials
+        {
+            public string ConnectionString { get; init; } = null!;
         }
     }
 }

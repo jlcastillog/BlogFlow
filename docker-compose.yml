@@ -12,6 +12,19 @@ services:
       - sql_data:/var/opt/mssql
     networks:
       - app-network
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault
+    ports:
+      - 8200:8200
+    environment:
+      VAULT_ADDR: "http://127.0.0.1:8200"
+      VAULT_TOKEN: "vault-blogflow-token"
+      VAULT_DEV_ROOT_TOKEN_ID: "vault-blogflow-token"
+    cap_add:
+      - IPC_LOCK
+    networks:
+      - app-network
   service-api-gateway:
     build:
       context: .\backend\BlogFlow
@@ -30,8 +43,11 @@ services:
       dockerfile: .\BlogFlow.Auth.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
+      - vault
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
+      - VAULT_TOKEN
+      - VAULT_ADDR
     networks:
       - app-network
   web-service-core:
@@ -40,8 +56,11 @@ services:
       dockerfile: .\BlogFlow.Core.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
+      - vault
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
+      - VAULT_TOKEN
+      - VAULT_ADDR
     networks:
       - app-network
   frontend:
@@ -52,6 +71,5 @@ services:
       - "3000:80"
 volumes:
   sql_data:
-
 networks:
   app-network:

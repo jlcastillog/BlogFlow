@@ -15,11 +15,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlogFlow.Core.Application.Interface\BlogFlow.Core.Application.Interface.csproj" />
+    <ProjectReference Include="..\BlogFlow.Core.Transversal.Secrets\BlogFlow.Core.Transversal.Secrets.csproj" />
   </ItemGroup>
 
   <ItemGroup>

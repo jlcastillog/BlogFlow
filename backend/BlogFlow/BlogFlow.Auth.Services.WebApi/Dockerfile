@@ -14,6 +14,7 @@ COPY ["BlogFlow.Core.Application.UseCases/BlogFlow.Core.Application.UseCases.csp
 COPY ["BlogFlow.Core.Application.Interface/BlogFlow.Core.Application.Interface.csproj", "BlogFlow.Core.Application.Interface/"]
 COPY ["BlogFlow.Core.Application.DTO/BlogFlow.Core.Application.DTO.csproj", "BlogFlow.Core.Application.DTO/"]
 COPY ["BlogFlow.Core.Transversal.Common/BlogFlow.Core.Transversal.Common.csproj", "BlogFlow.Core.Transversal.Common/"]
+COPY ["BlogFlow.Core.Transversal.Secrets/BlogFlow.Core.Transversal.Secrets.csproj", "BlogFlow.Core.Transversal.Secrets/"]
 COPY ["BlogFlow.Auth.Application.Test/BlogFlow.Auth.Application.Test.csproj", "BlogFlow.Auth.Application.Test/"]
 
 # Restaurar dependencias

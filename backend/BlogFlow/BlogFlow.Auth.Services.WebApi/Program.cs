@@ -27,8 +27,9 @@ builder.Configuration
 builder.Services.AddEndpointsApiExplorer();
 
 // Add services to the container.
+builder.Services.AddVaultService(builder.Configuration);
 builder.Services.AddFeature(builder.Configuration);
-builder.Services.AddPersistenceServices(builder.Configuration);
+await builder.Services.AddPersistenceServicesAsync(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddVersioning();
