@@ -1,11 +1,13 @@
 using BlogFlow.APIGateway.Services.WebApi.Helpers;
 using BlogFlow.APIGateway.Services.WebApi.Modules.Features;
 using BlogFlow.APIGateway.Services.WebApi.Modules.HealthCheck;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Text.Json;
+using BlogFlow.APIGateway.Services.WebApi.Modules.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddLogger();
 
 // Detect current environment
 var environment = builder.Environment.EnvironmentName;

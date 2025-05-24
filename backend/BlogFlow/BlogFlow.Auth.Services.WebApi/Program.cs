@@ -1,14 +1,14 @@
 using Asp.Versioning.ApiExplorer;
-using BlogFlow.Core.Application.UseCases;
-using BlogFlow.Core.Infrastructure.Persistence;
 using BlogFlow.Auth.Services.WebApi.Modules.Authentication;
 using BlogFlow.Auth.Services.WebApi.Modules.Feature;
+using BlogFlow.Auth.Services.WebApi.Modules.HealthChecks;
 using BlogFlow.Auth.Services.WebApi.Modules.Swagger;
 using BlogFlow.Auth.Services.WebApi.Modules.Versioning;
-using System;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using BlogFlow.Core.Application.UseCases;
+using BlogFlow.Core.Infrastructure.Persistence;
 using HealthChecks.UI.Client;
-using BlogFlow.Auth.Services.WebApi.Modules.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using BlogFlow.Auth.Services.WebApi.Modules.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{environment}.json", optional: true)
     .AddEnvironmentVariables();
+
+builder.AddLogger();
 
 builder.Services.AddEndpointsApiExplorer();
 

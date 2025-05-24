@@ -1,10 +1,8 @@
 ﻿using Asp.Versioning;
-using BlogFlow.Core.Application.Interface.UseCases;
 using BlogFlow.Core.Application.DTO;
-using Microsoft.AspNetCore.Mvc;
+using BlogFlow.Core.Application.Interface.UseCases;
 using Microsoft.AspNetCore.Authorization;
-using BlogFlow.Core.Transversal.Common.Helpers;
-using BlogFlow.Core.Application.UseCases.Images;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlogFlow.Core.Services.WebApi.Controllers.v1
 {
