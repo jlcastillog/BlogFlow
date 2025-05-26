@@ -30,6 +30,7 @@ services:
       dockerfile: .\BlogFlow.Auth.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
+      - service-api-gateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:
@@ -40,6 +41,8 @@ services:
       dockerfile: .\BlogFlow.Core.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
+      - service-api-gateway
+      - web-service-auth
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:

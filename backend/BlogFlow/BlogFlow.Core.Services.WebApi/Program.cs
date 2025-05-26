@@ -5,12 +5,14 @@ using BlogFlow.Core.Infrastructure.Persistence.Contexts;
 using BlogFlow.Core.Services.WebApi.Modules.Authentication;
 using BlogFlow.Core.Services.WebApi.Modules.Feature;
 using BlogFlow.Core.Services.WebApi.Modules.HealthChecks;
+using BlogFlow.Core.Services.WebApi.Modules.Logger;
 using BlogFlow.Core.Services.WebApi.Modules.Swagger;
 using BlogFlow.Core.Services.WebApi.Modules.Versioning;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using BlogFlow.Core.Services.WebApi.Modules.Logger;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,11 +49,20 @@ builder.Services.AddHttpsRedirection(options =>
 
 var app = builder.Build();
 
-// Ejecuta migraciones al iniciar
+// Running migration on starting
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.Migrate(); // Apply pending migrations
+    Console.WriteLine("Checking for database and applying migrations if needed");
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    var databaseCreator = (RelationalDatabaseCreator)dbContext.Database.GetService<IDatabaseCreator>();
+    if (!databaseCreator.Exists())
+    {
+        Console.WriteLine("Database does not exist. Creating...");
+        dbContext.Database.EnsureCreated(); 
+    }
+
+    dbContext.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.

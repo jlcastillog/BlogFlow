@@ -6,7 +6,8 @@ Set-Location $composeFilePath
 
 # Show running containers based on the compose file
 Write-Host "Stopping and removing existing containers..." -ForegroundColor Yellow
-docker compose down -v
+#docker compose down -v
+docker compose down
 
 # (Optional) Remove old images to force a rebuild
 Write-Host "Removing old images..." -ForegroundColor Yellow

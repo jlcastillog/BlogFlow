@@ -29,5 +29,18 @@ RUN dotnet publish -c Release -o /app/publish
 # Crear la imagen final basada en el runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+
+# Instalar PowerShell Core
+RUN apt-get update \
+    && apt-get install -y wget apt-transport-https software-properties-common \
+    && wget -q "https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb" -O packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt-get install -y powershell \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar el script de espera
+COPY BlogFlow.Core.Services.WebApi/wait-for-sql.ps1 .
+
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "BlogFlow.Core.Services.WebApi.dll"]
+ENTRYPOINT ["pwsh", "./wait-for-sql.ps1", "dotnet", "BlogFlow.Core.Services.WebApi.dll"]
