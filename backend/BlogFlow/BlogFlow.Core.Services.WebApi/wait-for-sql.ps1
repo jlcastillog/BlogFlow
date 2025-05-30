@@ -12,6 +12,7 @@ while ($attempt -lt $maxAttempts) {
         $tcpClient = New-Object System.Net.Sockets.TcpClient
         $tcpClient.Connect($server, $port)
         if ($tcpClient.Connected) {
+            Start-Sleep -Seconds 4
             Write-Host "✅ SQL Server está listo - arrancando la aplicación .NET"
             $tcpClient.Close()
             break
