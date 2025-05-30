@@ -1,16 +1,18 @@
 using Asp.Versioning.ApiExplorer;
+using BlogFlow.Core.Application.UseCases;
+using BlogFlow.Core.Infrastructure.Persistence;
+using BlogFlow.Core.Infrastructure.Persistence.Contexts;
 using BlogFlow.Core.Services.WebApi.Modules.Authentication;
 using BlogFlow.Core.Services.WebApi.Modules.Feature;
+using BlogFlow.Core.Services.WebApi.Modules.HealthChecks;
+using BlogFlow.Core.Services.WebApi.Modules.Logger;
 using BlogFlow.Core.Services.WebApi.Modules.Swagger;
 using BlogFlow.Core.Services.WebApi.Modules.Versioning;
-using BlogFlow.Core.Infrastructure.Persistence;
-using BlogFlow.Core.Application.UseCases;
-using System;
-using BlogFlow.Core.Infrastructure.Persistence.Contexts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
-using BlogFlow.Core.Services.WebApi.Modules.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{environment}.json", optional: true)
     .AddEnvironmentVariables();
+
+builder.AddLogger();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -45,11 +49,20 @@ builder.Services.AddHttpsRedirection(options =>
 
 var app = builder.Build();
 
-// Ejecuta migraciones al iniciar
+// Running migration on starting
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.Migrate(); // Apply pending migrations
+    Console.WriteLine("Checking for database and applying migrations if needed");
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    var databaseCreator = (RelationalDatabaseCreator)dbContext.Database.GetService<IDatabaseCreator>();
+    if (!databaseCreator.Exists())
+    {
+        Console.WriteLine("Database does not exist. Creating...");
+        dbContext.Database.EnsureCreated(); 
+    }
+
+    dbContext.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.

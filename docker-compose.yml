@@ -30,6 +30,7 @@ services:
       dockerfile: .\BlogFlow.Auth.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
+      - service-api-gateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:
@@ -40,6 +41,8 @@ services:
       dockerfile: .\BlogFlow.Core.Services.WebApi\Dockerfile
     depends_on:
       - sqlserver
+      - service-api-gateway
+      - web-service-auth
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:
@@ -50,8 +53,22 @@ services:
       dockerfile: .\Dockerfile
     ports:
       - "3000:80"
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:80"        # Interfaz web
+      - "5342:5341"      # Ingesta de logs desde Serilog
+    volumes:
+      - seq_data:/data
+    networks:
+      - app-network
+      
 volumes:
   sql_data:
+  seq_data:
 
 networks:
   app-network:
