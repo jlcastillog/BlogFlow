@@ -73,15 +73,21 @@ console.log("blog", blog);
           <form onSubmit={handleSubmit} className="editBlog-form">
             <div className="editBlog-towLine-fields">
               <label>Title</label>
-              <input placeholder="Title" value={blog.title}/>
+              <input placeholder="Title" value={blog.title} onChange={(e) =>
+                setBlog({ ...blog, title: e.target.value })
+              }/>
             </div>
             <div className="editBlog-towLine-fields">
               <label>Category</label>
-              <input placeholder="Category" value={blog.category}/>
+              <input placeholder="Category" value={blog.category} onChange={(e) =>
+                setBlog({ ...blog, category: e.target.value })
+              }/>
             </div>
             <div className="editBlog-towLine-fields">
               <label>Description</label>
-              <input placeholder="Description" value={blog.description}/>
+              <input placeholder="Description" value={blog.description} onChange={(e) =>
+                setBlog({ ...blog, description: e.target.value })
+              }/>
             </div>
             <div className="image-loader-field">
               <ImageLoader onImageSelect={setImage} image={image} imageUrl={blog.imageUrl + "?v=" + new Date().getTime()}/>
