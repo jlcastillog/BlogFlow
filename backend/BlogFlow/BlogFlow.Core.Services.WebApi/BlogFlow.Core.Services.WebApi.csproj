@@ -31,4 +31,8 @@
     <ProjectReference Include="..\BlogFlow.Core.Infrastructure.Persistence\BlogFlow.Core.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

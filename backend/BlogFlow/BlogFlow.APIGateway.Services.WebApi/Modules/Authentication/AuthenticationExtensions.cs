@@ -1,11 +1,11 @@
-﻿using BlogFlow.Auth.Services.WebApi.Helpers;
+﻿using BlogFlow.APIGateway.Services.WebApi.Helpers;
 using BlogFlow.Core.Application.DTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace BlogFlow.Auth.Services.WebApi.Modules.Authentication
+namespace BlogFlow.APIGateway.Services.WebApi.Modules.Authentication
 {
     public static class AuthenticationExtensions
     {
@@ -70,6 +70,15 @@ namespace BlogFlow.Auth.Services.WebApi.Modules.Authentication
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AllowAnonymous", policy => policy.RequireAssertion(_ => true));
+                options.AddPolicy("Authenticated", policy =>
+                {
+                    policy.RequireAuthenticatedUser(); 
+                });
             });
 
             return services;

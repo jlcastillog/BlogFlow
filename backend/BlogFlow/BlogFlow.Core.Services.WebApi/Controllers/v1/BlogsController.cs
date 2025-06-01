@@ -32,7 +32,6 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpGet("Get/{blogId}")]
-        [Authorize]
         public async Task<IActionResult> GetAsync(string blogId)
         {
             if (string.IsNullOrEmpty(blogId))
@@ -49,7 +48,6 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Insert")]
-        [Authorize]
         public async Task<IActionResult> InsertAsync([FromForm] BlogDTO blog, IFormFile image)
         {
             if (blog == null)
@@ -88,8 +86,7 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpPost("Update/{blogId}")]
-        [Authorize]
-        public async Task<IActionResult> UpdateAsync(string blogId, [FromForm] BlogDTO blog, IFormFile image)
+        public async Task<IActionResult> UpdateAsync(string blogId, [FromForm] BlogDTO blog, IFormFile? image)
         {
             if (string.IsNullOrEmpty(blogId))
             {
@@ -112,7 +109,6 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         }
 
         [HttpDelete("delete/{blogId}")]
-        [Authorize]
         public async Task<IActionResult> DeleteAsync(string blogId)
         {
             if (string.IsNullOrEmpty(blogId))

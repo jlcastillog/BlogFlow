@@ -2,7 +2,6 @@ using Asp.Versioning.ApiExplorer;
 using BlogFlow.Core.Application.UseCases;
 using BlogFlow.Core.Infrastructure.Persistence;
 using BlogFlow.Core.Infrastructure.Persistence.Contexts;
-using BlogFlow.Core.Services.WebApi.Modules.Authentication;
 using BlogFlow.Core.Services.WebApi.Modules.Feature;
 using BlogFlow.Core.Services.WebApi.Modules.HealthChecks;
 using BlogFlow.Core.Services.WebApi.Modules.Logger;
@@ -37,7 +36,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddFeature(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddVersioning();
 builder.Services.AddSwagger();
 builder.Services.AddHealthCheck(builder.Configuration);
@@ -81,8 +79,6 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(FeatureExtension.myPolicy);
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
