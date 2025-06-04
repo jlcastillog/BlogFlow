@@ -1,9 +1,10 @@
 using BlogFlow.APIGateway.Services.WebApi.Helpers;
 using BlogFlow.APIGateway.Services.WebApi.Modules.Features;
 using BlogFlow.APIGateway.Services.WebApi.Modules.HealthCheck;
+using BlogFlow.APIGateway.Services.WebApi.Modules.Logger;
+using BlogFlow.APIGateway.Services.WebApi.Modules.Authentication;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Text.Json;
-using BlogFlow.APIGateway.Services.WebApi.Modules.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ Console.WriteLine($"Running in: {environment}");
 builder.Services.Configure<HealthCheckSettings>(
     builder.Configuration.GetSection("HealthChecks"));
 
+builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddFeature(builder.Configuration);
 builder.Services.AddHealthCheck(builder.Configuration);
 
@@ -24,7 +26,13 @@ var app = builder.Build();
 
 app.UseCors(FeatureExtension.myPolicy);
 app.UseHttpsRedirection();
-app.MapReverseProxy();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapReverseProxy(proxyPipeline =>
+{
+    proxyPipeline.UseAuthentication();
+    proxyPipeline.UseAuthorization();
+});
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {

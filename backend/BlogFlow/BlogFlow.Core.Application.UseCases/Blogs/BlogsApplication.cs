@@ -248,36 +248,49 @@ namespace BlogFlow.Core.Application.UseCases.Blogs
 
                 if (blogExist != null)
                 {
+                    bool saveImage = false;
                     string url = string.Empty;
                     string publicId = string.Empty;
 
-                    try
+                    if (image.File != null)
                     {
-                        // Update image to storage repository
-                        bool resultUpdateImage = false;
-
-                        using var stream = image.File.OpenReadStream();
-                        (resultUpdateImage, url, publicId) = await _imageStorageService.UpdateImageAsync(blogExist.Image.PublicId, stream, image.File.FileName, cancellationToken);
-
-                        if (!resultUpdateImage)
+                        try
                         {
-                            throw new Exception("Failed updating file to storage service!!");
+                            // Update image to storage repository
+                            bool resultUpdateImage = false;
+
+                            using var stream = image.File.OpenReadStream();
+                            (resultUpdateImage, url, publicId) = await _imageStorageService.UpdateImageAsync(blogExist.Image.PublicId, stream, image.File.FileName, cancellationToken);
+
+                            if (!resultUpdateImage)
+                            {
+                                throw new Exception("Failed updating file to storage service!!");
+                            }
+
+                            saveImage = true;
                         }
-                    }
-                    catch (Exception exUploadImage)
-                    {
-                        response.IsSuccess = false;
-                        response.Message = exUploadImage.Message;
-                        return response;
+                        catch (Exception exUploadImage)
+                        {
+                            response.IsSuccess = false;
+                            response.Message = exUploadImage.Message;
+                            return response;
+                        }
                     }
 
                     var blog = _mapper.Map<Blog>(entity);
 
-                    blog.Image = blogExist.Image;
-                    blog.Image.PublicId = publicId;
-                    blog.Image.Url = url;
+                    if (saveImage)
+                    {
+                        blogExist.Image = blog.Image;
+                        blogExist.Image.PublicId = publicId;
+                        blogExist.Image.Url = url;
+                    }
 
-                    await _unitOfWork.Blogs.UpdateAsync(blog);
+                    blogExist.Title = blog.Title;
+                    blogExist.Description = blog.Description;
+                    blogExist.Category = blog.Category;
+
+                    await _unitOfWork.Blogs.UpdateAsync(blogExist);
 
                     response.Data = await _unitOfWork.Save(cancellationToken) > 0 ? true : false;
 

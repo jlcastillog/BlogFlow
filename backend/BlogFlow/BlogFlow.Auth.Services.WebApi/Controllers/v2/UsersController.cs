@@ -31,7 +31,6 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             _appSettings = appSettings.Value;
         }
 
-        [AllowAnonymous]
         [HttpPost("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] AuthUserRequestDTO usersRequestDto)
         {
@@ -130,7 +129,6 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             return Ok();
         }
 
-        [Authorize]
         [HttpPost("Logout")]
         public IActionResult Logout()
         {
@@ -163,7 +161,6 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             return BadRequest(response);
         }
 
-        [Authorize]
         [HttpPost("Update/{userId}")]
         public async Task<IActionResult> UpdateAsync(string userId, [FromBody] UserDTO userDto)
         {
@@ -179,7 +176,6 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
             return BadRequest(response);
         }
 
-        [Authorize]
         [HttpDelete("Delete/{userId}")]
         public async Task<IActionResult> DeleteAsync(string userId)
         {
