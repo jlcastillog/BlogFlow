@@ -12,6 +12,13 @@ services:
       - sql_data:/var/opt/mssql
     networks:
       - app-network
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
   service-api-gateway:
     build:
       context: .\backend\BlogFlow
@@ -31,6 +38,7 @@ services:
     depends_on:
       - sqlserver
       - service-api-gateway
+      - rabbitmq
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:
@@ -47,6 +55,17 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker-Dev
     networks:
       - app-network
+  notifications-service:
+    build:
+      context: .\backend\BlogFlow
+      dockerfile: .\BlogFlow.Notifications.Worker\Dockerfile
+    depends_on:
+      - rabbitmq
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker-Dev
+    networks:
+      - app-network
+
   frontend:
     build:
       context: .\frontend\BlogFlow

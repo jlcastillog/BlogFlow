@@ -20,7 +20,7 @@ namespace BlogFlow.Core.Application.UseCases
             services.AddScoped<IRefreshTokenApplication, RefreshTokenApplication>();
             services.AddScoped<IImageApplication, ImageApplication>();
             services.AddScoped<IImageStorageApplication, ImageStorageApplication>();
-
+            
             return services;
         }
     }
