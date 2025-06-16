@@ -31,7 +31,7 @@ builder.AddLogger();
 builder.Services.AddEndpointsApiExplorer();
 
 // Add services to the container.
-builder.Services.AddRabbitMQ(builder.Configuration);
+await builder.Services.AddRabbitMQAsync(builder.Configuration);
 builder.Services.AddFeature(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
