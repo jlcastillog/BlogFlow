@@ -10,6 +10,7 @@ COPY ["BlogFlow.Auth.Services.WebApi/BlogFlow.Auth.Services.WebApi.csproj", "Blo
 COPY ["BlogFlow.Core.Services.WebApi/BlogFlow.Core.Services.WebApi.csproj", "BlogFlow.Core.Services.WebApi/"]
 COPY ["BlogFlow.Notifications.Worker/BlogFlow.Notifications.Worker.csproj", "BlogFlow.Notifications.Worker/"]
 COPY ["BlogFlow.Core.Infrastructure.Persistence/BlogFlow.Core.Infrastructure.Persistence.csproj", "BlogFlow.Core.Infrastructure.Persistence/"]
+COPY ["BlogFlow.Core.Infrastructure.Mail/BlogFlow.Core.Infrastructure.Mail.csproj", "BlogFlow.Core.Infrastructure.Mail/"]
 COPY ["BlogFlow.Core.Domain/BlogFlow.Core.Domain.csproj", "BlogFlow.Core.Domain/"]
 COPY ["BlogFlow.Core.Application.UseCases/BlogFlow.Core.Application.UseCases.csproj", "BlogFlow.Core.Application.UseCases/"]
 COPY ["BlogFlow.Core.Application.Interface/BlogFlow.Core.Application.Interface.csproj", "BlogFlow.Core.Application.Interface/"]

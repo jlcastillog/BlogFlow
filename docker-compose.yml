@@ -62,7 +62,7 @@ services:
     depends_on:
       - rabbitmq
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker-Dev
+      - DOTNET_ENVIRONMENT=Docker-Dev
     networks:
       - app-network
 

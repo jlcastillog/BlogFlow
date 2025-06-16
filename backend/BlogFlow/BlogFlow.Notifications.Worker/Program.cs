@@ -5,24 +5,18 @@ using BlogFlow.Notifications.Worker.Helpers;
 using MassTransit;
 using Serilog;
 
-var configuration = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-
 var host = Host.CreateDefaultBuilder(args)
-    .ConfigureLogging(logging =>
+    .UseSerilog((context, services, loggerConfiguration) =>
     {
-        logging.ClearProviders();
-    })
-    .UseSerilog((context, services, configuration) =>
-    {
-        configuration
+        loggerConfiguration
             .ReadFrom.Configuration(context.Configuration)
             .ReadFrom.Services(services)
             .Enrich.FromLogContext();
     })
     .ConfigureServices((context, services) =>
     {
+        var configuration = context.Configuration;
+
         var rabibitMQSettingSections = configuration.GetSection("RabbitMQ");
         services.Configure<RabbitMQSettings>(rabibitMQSettingSections);
 
