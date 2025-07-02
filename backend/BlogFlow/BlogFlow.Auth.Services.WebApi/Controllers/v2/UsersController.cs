@@ -23,12 +23,14 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
         private readonly IUsersApplication _usersApplication;
         private readonly IRefreshTokenApplication _refreshTokenApplication;
         private readonly AppSettings _appSettings;
+        private readonly IRegisterUserHandler _registerUserHandler;
 
-        public UsersController(IUsersApplication usersApplication, IRefreshTokenApplication refreshTokenApplication, IOptions<AppSettings> appSettings)
+        public UsersController(IUsersApplication usersApplication, IRefreshTokenApplication refreshTokenApplication, IOptions<AppSettings> appSettings, IRegisterUserHandler registerUserHandler)
         {
             _usersApplication = usersApplication;
             _refreshTokenApplication = refreshTokenApplication;
             _appSettings = appSettings.Value;
+            _registerUserHandler = registerUserHandler;
         }
 
         [HttpPost("Authenticate")]
@@ -153,7 +155,7 @@ namespace BlogFlow.Auth.Services.WebApi.Controllers.v2
                 return BadRequest();
             }
 
-            var response = await _usersApplication.InsertAsync(userDto);
+            var response = await _registerUserHandler.HandleAsync(userDto);
             if (response.IsSuccess)
             {
                 return Ok(response);

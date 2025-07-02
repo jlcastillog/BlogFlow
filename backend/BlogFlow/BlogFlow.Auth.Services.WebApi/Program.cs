@@ -1,13 +1,16 @@
 using Asp.Versioning.ApiExplorer;
 using BlogFlow.Auth.Services.WebApi.Modules.Feature;
 using BlogFlow.Auth.Services.WebApi.Modules.HealthChecks;
+using BlogFlow.Auth.Services.WebApi.Modules.Logger;
+using BlogFlow.Auth.Services.WebApi.Modules.RabbitMQ;
 using BlogFlow.Auth.Services.WebApi.Modules.Swagger;
 using BlogFlow.Auth.Services.WebApi.Modules.Versioning;
+using BlogFlow.Core.Application.Interface.UseCases;
 using BlogFlow.Core.Application.UseCases;
+using BlogFlow.Core.Application.UseCases.Users;
 using BlogFlow.Core.Infrastructure.Persistence;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using BlogFlow.Auth.Services.WebApi.Modules.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,9 +31,11 @@ builder.AddLogger();
 builder.Services.AddEndpointsApiExplorer();
 
 // Add services to the container.
+await builder.Services.AddRabbitMQAsync(builder.Configuration);
 builder.Services.AddFeature(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddScoped<IRegisterUserHandler, RegisterUserHandler>();
 builder.Services.AddVersioning();
 builder.Services.AddSwagger();
 builder.Services.AddHealthCheck(builder.Configuration);
