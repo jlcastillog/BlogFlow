@@ -1,5 +1,6 @@
 import { createUser } from "../../services/user/userService";
 import { useAuth } from "../../components/auth";
+import ErrorValidationPanel from "../../components/validations";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -25,7 +26,6 @@ function Signup() {
   const auth = useAuth();
 
   const doSignup = async () => {
-
     const form = event.target;
     const user = {
       firstName: form[0].value,
@@ -53,28 +53,32 @@ function Signup() {
             <div className="signup-firstname-section">
               <label>First name</label>
               <input placeholder="First Name" {...register("firstName")} />
-              <p style={styles.error}>{errors.firstName?.message}</p>
+              <ErrorValidationPanel message={errors.firstName?.message} />
             </div>
             <div className="signup-lastname-section">
               <label>Last name</label>
-              <input placeholder="Last Name" {...register("lastName")}/>
-              <p style={styles.error}>{errors.lastName?.message}</p>
+              <input placeholder="Last Name" {...register("lastName")} />
+              <ErrorValidationPanel message={errors.lastName?.message} />
             </div>
           </div>
           <div className="signup-one-field-inline-section">
             <label>User name</label>
-            <input placeholder="User Name" {...register("userName")}/>
-            <p style={styles.error}>{errors.userName?.message}</p>
+            <input placeholder="User Name" {...register("userName")} />
+            <ErrorValidationPanel message={errors.userName?.message} />
           </div>
           <div className="signup-one-field-inline-section">
             <label>Email</label>
-            <input placeholder="Email" {...register("email")}/>
-            <p style={styles.error}>{errors.email?.message}</p>
+            <input placeholder="Email" {...register("email")} />
+            <ErrorValidationPanel message={errors.email?.message} />
           </div>
           <div className="signup-one-field-inline-section">
             <label>Password</label>
-            <input placeholder="Password" type="password" {...register("password")}/>
-            <p style={styles.error}>{errors.password?.message}</p>
+            <input
+              placeholder="Password"
+              type="password"
+              {...register("password")}
+            />
+            <ErrorValidationPanel message={errors.password?.message} />
           </div>
           <div className="signup-button-container">
             <button type="submit">Create Account</button>
@@ -86,11 +90,3 @@ function Signup() {
 }
 
 export default Signup;
-
-const styles = {
-  error: {
-    color: 'red',
-    margin: 0,
-    fontSize: '0.9em',
-  },
-};

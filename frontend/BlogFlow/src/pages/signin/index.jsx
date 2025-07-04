@@ -4,13 +4,14 @@ import { useAuth } from "../../components/auth";
 import ErrorPanel from "../../components/error";
 import { getErrorMessage } from "../../components/error/helper";
 import { useForm } from "react-hook-form";
+import ErrorValidationPanel from "../../components/validations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "./style.css";
 
 function Signin() {
   const schema = yup.object().shape({
-    userName: yup.string().required("Name field is mandatory"),
+    userName: yup.string().required("User name field is mandatory"),
     password: yup.string().required("Password field is mandatory"),
   });
 
@@ -47,7 +48,6 @@ function Signin() {
   };
 
   const doLogout = async () => {
-
     try {
       await setErrorMessage(null);
       await auth.logout();
@@ -80,7 +80,7 @@ function Signin() {
             placeholder="Username"
             disabled={loggedUser}
           ></input>
-          <p style={styles.error}>{errors.userName?.message}</p>
+          <ErrorValidationPanel message={errors.userName?.message} />
           <input
             {...register("password")}
             type="password"
@@ -89,7 +89,7 @@ function Signin() {
             placeholder="Password"
             disabled={loggedUser}
           ></input>
-          <p style={styles.error}>{errors.password?.message}</p>
+          <ErrorValidationPanel message={errors.password?.message} />
           {!loggedUser && (
             <div className="login-button-container">
               <button type="submit">Sign in</button>
@@ -108,11 +108,3 @@ function Signin() {
 }
 
 export default Signin;
-
-const styles = {
-  error: {
-    color: 'red',
-    margin: 0,
-    fontSize: '0.9em',
-  },
-};

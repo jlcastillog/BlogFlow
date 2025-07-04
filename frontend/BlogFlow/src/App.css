@@ -12,3 +12,9 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.error-validation-message {
+    color: red;
+    font-size: 0.9em;
+    padding: 0px;
+}
