@@ -3,9 +3,26 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../components/auth";
 import ErrorPanel from "../../components/error";
 import { getErrorMessage } from "../../components/error/helper";
+import { useForm } from "react-hook-form";
+import ErrorValidationPanel from "../../components/validations";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import "./style.css";
 
 function Signin() {
+  const schema = yup.object().shape({
+    userName: yup.string().required("User name field is mandatory"),
+    password: yup.string().required("Password field is mandatory"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const auth = useAuth();
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -17,8 +34,7 @@ function Signin() {
 
   const [password, setPassword] = useState(loggedUser ? "*************" : "");
 
-  const doLogin = async (e) => {
-    e.preventDefault();
+  const doLogin = async () => {
     try {
       await setErrorMessage(null);
       if (!userName || !password) {
@@ -31,14 +47,12 @@ function Signin() {
     }
   };
 
-  const doLogout = async (e) => {
-    e.preventDefault();
-
+  const doLogout = async () => {
     try {
       await setErrorMessage(null);
       await auth.logout();
     } catch (err) {
-      if(err.message === "Refresh token failed") {
+      if (err.message === "Refresh token failed") {
         auth.resetUser();
       }
       const errorFromRespose = getErrorMessage(err);
@@ -58,20 +72,24 @@ function Signin() {
             <NavLink to="/signup">Sign up</NavLink>
           </p>
         )}
-        <form onSubmit={onSummit} className="login-form">
+        <form onSubmit={handleSubmit(onSummit)} className="login-form">
           <input
+            {...register("userName")}
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Username"
             disabled={loggedUser}
           ></input>
+          <ErrorValidationPanel message={errors.userName?.message} />
           <input
+            {...register("password")}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             disabled={loggedUser}
           ></input>
+          <ErrorValidationPanel message={errors.password?.message} />
           {!loggedUser && (
             <div className="login-button-container">
               <button type="submit">Sign in</button>
