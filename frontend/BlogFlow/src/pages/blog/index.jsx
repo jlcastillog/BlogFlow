@@ -6,8 +6,10 @@ import MessagePanel from "../../components/message";
 import Loading from "../../components/loading";
 import PostPreview from "../../components/post-preview";
 import RoundedButton from "../../components/buttons/roundedButton";
+import FollowButton from "../../components/buttons/followButton";
 import { getPostsByBlog } from "../../services/post/postService";
 import { deleteBlog } from "../../services/blog/blogService";
+import { followBlog, unfollowBlog, getFollowers } from "../../services/blog/followService";
 import { getErrorMessage } from "../../components/error/helper";
 import "./style.css";
 
@@ -20,6 +22,8 @@ function BlogPage() {
   const [message, setMassage] = useState(null);
   const [blog, setBlog] = useState(location.state.blog);
   const [posts, setPosts] = useState([]);
+  const [followers, setFollowers] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const loggedUser = auth.user;
 
@@ -48,6 +52,25 @@ function BlogPage() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    async function fetchFollowers() {
+      try {
+        const data = await getFollowers(blog.id);
+        // data: { numberOfFollowers, followers: [...] }
+        setFollowers(data.numberOfFollowers ?? 0);
+        if (loggedUser && Array.isArray(data.followers)) {
+          setIsFollowing(data.followers.some(f => f.userId === loggedUser.userId));
+        } else {
+          setIsFollowing(false);
+        }
+      } catch (err) {
+        setFollowers(0);
+        setIsFollowing(false);
+      }
+    }
+    fetchFollowers();
+  }, [blog.id, loggedUser]);
+
   const onRemovedPost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
     setMassage("Post removed successfully");
@@ -71,6 +94,27 @@ function BlogPage() {
     console.log(blog);
     navigate(`/editBlog/${blog.id}`, { state: { blog } });
   }
+
+  const handleFollow = async () => {
+    if (!loggedUser) return;
+    try {
+      if (isFollowing) {
+        await unfollowBlog(blog.id, loggedUser.userId);
+      } else {
+        await followBlog(blog.id, loggedUser.userId);
+      }
+      // Actualiza la lista de seguidores
+      const data = await getFollowers(blog.id);
+      setFollowers(data.numberOfFollowers ?? 0);
+      if (loggedUser && Array.isArray(data.followers)) {
+        setIsFollowing(data.followers.some(f => f.userId === loggedUser.userId));
+      } else {
+        setIsFollowing(false);
+      }
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
+  };
 
   return (
     <section className="blog-section-container">
@@ -108,6 +152,12 @@ function BlogPage() {
             alt="Imagen del blog"
             className="blog-image"
           />
+          <div className="blog-follow-actions">
+            <FollowButton isFollowing={isFollowing} onClick={handleFollow} />
+            <span className="blog-followers-count">
+              Followers: {followers}
+            </span>
+          </div>
         </div>
       </div>
       <div className="posts-info-container">

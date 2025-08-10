@@ -1,0 +1,15 @@
+.follow-button {
+  width: 120px;
+  height: 36px;
+  background-color: #22c55e;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.following {
+  background-color: #f87171;
+}
