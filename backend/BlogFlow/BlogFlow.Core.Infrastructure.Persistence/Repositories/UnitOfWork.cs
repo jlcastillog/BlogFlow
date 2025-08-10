@@ -10,6 +10,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
         public IPostsRepository Posts { get; }
         public IRefreshTokenRepository RefreshTokens { get; }
         public IImageRepository Images { get; }
+        public IFollowerRepository Followers { get; }
 
         private readonly ApplicationDbContext _applicaDbContext;
 
@@ -18,6 +19,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
                           IPostsRepository posts,
                           IRefreshTokenRepository refreshTokens,
                           IImageRepository images,
+                          IFollowerRepository followers,
                           ApplicationDbContext applicationDbContext)
         {
             Users = users;
@@ -25,6 +27,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
             Posts = posts;
             RefreshTokens = refreshTokens;
             Images = images;
+            Followers = followers;
             _applicaDbContext = applicationDbContext;
         }
 

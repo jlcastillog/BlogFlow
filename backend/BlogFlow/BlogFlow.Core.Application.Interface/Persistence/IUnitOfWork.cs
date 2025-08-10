@@ -7,6 +7,7 @@
         IPostsRepository Posts { get; }
         IRefreshTokenRepository RefreshTokens { get; }
         IImageRepository Images { get; }
+        IFollowerRepository Followers { get; }
         Task<int> Save(CancellationToken cancellationToken);
     }
 }

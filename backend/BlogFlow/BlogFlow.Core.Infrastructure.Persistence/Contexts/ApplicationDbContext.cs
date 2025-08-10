@@ -16,6 +16,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Contexts
         public DbSet<Post> Posts { get; set; }
         public DbSet<RefreshToken> RefreshTokens{ get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Follower> Followers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Post>().ToTable("Post");
             modelBuilder.Entity<RefreshToken>().ToTable("RefreshToken");
             modelBuilder.Entity<Image>().ToTable("Image");
+            modelBuilder.Entity<Follower>().ToTable("Follower");
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
