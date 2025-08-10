@@ -5,7 +5,7 @@ using BlogFlow.Core.Transversal.Common;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace BlogFlow.Auth.Application.Test
+namespace BlogFlow.Auth.Application.Test.Controllers
 {
     [TestClass]
     public sealed class UserControllerTest
