@@ -44,6 +44,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence
             services.AddScoped<IPostsRepository, PostsRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IFollowerRepository, FollowerRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
