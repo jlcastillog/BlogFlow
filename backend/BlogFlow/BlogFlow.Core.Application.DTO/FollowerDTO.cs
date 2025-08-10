@@ -3,9 +3,9 @@
     public class FollowerDTO
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public required UserDTO User { get; set; }
-        public int BlogID { get; set; }
-        public required BlogDTO Blog { get; set; }
+        public required int UserId { get; set; }
+        public UserDTO? User { get; set; }
+        public required int BlogID { get; set; }
+        public BlogDTO? Blog { get; set; }
     }
 }

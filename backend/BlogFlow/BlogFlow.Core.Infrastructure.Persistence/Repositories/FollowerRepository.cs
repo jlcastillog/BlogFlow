@@ -88,7 +88,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
                 return false;
 
             _applicationDbContext.Followers.Remove(follower);
-            return await _applicationDbContext.SaveChangesAsync() > 0;
+            return await Task.FromResult(true);
         }
 
         public async Task<IEnumerable<Follower>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -121,7 +121,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
         public async Task<bool> InsertAsync(Follower entity)
         {
             await _applicationDbContext.Followers.AddAsync(entity);
-            return await _applicationDbContext.SaveChangesAsync() > 0;
+            return await Task.FromResult(true);
         }
 
         public async Task<bool> UpdateAsync(Follower entity)
@@ -131,7 +131,7 @@ namespace BlogFlow.Core.Infrastructure.Persistence.Repositories
                 return false;
 
             _applicationDbContext.Entry(existing).CurrentValues.SetValues(entity);
-            return await _applicationDbContext.SaveChangesAsync() > 0;
+            return await Task.FromResult(true);
         }
 
         #endregion

@@ -14,14 +14,16 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
     public class FollowersController : Controller
     {
         private readonly IFollowersApplication _followersApplication;
+        private readonly IWebHostEnvironment _env;
 
         /// <summary>
         /// Constructor that injects the followers application service.
         /// </summary>
         /// <param name="followersApplication">Application service for followers.</param>
-        public FollowersController(IFollowersApplication followersApplication)
+        public FollowersController(IFollowersApplication followersApplication, IWebHostEnvironment env)
         {
             _followersApplication = followersApplication;
+            _env = env;
         }
 
         /// <summary>
@@ -31,6 +33,9 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllAsync()
         {
+            if (!_env.IsDevelopment())
+                return Forbid("This endpoint is only available in development or test environments.");
+
             var response = await _followersApplication.GetAllAsync();
             if (response.IsSuccess)
             {
@@ -47,6 +52,9 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         [HttpGet("Get/{followerId}")]
         public async Task<IActionResult> GetAsync(string followerId)
         {
+            if (!_env.IsDevelopment())
+                return Forbid("This endpoint is only available in development or test environments.");
+
             if (string.IsNullOrEmpty(followerId))
             {
                 return BadRequest("FollowerId is required");
@@ -68,6 +76,9 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         [HttpPost("Insert")]
         public async Task<IActionResult> InsertAsync([FromForm] FollowerDTO follower)
         {
+            if (!_env.IsDevelopment())
+                return Forbid("This endpoint is only available in development or test environments.");
+
             if (follower == null)
             {
                 return BadRequest("Follower is required");
@@ -88,6 +99,9 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         [HttpGet("Count")]
         public async Task<IActionResult> CountAsync()
         {
+            if (!_env.IsDevelopment())
+                return Forbid("This endpoint is only available in development or test environments.");
+
             var response = await _followersApplication.CountAsync();
             if (response.IsSuccess)
             {
@@ -105,6 +119,9 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         [HttpPost("Update/{followerId}")]
         public async Task<IActionResult> UpdateAsync(string followerId, [FromForm] FollowerDTO follower)
         {
+            if (!_env.IsDevelopment())
+                return Forbid("This endpoint is only available in development or test environments.");
+
             if (string.IsNullOrEmpty(followerId))
             {
                 return BadRequest("FollowerId is required");
@@ -130,6 +147,9 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
         [HttpDelete("Delete/{followerId}")]
         public async Task<IActionResult> DeleteAsync(string followerId)
         {
+            if (!_env.IsDevelopment())
+                return Forbid("This endpoint is only available in development or test environments.");
+
             if (string.IsNullOrEmpty(followerId))
             {
                 return BadRequest("FollowerId is required");

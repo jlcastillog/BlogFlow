@@ -1,21 +1,31 @@
 ﻿using Asp.Versioning;
+using Azure;
 using BlogFlow.Core.Application.DTO;
 using BlogFlow.Core.Application.Interface.UseCases;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogFlow.Core.Services.WebApi.Controllers.v1
 {
+    /// <summary>
+    /// Controller for managing CRUD operations for Blogs and related actions.
+    /// </summary>
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     public class BlogsController : Controller
     {
         private readonly IBlogsApplication _blogsApplication;
+        private readonly IFollowersApplication _followersApplication;
 
-        public BlogsController(IBlogsApplication blogsApplication)
+        /// <summary>
+        /// Constructor that injects the blogs and followers application services.
+        /// </summary>
+        /// <param name="blogsApplication">Application service for blogs.</param>
+        /// <param name="followersApplication">Application service for followers.</param>
+        public BlogsController(IBlogsApplication blogsApplication, IFollowersApplication followersApplication)
         {
             _blogsApplication = blogsApplication;
+            _followersApplication = followersApplication;
         }
 
         [HttpGet("GetAll")]
@@ -123,6 +133,84 @@ namespace BlogFlow.Core.Services.WebApi.Controllers.v1
                 return Ok(response);
             }
             return BadRequest(response.Message);
+        }
+
+        /// <summary>
+        /// Follows a blog.
+        /// </summary>
+        /// <param name="blogId">Blog identifier to follow.</param>
+        /// <param name="userId">User identifier who wants to follow.</param>
+        /// <returns>Operation result.</returns>
+        [HttpPost("{blogId}/followers")]
+        public async Task<IActionResult> FollowBlogAsync(int blogId, [FromBody] FollowRequestDTO user)
+        {
+            if (blogId <= 0 || user?.UserId <= 0)
+                return BadRequest("Valid blogId and userId are required.");
+
+            var followerDto = new FollowerDTO
+            {
+                BlogID = blogId,
+                UserId = user!.UserId,
+                // Las propiedades de navegación pueden omitirse en la inserción
+            };
+
+            var response = await _followersApplication.InsertAsync(followerDto);
+            if (response.IsSuccess)
+                return Ok(response);
+            return BadRequest(response.Message);
+        }
+
+        /// <summary>
+        /// Unfollows a blog.
+        /// </summary>
+        /// <param name="blogId">Blog identifier to unfollow.</param>
+        /// <param name="userId">User identifier who wants to unfollow.</param>
+        /// <returns>Operation result.</returns>
+        [HttpDelete("{blogId}/followers/{userId}")]
+        public async Task<IActionResult> UnFollowBlogAsync(int blogId, int userId)
+        {
+            if (blogId <= 0 || userId <= 0)
+                return BadRequest("Valid blogId and userId are required.");
+
+            // Buscar el follower correspondiente
+            var followersResponse = await _followersApplication.GetAllAsync();
+            if (!followersResponse.IsSuccess || followersResponse.Data == null)
+                return BadRequest(followersResponse.Message);
+
+            var follower = followersResponse.Data.FirstOrDefault(f => f.BlogID == blogId && f.UserId == userId);
+            if (follower == null)
+                return NotFound("Follower not found.");
+
+            var response = await _followersApplication.DeleteAsync(follower.Id.ToString());
+            if (response.IsSuccess)
+                return Ok(response);
+            return BadRequest(response.Message);
+        }
+
+        /// <summary>
+        /// Gets all followers for a specific blog.
+        /// </summary>
+        /// <param name="blogId">Blog identifier.</param>
+        /// <returns>List of followers for the blog.</returns>
+        [HttpGet("{blogId}/followers")]
+        public async Task<IActionResult> GetFollowersByBlogAsync(int blogId)
+        {
+            if (blogId <= 0)
+                return BadRequest("Valid blogId is required.");
+
+            var followersResponse = await _followersApplication.GetAllAsync();
+            if (!followersResponse.IsSuccess || followersResponse.Data == null)
+                return BadRequest(followersResponse.Message);
+
+            var followersByBlog = followersResponse.Data.Where(f => f.BlogID == blogId);
+
+            var response = new FollowResponseDTO()
+            {
+                Followers = followersByBlog.ToArray(),
+                NumberOfFollowers = followersByBlog.Count()
+            };  
+
+            return Ok(response);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BlogFlow.Core.Application.Interface.UseCases;
 using BlogFlow.Core.Application.UseCases.Blogs;
+using BlogFlow.Core.Application.UseCases.Followers;
 using BlogFlow.Core.Application.UseCases.Images;
 using BlogFlow.Core.Application.UseCases.Posts;
 using BlogFlow.Core.Application.UseCases.RefreshTokens;
@@ -17,6 +18,7 @@ namespace BlogFlow.Core.Application.UseCases
             services.AddScoped<IUsersApplication, UsersApplication>();
             services.AddScoped<IBlogsApplication, BlogsApplication>();
             services.AddScoped<IPostsApplication, PostsApplication>();
+            services.AddScoped<IFollowersApplication, FollowersApplication>();
             services.AddScoped<IRefreshTokenApplication, RefreshTokenApplication>();
             services.AddScoped<IImageApplication, ImageApplication>();
             services.AddScoped<IImageStorageApplication, ImageStorageApplication>();
