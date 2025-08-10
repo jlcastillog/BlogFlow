@@ -6,7 +6,7 @@ using BlogFlow.Core.Application.UseCases.Users;
 using BlogFlow.Core.Domain.Entities;
 using Moq;
 
-namespace BlogFlow.Auth.Application.Test;
+namespace BlogFlow.Auth.Application.Test.Application;
 
 [TestClass]
 public class UserApplicationTest

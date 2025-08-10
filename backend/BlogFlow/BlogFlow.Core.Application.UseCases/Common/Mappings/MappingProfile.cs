@@ -18,6 +18,7 @@ namespace BlogFlow.Core.Application.UseCases.Common.Mappings
             CreateMap<Post, PostDTO>().ReverseMap();
             CreateMap<RefreshToken, RefreshTokenDTO>().ReverseMap();
             CreateMap<Image, ImageDTO>().ReverseMap();
+            CreateMap<Follower, FollowerDTO>().ReverseMap();
         }
     }
 }
